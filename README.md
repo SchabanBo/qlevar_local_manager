@@ -16,3 +16,6 @@ This app will help you manage you applications locals easily. set you locals in 
 
 you can translate the local using google translation. you need to set the google apiKey and click translate in the options button.
 Only Local items can be translated. and this will translate only the empty locals for the selected item.
+
+## Quick Demo
+https://user-images.githubusercontent.com/49782771/124182518-3ea80080-dab7-11eb-82a7-9919cc1b88ab.mp4
