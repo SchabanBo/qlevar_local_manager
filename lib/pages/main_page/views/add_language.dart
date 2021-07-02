@@ -19,7 +19,7 @@ class AddLanguageIcon extends StatelessWidget {
           con.locals().ensureAllLanguagesExist(con.locals().languages);
           con.locals.refresh();
         },
-        icon: const Icon(Icons.add_comment));
+        icon: const Icon(Icons.language));
   }
 }
 

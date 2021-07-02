@@ -1,10 +1,19 @@
 import 'package:get/get.dart';
+import '../controllers/main_controller.dart';
 import '../../../models/qlocal.dart';
 
 class LocalNodeController extends GetxController {
-  final isOpen = false.obs;
+  late final isOpen = _mainController.openAllNodes.value.obs;
   final Rx<QlevarLocalNode> item;
+  late final filter = _mainController.filter;
   final List<int> indexMap;
+  final _mainController = Get.find<MainController>();
+
+  @override
+  void onInit() {
+    super.onInit();
+    _mainController.openAllNodes.listen(isOpen);
+  }
 
   LocalNodeController(
     QlevarLocalNode _item,
@@ -13,4 +22,12 @@ class LocalNodeController extends GetxController {
         indexMap = List.from(_indexMap) {
     indexMap.add(_item.index);
   }
+
+  Iterable<QlevarLocalItem> get getItem => filter.isEmpty
+      ? item().items
+      : item().items.where((i) => i.filter(filter()));
+
+  Iterable<QlevarLocalNode> get getNodes => filter.isEmpty
+      ? item().nodes
+      : item().nodes.where((i) => i.filter(filter()));
 }

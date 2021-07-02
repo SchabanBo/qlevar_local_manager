@@ -90,6 +90,11 @@ class QlevarLocalNode {
     }
     return result;
   }
+
+  bool filter(String f) =>
+      key.contains(f) ||
+      items.any((i) => i.filter(f)) ||
+      nodes.any((i) => i.filter(f));
 }
 
 class QlevarLocalItem {
@@ -113,4 +118,6 @@ class QlevarLocalItem {
   LocalItem getItem(String currentLan) {
     return LocalItem(key: key, value: values[currentLan] ?? '');
   }
+
+  bool filter(String f) => key.contains(f);
 }

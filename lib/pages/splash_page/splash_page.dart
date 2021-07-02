@@ -44,12 +44,18 @@ class _SplashPageState extends State<SplashPage> {
         ),
       ]);
 
+  var _isBottomSheetOpen = false;
+
   Future<void> selectApp() async {
+    if (_isBottomSheetOpen) {
+      return;
+    }
+    _isBottomSheetOpen = true;
     final app = await Get.bottomSheet<AppLocalFile>(
         const SettingsPage(isSelectApp: true),
         enableDrag: true,
         barrierColor: Colors.transparent);
-
+    _isBottomSheetOpen = false;
     if (app == null) {
       setState(() {});
       return;
@@ -59,7 +65,7 @@ class _SplashPageState extends State<SplashPage> {
       setState(() {});
     }
     Get.put(MainController(appfile: app, locals: loclas!));
-    Get.offAll(const MainView());
+    Get.offAll(() => const MainView());
   }
 
   Future<QlevarLocal?> loadfile(AppLocalFile appLocalFile) async {

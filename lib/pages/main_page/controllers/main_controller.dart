@@ -8,10 +8,20 @@ import '../../../models/qlocal.dart';
 class MainController extends GetxController {
   final AppLocalFile appfile;
   final Rx<QlevarLocal> locals;
+  final openAllNodes = false.obs;
+  final filter = ''.obs;
   MainController({required this.appfile, required QlevarLocal locals})
       : locals = locals.obs;
 
   int get listItemsCount => locals().items.length + locals().nodes.length;
+
+  Iterable<QlevarLocalItem> get getItem => filter.isEmpty
+      ? locals().items
+      : locals().items.where((i) => i.filter(filter()));
+
+  Iterable<QlevarLocalNode> get getNodes => filter.isEmpty
+      ? locals().nodes
+      : locals().nodes.where((i) => i.filter(filter()));
 
   void addItem(List<int> indexMap, String key) {
     QlevarLocalNode node = locals();

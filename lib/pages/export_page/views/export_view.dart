@@ -1,16 +1,16 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../helpers/colors.dart';
+import '../controller.dart';
 import '../../../helpers/path_picker.dart';
-import '../../main_page/controllers/main_controller.dart';
-import '../../../services/exporters/getx_exporter_servvice.dart';
 
 class ExportView extends StatelessWidget {
-  final String path;
-  const ExportView({required this.path, Key? key}) : super(key: key);
+  final ExportController controller = ExportController();
+  ExportView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var _path = path;
     return Container(
       decoration: const BoxDecoration(
           color: Colors.white,
@@ -22,19 +22,29 @@ class ExportView extends StatelessWidget {
           children: [
             const Text('Export Data', style: TextStyle(fontSize: 24)),
             const Divider(),
+            Obx(() => Row(
+                  children: ExportAs.values
+                      .map((e) => Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Radio<ExportAs>(
+                                activeColor: AppColors.primary,
+                                value: e,
+                                groupValue: controller.exportAs(),
+                                onChanged: controller.exportAs,
+                              ),
+                              Text(describeEnum(e)),
+                            ],
+                          ))
+                      .toList(),
+                )),
             PathPicker(
-                path: path,
+                path: controller.path(),
                 title: 'Give the directory path to export to',
-                onChange: (s) => _path = s),
+                onChange: controller.path),
             const Spacer(),
             ElevatedButton(
-                onPressed: () {
-                  final data = Get.find<MainController>().locals().toData();
-                  GetxExporterService(data: data)
-                      .export(_path + '/locals.dart');
-                  Get.back();
-                },
-                child: const Text('Export')),
+                onPressed: controller.export, child: const Text('Export')),
           ],
         ),
       ),

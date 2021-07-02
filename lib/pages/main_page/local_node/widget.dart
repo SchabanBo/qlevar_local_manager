@@ -68,20 +68,23 @@ class LocalNodeWidget extends StatelessWidget {
                     opacity: a,
                     child: SizeTransition(sizeFactor: a, child: c))),
             child: controller.isOpen.isTrue
-                ? ListView(shrinkWrap: true, children: [
-                    ...controller.item().items.map((e) => LocalItemBinder(
-                          key: ValueKey(e.index),
-                          item: e,
-                          indexMap: controller.indexMap,
-                          startPadding: 8 + startPadding,
-                        )),
-                    ...controller.item().nodes.map((e) => LocalNodeBinder(
-                          key: ValueKey(e.index),
-                          item: e,
-                          indexMap: controller.indexMap,
-                          startPadding: 8 + startPadding,
-                        )),
-                  ])
+                ? ListView(
+                    shrinkWrap: true,
+                    physics: const ClampingScrollPhysics(),
+                    children: [
+                        ...controller.getItem.map((e) => LocalItemBinder(
+                              key: ValueKey(e.index),
+                              item: e,
+                              indexMap: controller.indexMap,
+                              startPadding: 8 + startPadding,
+                            )),
+                        ...controller.getNodes.map((e) => LocalNodeBinder(
+                              key: ValueKey(e.index),
+                              item: e,
+                              indexMap: controller.indexMap,
+                              startPadding: 8 + startPadding,
+                            )),
+                      ])
                 : const SizedBox()),
       );
 }

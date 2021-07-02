@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../import_page/import_icon.dart';
+import 'options_row.dart';
 import 'exit_icon.dart';
 import 'add_language.dart';
 import '../local_item/controller.dart';
@@ -23,6 +25,7 @@ class MainView extends GetView<MainController> {
         actions: const [
           SaveDataWidget(),
           ExportIcon(),
+          ImportIcon(),
           AddLanguageIcon(),
           SettingsIcon(),
           ExitIcon(),
@@ -34,6 +37,7 @@ class MainView extends GetView<MainController> {
 
   Widget get _buildList => Obx(() => Column(
         children: [
+          OptionsRow(),
           // ignore: prefer_const_literals_to_create_immutables
           Card(
               child: LocalItemWidget(
@@ -45,15 +49,15 @@ class MainView extends GetView<MainController> {
             isHeader: true,
           )),
           Expanded(
-            child: ListView(children: [
-              ...controller.locals().items.map((e) => LocalItemBinder(
+            child: ListView(shrinkWrap: true, primary: true, children: [
+              ...controller.getItem.map((e) => LocalItemBinder(
                     key: ValueKey(e.index),
                     item: e,
                     // ignore: prefer_const_literals_to_create_immutables
                     indexMap: [0],
                     startPadding: 8,
                   )),
-              ...controller.locals().nodes.map((e) => LocalNodeBinder(
+              ...controller.getNodes.map((e) => LocalNodeBinder(
                     key: ValueKey(e.index),
                     item: e,
                     // ignore: prefer_const_literals_to_create_immutables
