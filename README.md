@@ -3,13 +3,18 @@
 This app will help you manage you applications locals easily. set you locals in groups, translate them with google translation and then export them to a class that is useable with Getx.
 
 - [qlevar_local_manager](#qlevar_local_manager)
+  - [Quick Demo](#quick-demo)
   - [Getting Started](#getting-started)
   - [Data Schema](#data-schema)
   - [Translation](#translation)
   - [Export](#export)
     - [GetX](#getx)
     - [Easy Localization](#easy-localization)
-  - [Quick Demo](#quick-demo)
+
+
+## Quick Demo
+
+https://user-images.githubusercontent.com/49782771/124331112-1095ef80-db8f-11eb-8641-92eb7e58fb29.mp4
 
 ## Getting Started
 
@@ -53,6 +58,5 @@ To export the data to json files with this [structure](https://github.com/aissat
 - Pick the folder to export the files to.
 - Json files will be generated every file has the name of language and contains the translations for this language.
 
-## Quick Demo
 
-https://user-images.githubusercontent.com/49782771/124182518-3ea80080-dab7-11eb-82a7-9919cc1b88ab.mp4
+
