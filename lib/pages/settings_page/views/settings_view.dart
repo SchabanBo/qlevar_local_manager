@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'auto_save_section.dart';
 import 'apps_section.dart';
 import 'translation_settings.dart';
 import '../controller.dart';
@@ -25,9 +26,9 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(15))),
+      decoration: BoxDecoration(
+          color: Get.theme.bottomAppBarColor,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(15))),
       child: Padding(
         padding: const EdgeInsets.all(18.0),
         child: SingleChildScrollView(
@@ -40,6 +41,7 @@ class _SettingsPageState extends State<SettingsPage> {
               const SizedBox(height: 15),
               AppsSection(controller, widget.isSelectApp),
               TranslationSection(controller),
+              AutoSaveSection(controller),
             ],
           ),
         ),

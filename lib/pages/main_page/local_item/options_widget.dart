@@ -15,11 +15,14 @@ class OptionsWidget extends StatelessWidget {
       (open) => MouseRegion(
             onEnter: (_) => open(true),
             onExit: (_) => open(false),
-            child: AnimatedSwitcher(
-                duration: Constants.animationDuration,
-                transitionBuilder: (c, a) => SizeTransition(
-                    axis: Axis.horizontal, sizeFactor: a, child: c),
-                child: open.isTrue ? options : const Icon(Icons.menu)),
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: AnimatedSwitcher(
+                  duration: Constants.animationDuration,
+                  transitionBuilder: (c, a) => SizeTransition(
+                      axis: Axis.horizontal, sizeFactor: a, child: c),
+                  child: open.isTrue ? options : const Icon(Icons.menu)),
+            ),
           ),
       false.obs);
 

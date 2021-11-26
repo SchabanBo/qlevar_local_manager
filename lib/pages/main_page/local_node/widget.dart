@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../local_item/editable_text_widget.dart';
 import '../controllers/main_controller.dart';
 import 'options_widget.dart';
-import '../../../helpers/colors.dart';
 import '../local_item/binder.dart';
 import 'binder.dart';
 import 'controller.dart';
@@ -16,9 +16,7 @@ class LocalNodeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-        decoration: BoxDecoration(color: AppColors.secondary.withOpacity(0.1)),
-        padding: const EdgeInsets.symmetric(vertical: 8.0),
-        margin: const EdgeInsets.symmetric(vertical: 3.0),
+        color: Get.theme.bottomAppBarColor.withOpacity(0.1),
         child: Column(
           children: [
             Obx(() => Row(
@@ -30,27 +28,30 @@ class LocalNodeWidget extends StatelessWidget {
                   ],
                 )),
             body,
+            const Divider(),
           ],
         ),
       );
 
   Widget get header => Row(
         children: [
-          SizedBox(width: startPadding + 8),
-          OptionsWidget(controller: controller),
           const SizedBox(width: 8),
-          Obx(() => Text(controller.item().key)),
+          QEditableText(
+              text: controller.item().key,
+              onEdit: (s) => controller.item().key = s),
           const Spacer(),
           InkWell(
               onTap: () {
-                controller.isOpen.toggle();
+                controller.item.value.isOpen.toggle();
               },
               child: Obx(() => Icon(
-                    controller.isOpen.isTrue
+                    controller.item.value.isOpen.isTrue
                         ? Icons.expand_less
                         : Icons.expand_more,
-                    color: AppColors.secondary,
+                    size: 30,
                   ))),
+          SizedBox(width: startPadding + 8),
+          OptionsWidget(controller: controller),
           const SizedBox(width: 25),
         ],
       );
@@ -67,7 +68,7 @@ class LocalNodeWidget extends StatelessWidget {
                 child: FadeTransition(
                     opacity: a,
                     child: SizeTransition(sizeFactor: a, child: c))),
-            child: controller.isOpen.isTrue
+            child: controller.item.value.isOpen.isTrue
                 ? ListView(
                     shrinkWrap: true,
                     physics: const ClampingScrollPhysics(),

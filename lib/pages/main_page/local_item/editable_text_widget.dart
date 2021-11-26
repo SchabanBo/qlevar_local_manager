@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -11,29 +13,42 @@ class QEditableText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ObxValue<RxBool>(
-        (edit) => edit.isTrue
-            ? Column(
-                children: [
-                  TextFormField(
-                    autofocus: true,
-                    controller: controller,
-                    maxLines: null,
-                    onFieldSubmitted: (s) => save(edit),
-                  ),
-                  const SizedBox(height: 5),
-                  Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-                    InkWell(
-                      onTap: () => save(edit),
-                      child: const Icon(Icons.done, color: Colors.green),
-                    ),
-                    InkWell(
-                      onTap: () => edit.toggle(),
-                      child: const Icon(Icons.close, color: Colors.red),
+        (edit) => InkWell(
+            onTap: () => edit.toggle(),
+            child: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 500),
+              transitionBuilder: (c, a) => SizeTransition(
+                  axisAlignment: 1,
+                  axis: Axis.horizontal,
+                  sizeFactor:
+                      CurvedAnimation(parent: a, curve: Curves.linearToEaseOut),
+                  child: c),
+              child: edit.isTrue
+                  ? Focus(
+                      onFocusChange: (f) {
+                        if (!f) {
+                          save(edit);
+                        }
+                      },
+                      child: TextField(
+                        decoration: const InputDecoration(
+                            contentPadding: EdgeInsets.all(0), filled: true),
+                        autofocus: true,
+                        maxLines: null,
+                        controller: controller,
+                      ),
                     )
-                  ])
-                ],
-              )
-            : InkWell(onTap: () => edit.toggle(), child: Text(text)),
+                  : Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          controller.text,
+                          style: const TextStyle(fontSize: 18),
+                        ),
+                      ),
+                    ),
+            )),
         false.obs);
   }
 

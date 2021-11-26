@@ -9,6 +9,7 @@ class MainController extends GetxController {
   final AppLocalFile appfile;
   final Rx<QlevarLocal> locals;
   final openAllNodes = false.obs;
+  final loading = false.obs;
   final filter = ''.obs;
   MainController({required this.appfile, required QlevarLocal locals})
       : locals = locals.obs;
@@ -68,7 +69,7 @@ class MainController extends GetxController {
     for (var i = 1; i < indexMap.length - 1; i++) {
       node = node.nodes.firstWhere((e) => e.index == indexMap[i]);
     }
-    if (node.items.any((e) => e.key == value)) {
+    if (node.items.any((e) => e.index != indexMap.last && e.key == value)) {
       showError('Error', 'Key with name $value already exist');
       update();
       return;
@@ -99,7 +100,9 @@ class MainController extends GetxController {
   }
 
   Future<void> saveData() async {
+    loading(true);
     final data = locals().toData();
     await File(appfile.path).writeAsString(data.toJson());
+    loading(false);
   }
 }

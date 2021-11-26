@@ -1,6 +1,5 @@
 import 'package:filepicker_windows/filepicker_windows.dart';
 import 'package:flutter/material.dart';
-import 'package:qlevar_local_manager/helpers/colors.dart';
 
 enum PathType {
   file,
@@ -37,7 +36,6 @@ class _PathPickerState extends State<PathPicker> {
           InkWell(
               child: const Icon(
                 Icons.folder,
-                color: AppColors.primary,
               ),
               onTap: pick),
           const SizedBox(width: 10),

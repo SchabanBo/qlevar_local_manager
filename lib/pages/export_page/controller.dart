@@ -8,7 +8,9 @@ class ExportController extends GetxController {
   final Rx<ExportAs> exportAs = ExportAs.getx.obs;
 
   void export() {
-    final data = Get.find<MainController>().locals().toData();
+    final mainCon = Get.find<MainController>();
+    mainCon.loading.value = true;
+    final data = mainCon.locals().toData();
     switch (exportAs()) {
       case ExportAs.getx:
         GetxExporterService(data: data).export(path() + '/locals.g.dart');
@@ -18,7 +20,7 @@ class ExportController extends GetxController {
         break;
     }
 
-    Get.back();
+    mainCon.loading.value = false;
   }
 }
 

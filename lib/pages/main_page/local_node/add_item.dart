@@ -1,7 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:qlevar_local_manager/helpers/constants.dart';
+import '../../../helpers/constants.dart';
 import '../controllers/main_controller.dart';
 
 class AddLocalNode extends StatelessWidget {
@@ -14,7 +13,7 @@ class AddLocalNode extends StatelessWidget {
           message: 'Add new Node',
           child: Icon(
             Icons.add_box,
-            color: Colors.blue,
+            color: Color(0xffffc107),
           )),
       onTap: () async {
         final key = await Get.dialog<String>(_GetItemKey());
@@ -33,10 +32,7 @@ class AddLocalItem extends StatelessWidget {
   Widget build(BuildContext context) => InkWell(
       child: const Tooltip(
           message: 'Add new Item',
-          child: Icon(
-            Icons.add,
-            color: Colors.blue,
-          )),
+          child: Icon(Icons.add, color: Color(0xffffc107))),
       onTap: () async {
         final key = await Get.dialog<String>(_GetItemKey());
         if (key == null || key.isEmpty) {
