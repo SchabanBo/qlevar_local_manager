@@ -16,76 +16,95 @@ class LocalNodeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-        color: Get.theme.bottomAppBarColor.withOpacity(0.1),
-        child: Column(
+        margin: EdgeInsets.only(left: startPadding),
+        decoration: BoxDecoration(
+          color: Get.theme.bottomAppBarColor.withOpacity(0.2),
+          border: Border(
+            left: BorderSide(
+              color: Get.theme.colorScheme.primary.withOpacity(0.5),
+              width: 2,
+            ),
+            bottom: BorderSide(
+              color: Get.theme.colorScheme.primary.withOpacity(0.5),
+              width: 2,
+            ),
+          ),
+        ),
+        child: Obx(() => Column(
+              children: [
+                header,
+                body,
+              ],
+            )),
+      );
+
+  Widget get header => Container(
+        color: Get.theme.bottomAppBarColor,
+        child: Row(
           children: [
-            Obx(() => Row(
-                  children: [
-                    Expanded(flex: 2, child: header),
-                    ...List.generate(
-                        Get.find<MainController>().locals().languages.length,
-                        (i) => i).map((_) => const Expanded(child: SizedBox()))
-                  ],
-                )),
-            body,
-            const Divider(),
+            const SizedBox(width: 8),
+            Flexible(
+              flex: 1,
+              child: QEditableText(
+                  text: controller.item().key,
+                  onEdit: (s) => controller.item().key = s),
+            ),
+            Expanded(
+              flex: Get.find<MainController>().locals().languages.length,
+              child: InkWell(
+                onTap: () {
+                  controller.item.value.isOpen.toggle();
+                },
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: Obx(() => Icon(
+                        controller.item.value.isOpen.isTrue
+                            ? Icons.expand_less
+                            : Icons.expand_more,
+                        size: 30,
+                        color: Colors.blueGrey,
+                      )),
+                ),
+              ),
+            ),
+            const SizedBox(width: 5),
+            OptionsWidget(controller: controller),
+            const SizedBox(width: 8),
           ],
         ),
       );
 
-  Widget get header => Row(
-        children: [
-          const SizedBox(width: 8),
-          QEditableText(
-              text: controller.item().key,
-              onEdit: (s) => controller.item().key = s),
-          const Spacer(),
-          InkWell(
-              onTap: () {
-                controller.item.value.isOpen.toggle();
-              },
-              child: Obx(() => Icon(
-                    controller.item.value.isOpen.isTrue
-                        ? Icons.expand_less
-                        : Icons.expand_more,
-                    size: 30,
-                  ))),
-          SizedBox(width: startPadding + 8),
-          OptionsWidget(controller: controller),
-          const SizedBox(width: 25),
-        ],
-      );
-
-  Widget get body => Obx(
-        () => AnimatedSwitcher(
-            switchInCurve: Curves.linearToEaseOut,
-            switchOutCurve: Curves.linearToEaseOut,
-            duration: const Duration(milliseconds: 500),
-            transitionBuilder: (c, a) => SlideTransition(
-                position: Tween<Offset>(
-                        begin: const Offset(0, -1), end: const Offset(0, 0))
-                    .animate(a),
-                child: FadeTransition(
-                    opacity: a,
-                    child: SizeTransition(sizeFactor: a, child: c))),
-            child: controller.item.value.isOpen.isTrue
-                ? ListView(
+  Widget get body => AnimatedSwitcher(
+        switchInCurve: Curves.linearToEaseOut,
+        switchOutCurve: Curves.linearToEaseOut,
+        duration: const Duration(milliseconds: 500),
+        transitionBuilder: (c, a) => SlideTransition(
+            position: Tween<Offset>(
+                    begin: const Offset(0, -1), end: const Offset(0, 0))
+                .animate(a),
+            child: FadeTransition(
+                opacity: a, child: SizeTransition(sizeFactor: a, child: c))),
+        child: controller.item.value.isOpen.isTrue
+            ? Container(
+                padding: const EdgeInsets.all(4),
+                child: ListView(
                     shrinkWrap: true,
-                    physics: const ClampingScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     children: [
-                        ...controller.getItem.map((e) => LocalItemBinder(
-                              key: ValueKey(e.index),
-                              item: e,
-                              indexMap: controller.indexMap,
-                              startPadding: 8 + startPadding,
-                            )),
-                        ...controller.getNodes.map((e) => LocalNodeBinder(
-                              key: ValueKey(e.index),
-                              item: e,
-                              indexMap: controller.indexMap,
-                              startPadding: 8 + startPadding,
-                            )),
-                      ])
-                : const SizedBox()),
+                      ...controller.getItem.map((e) => LocalItemBinder(
+                            key: ValueKey(e.index),
+                            item: e,
+                            indexMap: controller.indexMap,
+                            startPadding: 8 + startPadding,
+                          )),
+                      ...controller.getNodes.map((e) => LocalNodeBinder(
+                            key: ValueKey(e.index),
+                            item: e,
+                            indexMap: controller.indexMap,
+                            startPadding: 8 + startPadding,
+                          )),
+                    ]),
+              )
+            : const SizedBox(),
       );
 }

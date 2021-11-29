@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../views/options_row.dart';
 import '../../../models/qlocal.dart';
 import '../../../widgets/rotaion_icon.dart';
 
@@ -54,21 +55,24 @@ class TreeWidget extends StatelessWidget {
           ? ListView(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              children: _getChildren(node))
+              children: [OptionsRow(), ..._getChildren(node)])
           : const SizedBox.shrink()));
+}
 
-  List<Widget> _getChildren(QlevarLocalNode node) {
-    final result = <Widget>[];
-    for (var item in node.items) {
-      result.add(ListTile(
-        title: Text(item.key.toUpperCase()),
-      ));
-    }
-    for (var item in node.nodes) {
-      result.add(_TreeWidget(item));
-    }
-    return result;
+List<Widget> _getChildren(QlevarLocalNode node) {
+  final result = <Widget>[];
+  for (var item in node.items) {
+    result.add(
+      Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+        child: Text(item.key.toUpperCase()),
+      ),
+    );
   }
+  for (var item in node.nodes) {
+    result.add(_TreeWidget(item));
+  }
+  return result;
 }
 
 class _TreeWidget extends StatelessWidget {
@@ -80,28 +84,35 @@ class _TreeWidget extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => Padding(
+  Widget build(BuildContext context) => Container(
         padding: const EdgeInsets.only(left: 8, top: 1),
-        child: Container(
-          decoration: const BoxDecoration(
-            border: Border(
-              left: BorderSide(
-                color: Colors.amber,
-                width: 2,
-              ),
+        decoration: const BoxDecoration(
+          border: Border(
+            left: BorderSide(
+              color: Colors.amber,
+              width: 2,
             ),
           ),
-          child: Column(
-            children: [
-              ListTile(
-                  title: Text(node.key.toUpperCase()),
-                  onTap: node.isOpen.toggle,
-                  trailing: node.hasChildren
-                      ? Obx(() => RotaionIcon(rotate: node.isOpen.value))
-                      : const SizedBox()),
-              node.hasChildren ? children : const SizedBox.shrink()
-            ],
-          ),
+        ),
+        child: Column(
+          children: [
+            InkWell(
+              onTap: node.isOpen.toggle,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(node.key.toUpperCase()),
+                    node.hasChildren
+                        ? Obx(() => RotaionIcon(rotate: !node.isOpen.value))
+                        : const SizedBox()
+                  ],
+                ),
+              ),
+            ),
+            node.hasChildren ? children : const SizedBox.shrink()
+          ],
         ),
       );
 
@@ -113,17 +124,4 @@ class _TreeWidget extends StatelessWidget {
               physics: const NeverScrollableScrollPhysics(),
               children: _getChildren(node))
           : const SizedBox.shrink()));
-
-  List<Widget> _getChildren(QlevarLocalNode node) {
-    final result = <Widget>[];
-    for (var item in node.items) {
-      result.add(ListTile(
-        title: Text(item.key.toUpperCase()),
-      ));
-    }
-    for (var item in node.nodes) {
-      result.add(_TreeWidget(item));
-    }
-    return result;
-  }
 }

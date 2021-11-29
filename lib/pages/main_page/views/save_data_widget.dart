@@ -9,7 +9,7 @@ class SaveDataWidget extends GetView<MainController> {
   Widget build(BuildContext context) {
     return IconButton(
         tooltip: 'Save',
-        onPressed: controller.saveData,
+        onPressed: () => controller.saveData(),
         icon: const Icon(Icons.save));
   }
 }

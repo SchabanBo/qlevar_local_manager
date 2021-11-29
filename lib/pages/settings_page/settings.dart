@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:qlevar_local_manager/pages/export_page/controller.dart';
+import '../export_page/controller.dart';
 
 class Settings {
   final List<AppLocalFile> apps;

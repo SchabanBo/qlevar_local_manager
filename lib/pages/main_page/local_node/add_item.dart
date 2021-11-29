@@ -12,8 +12,8 @@ class AddLocalNode extends StatelessWidget {
       child: const Tooltip(
           message: 'Add new Node',
           child: Icon(
-            Icons.add_box,
-            color: Color(0xffffc107),
+            Icons.add_box_outlined,
+            color: Constants.iconColors,
           )),
       onTap: () async {
         final key = await Get.dialog<String>(_GetItemKey());
@@ -32,7 +32,10 @@ class AddLocalItem extends StatelessWidget {
   Widget build(BuildContext context) => InkWell(
       child: const Tooltip(
           message: 'Add new Item',
-          child: Icon(Icons.add, color: Color(0xffffc107))),
+          child: Icon(
+            Icons.add,
+            color: Constants.iconColors,
+          )),
       onTap: () async {
         final key = await Get.dialog<String>(_GetItemKey());
         if (key == null || key.isEmpty) {

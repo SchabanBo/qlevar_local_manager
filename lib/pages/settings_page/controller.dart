@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
-import 'package:qlevar_local_manager/pages/export_page/controller.dart';
-import 'package:qlevar_local_manager/pages/main_page/controllers/main_controller.dart';
+import '../export_page/controller.dart';
+import '../main_page/controllers/main_controller.dart';
 import 'settings.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';

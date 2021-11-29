@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import '../../../models/qlocal.dart';
 import '../../settings_page/controller.dart';
 import '../../../services/translators/google_translator_service.dart';
 import '../../../helpers/constants.dart';
@@ -11,29 +13,36 @@ class OptionsWidget extends StatelessWidget {
   const OptionsWidget({required this.controller, Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => ObxValue<RxBool>(
-      (open) => MouseRegion(
-            onEnter: (_) => open(true),
-            onExit: (_) => open(false),
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: AnimatedSwitcher(
-                  duration: Constants.animationDuration,
-                  transitionBuilder: (c, a) => SizeTransition(
-                      axis: Axis.horizontal, sizeFactor: a, child: c),
-                  child: open.isTrue ? options : const Icon(Icons.menu)),
-            ),
-          ),
-      false.obs);
+  Widget build(BuildContext context) => options;
 
   Widget get options => Row(
         children: [
           InkWell(
             child: const Tooltip(
+                message: 'Copy Path',
+                child: Icon(
+                  Icons.copy,
+                  color: Constants.iconColors,
+                )),
+            onTap: copyPath,
+          ),
+          const SizedBox(width: 5),
+          InkWell(
+            child: const Tooltip(
+                message: 'Translate',
+                child: Icon(
+                  Icons.translate,
+                  color: Constants.iconColors,
+                )),
+            onTap: translate,
+          ),
+          const SizedBox(width: 5),
+          InkWell(
+            child: const Tooltip(
                 message: 'Delete',
                 child: Icon(
-                  Icons.delete,
-                  color: Colors.red,
+                  Icons.delete_outline,
+                  color: Constants.iconColors,
                 )),
             onTap: () => Get.defaultDialog(
                 title: 'Delete',
@@ -44,15 +53,6 @@ class OptionsWidget extends StatelessWidget {
                   Get.back();
                 },
                 onCancel: () {}),
-          ),
-          InkWell(
-            child: const Tooltip(
-                message: 'Translate',
-                child: Icon(
-                  Icons.translate,
-                  color: Colors.green,
-                )),
-            onTap: translate,
           ),
         ],
       );
@@ -75,5 +75,18 @@ class OptionsWidget extends StatelessWidget {
     final serivce = GoogleTranslatorService(settings.googleApi);
     await serivce.tranlate(controller.item, lan);
     Get.find<MainController>().locals.refresh();
+  }
+
+  void copyPath() {
+    final indexMap = controller.indexMap;
+    var result = '';
+    QlevarLocalNode node = Get.find<MainController>().locals();
+    for (var i = 1; i < indexMap.length - 1; i++) {
+      node = node.nodes.firstWhere((e) => e.index == indexMap[i]);
+      result += node.key + '_';
+    }
+    final item = node.items.firstWhere((e) => e.index == indexMap.last);
+    result += item.key;
+    Clipboard.setData(ClipboardData(text: result));
   }
 }
