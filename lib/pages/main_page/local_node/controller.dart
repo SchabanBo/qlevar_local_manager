@@ -3,7 +3,6 @@ import '../controllers/main_controller.dart';
 import '../../../models/qlocal.dart';
 
 class LocalNodeController extends GetxController {
-  late final isOpen = _mainController.openAllNodes.value.obs;
   final Rx<QlevarLocalNode> item;
   late final filter = _mainController.filter;
   final List<int> indexMap;
@@ -12,7 +11,7 @@ class LocalNodeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    _mainController.openAllNodes.listen(isOpen);
+    _mainController.openAllNodes.listen(item.value.isOpen);
   }
 
   LocalNodeController(

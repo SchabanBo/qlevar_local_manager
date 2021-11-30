@@ -1,3 +1,5 @@
+import 'package:get/get.dart';
+
 import 'local_data.dart';
 
 int _counter = 0;
@@ -25,6 +27,7 @@ class QlevarLocal extends QlevarLocalNode {
 
     result.ensureAllLanguagesExist(result.languages);
     result.itemCount = _counter;
+    result.isOpen.toggle();
     return result;
   }
 
@@ -49,7 +52,10 @@ class QlevarLocalNode {
   final int index = _counter++;
   final nodes = <QlevarLocalNode>[];
   final items = <QlevarLocalItem>[];
+
+  bool get hasChildren => nodes.isNotEmpty || items.isNotEmpty;
   QlevarLocalNode({required this.key});
+  RxBool isOpen = false.obs;
 
   void addLocalObject(String currentLan, LocalNode obj) {
     if (!nodes.any((e) => e.key == obj.name)) {

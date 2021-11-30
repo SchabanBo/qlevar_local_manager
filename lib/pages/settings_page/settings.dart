@@ -1,17 +1,22 @@
 import 'dart:convert';
 
+import '../export_page/controller.dart';
+
 class Settings {
   final List<AppLocalFile> apps;
   final TranlationSettings tranlation;
+  final AutoSave autoSave;
   Settings({
     required this.apps,
     required this.tranlation,
+    required this.autoSave,
   });
 
   Map<String, dynamic> toMap() {
     return {
       'apps': apps.map((x) => x.toMap()).toList(),
       'tranlation': tranlation.toMap(),
+      'autoSave': autoSave.toMap(),
     };
   }
 
@@ -22,6 +27,9 @@ class Settings {
       tranlation: map['tranlation'] == null
           ? TranlationSettings()
           : TranlationSettings.fromMap(map['tranlation']),
+      autoSave: map['autoSave'] == null
+          ? AutoSave()
+          : AutoSave.fromMap(map['autoSave']),
     );
   }
 
@@ -53,7 +61,7 @@ class AppLocalFile {
     return AppLocalFile(
       name: map['name'],
       path: map['path'],
-      exportPath: map['exportPath'] == null ? '' : map['exportPath'],
+      exportPath: map['exportPath'] ?? '',
     );
   }
 
@@ -86,4 +94,44 @@ class TranlationSettings {
 
   factory TranlationSettings.fromJson(String source) =>
       TranlationSettings.fromMap(json.decode(source));
+}
+
+class AutoSave {
+  bool enabled;
+  int interval;
+  bool export;
+  ExportAs exportAs;
+
+  AutoSave({
+    this.enabled = true,
+    this.interval = 60,
+    this.export = true,
+    this.exportAs = ExportAs.getx,
+  });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'enabled': enabled,
+      'interval': interval,
+      'export': export,
+      'exportAs': exportAs.toString(),
+    };
+  }
+
+  factory AutoSave.fromMap(Map<String, dynamic> map) {
+    return AutoSave(
+      enabled: map['enabled'],
+      interval: map['interval'],
+      export: map['export'],
+      exportAs: map['exportAs'] == null
+          ? ExportAs.getx
+          : ExportAs.values
+              .firstWhere((element) => map['exportAs'] == element.toString()),
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory AutoSave.fromJson(String source) =>
+      AutoSave.fromMap(json.decode(source));
 }

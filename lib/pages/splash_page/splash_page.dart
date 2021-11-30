@@ -22,7 +22,6 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Get.theme.colorScheme.secondary,
         body: FutureBuilder<Settings>(
             future: Future.delayed(
                 const Duration(seconds: 1), () => SettingsLoader().load()),

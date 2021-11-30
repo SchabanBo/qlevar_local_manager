@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../helpers/colors.dart';
 import '../controller.dart';
 import '../../../helpers/path_picker.dart';
 
@@ -12,9 +11,9 @@ class ExportView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(15))),
+      decoration: BoxDecoration(
+          color: Get.theme.bottomAppBarColor,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(15))),
       child: Padding(
         padding: const EdgeInsets.all(18.0),
         child: Column(
@@ -22,29 +21,24 @@ class ExportView extends StatelessWidget {
           children: [
             const Text('Export Data', style: TextStyle(fontSize: 24)),
             const Divider(),
-            Obx(() => Row(
-                  children: ExportAs.values
-                      .map((e) => Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Radio<ExportAs>(
-                                activeColor: AppColors.primary,
-                                value: e,
-                                groupValue: controller.exportAs(),
-                                onChanged: controller.exportAs,
-                              ),
-                              Text(describeEnum(e)),
-                            ],
-                          ))
-                      .toList(),
-                )),
+            Obx(() => ToggleButtons(
+                children:
+                    ExportAs.values.map((e) => Text(describeEnum(e))).toList(),
+                onPressed: (i) => controller.exportAs(ExportAs.values[i]),
+                isSelected: ExportAs.values
+                    .map((e) => e == controller.exportAs())
+                    .toList())),
             PathPicker(
                 path: controller.path(),
                 title: 'Give the directory path to export to',
                 onChange: controller.path),
             const Spacer(),
             ElevatedButton(
-                onPressed: controller.export, child: const Text('Export')),
+                onPressed: () {
+                  controller.export();
+                  Get.back();
+                },
+                child: const Text('Export')),
           ],
         ),
       ),

@@ -8,15 +8,12 @@ class OptionsRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Row(children: [
+        const SizedBox(width: 10),
         Expanded(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              onChanged: controller.filter,
-              decoration: const InputDecoration(
-                prefixIcon: Icon(Icons.filter_alt),
-                hintText: 'Filter',
-              ),
+          child: TextField(
+            onChanged: controller.filter,
+            decoration: const InputDecoration(
+              hintText: 'Filter',
             ),
           ),
         ),

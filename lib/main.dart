@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'helpers/colors.dart';
 import 'pages/splash_page/splash_page.dart';
 
 void main() {
@@ -15,10 +14,23 @@ class MyApp extends StatelessWidget {
       title: 'Qlevar Local Manager',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-          appBarTheme: const AppBarTheme(backgroundColor: AppColors.primary),
-          colorScheme: const ColorScheme.light().copyWith(
-              primary: AppColors.primary, secondary: AppColors.secondary)),
+        colorScheme:
+            ColorScheme.fromSwatch(brightness: Brightness.dark).copyWith(
+          secondary: const Color(0xffCC9B06),
+          primary: Colors.blueGrey.shade300,
+        ),
+      ),
       home: const SplashPage(),
     );
   }
 }
+	// #4e5258
+	// #393e46
+	// #22262b
+
+
+// #806104
+// #FFD454
+// #ffc107
+// #806A2A
+// #CC9B06

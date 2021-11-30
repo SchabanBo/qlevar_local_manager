@@ -1,7 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:qlevar_local_manager/helpers/constants.dart';
+import '../../../helpers/constants.dart';
 import '../controllers/main_controller.dart';
 
 class AddLocalNode extends StatelessWidget {
@@ -13,8 +12,8 @@ class AddLocalNode extends StatelessWidget {
       child: const Tooltip(
           message: 'Add new Node',
           child: Icon(
-            Icons.add_box,
-            color: Colors.blue,
+            Icons.add_box_outlined,
+            color: Constants.iconColors,
           )),
       onTap: () async {
         final key = await Get.dialog<String>(_GetItemKey());
@@ -35,7 +34,7 @@ class AddLocalItem extends StatelessWidget {
           message: 'Add new Item',
           child: Icon(
             Icons.add,
-            color: Colors.blue,
+            color: Constants.iconColors,
           )),
       onTap: () async {
         final key = await Get.dialog<String>(_GetItemKey());

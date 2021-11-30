@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../tree/widget.dart';
 import '../../import_page/import_icon.dart';
-import 'options_row.dart';
 import 'exit_icon.dart';
 import 'add_language.dart';
 import '../local_item/controller.dart';
@@ -21,48 +21,45 @@ class MainView extends GetView<MainController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(controller.appfile.name),
-        actions: const [
-          SaveDataWidget(),
-          ExportIcon(),
-          ImportIcon(),
-          AddLanguageIcon(),
-          SettingsIcon(),
-          ExitIcon(),
-        ],
-      ),
+          title: Text(controller.appfile.name),
+          actions: const [
+            SaveDataWidget(),
+            ExportIcon(),
+            ImportIcon(),
+            AddLanguageIcon(),
+            SettingsIcon(),
+            ExitIcon(),
+          ],
+          bottom: PreferredSize(
+              preferredSize: const Size.fromHeight(5),
+              child: Obx(() => controller.loading.isTrue
+                  ? const LinearProgressIndicator()
+                  : const SizedBox.shrink()))),
       body: _buildList,
     );
   }
 
   Widget get _buildList => Obx(() => Column(
         children: [
-          OptionsRow(),
-          // ignore: prefer_const_literals_to_create_immutables
-          Card(
-              child: LocalItemWidget(
+          LocalItemWidget(
             controller: LocalItemController(
                 QlevarLocalItem(key: 'Keys')
                   ..values.addEntries(
                       controller.locals().languages.map((e) => MapEntry(e, e))),
                 [0]),
             isHeader: true,
-          )),
+          ),
           Expanded(
-            child: ListView(shrinkWrap: true, primary: true, children: [
+            child: ListView(controller: controller.gridController, children: [
               ...controller.getItem.map((e) => LocalItemBinder(
                     key: ValueKey(e.index),
                     item: e,
-                    // ignore: prefer_const_literals_to_create_immutables
-                    indexMap: [0],
-                    startPadding: 8,
+                    indexMap: const [0],
                   )),
               ...controller.getNodes.map((e) => LocalNodeBinder(
                     key: ValueKey(e.index),
                     item: e,
-                    // ignore: prefer_const_literals_to_create_immutables
-                    indexMap: [0],
-                    startPadding: 8,
+                    indexMap: const [0],
                   )),
             ]),
           ),
