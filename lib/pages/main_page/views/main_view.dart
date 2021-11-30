@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../tree/widget.dart';
 import '../../import_page/import_icon.dart';
-import 'options_row.dart';
 import 'exit_icon.dart';
 import 'add_language.dart';
 import '../local_item/controller.dart';
@@ -40,47 +39,29 @@ class MainView extends GetView<MainController> {
     );
   }
 
-  Widget get _buildList => Obx(() => Row(
+  Widget get _buildList => Obx(() => Column(
         children: [
-          Container(
-              padding: const EdgeInsets.only(
-                top: 10,
-              ),
-              color: Get.theme.bottomAppBarColor,
-              width: 200,
-              child: TreeWidget(controller.locals.value)),
+          LocalItemWidget(
+            controller: LocalItemController(
+                QlevarLocalItem(key: 'Keys')
+                  ..values.addEntries(
+                      controller.locals().languages.map((e) => MapEntry(e, e))),
+                [0]),
+            isHeader: true,
+          ),
           Expanded(
-            flex: 4,
-            child: Column(
-              children: [
-                LocalItemWidget(
-                  controller: LocalItemController(
-                      QlevarLocalItem(key: 'Keys')
-                        ..values.addEntries(controller
-                            .locals()
-                            .languages
-                            .map((e) => MapEntry(e, e))),
-                      [0]),
-                  isHeader: true,
-                ),
-                ListView(
-                    shrinkWrap: true,
-                    primary: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    children: [
-                      ...controller.getItem.map((e) => LocalItemBinder(
-                            key: ValueKey(e.index),
-                            item: e,
-                            indexMap: const [0],
-                          )),
-                      ...controller.getNodes.map((e) => LocalNodeBinder(
-                            key: ValueKey(e.index),
-                            item: e,
-                            indexMap: const [0],
-                          )),
-                    ]),
-              ],
-            ),
+            child: ListView(controller: controller.gridController, children: [
+              ...controller.getItem.map((e) => LocalItemBinder(
+                    key: ValueKey(e.index),
+                    item: e,
+                    indexMap: const [0],
+                  )),
+              ...controller.getNodes.map((e) => LocalNodeBinder(
+                    key: ValueKey(e.index),
+                    item: e,
+                    indexMap: const [0],
+                  )),
+            ]),
           ),
         ],
       ));

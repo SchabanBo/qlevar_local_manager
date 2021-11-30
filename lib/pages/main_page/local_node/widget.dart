@@ -21,12 +21,10 @@ class LocalNodeWidget extends StatelessWidget {
           color: Get.theme.bottomAppBarColor.withOpacity(0.2),
           border: Border(
             left: BorderSide(
-              color: Get.theme.colorScheme.primary.withOpacity(0.5),
-              width: 2,
+              color: Colors.blueGrey.shade300,
             ),
             bottom: BorderSide(
-              color: Get.theme.colorScheme.primary.withOpacity(0.5),
-              width: 2,
+              color: Colors.blueGrey.shade300,
             ),
           ),
         ),
@@ -62,7 +60,6 @@ class LocalNodeWidget extends StatelessWidget {
                             ? Icons.expand_less
                             : Icons.expand_more,
                         size: 30,
-                        color: Colors.blueGrey,
                       )),
                 ),
               ),
@@ -78,33 +75,26 @@ class LocalNodeWidget extends StatelessWidget {
         switchInCurve: Curves.linearToEaseOut,
         switchOutCurve: Curves.linearToEaseOut,
         duration: const Duration(milliseconds: 500),
-        transitionBuilder: (c, a) => SlideTransition(
-            position: Tween<Offset>(
-                    begin: const Offset(0, -1), end: const Offset(0, 0))
-                .animate(a),
-            child: FadeTransition(
-                opacity: a, child: SizeTransition(sizeFactor: a, child: c))),
+        transitionBuilder: (c, a) =>
+            SizeTransition(sizeFactor: a, child: c, axis: Axis.vertical),
         child: controller.item.value.isOpen.isTrue
-            ? Container(
-                padding: const EdgeInsets.all(4),
-                child: ListView(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    children: [
-                      ...controller.getItem.map((e) => LocalItemBinder(
-                            key: ValueKey(e.index),
-                            item: e,
-                            indexMap: controller.indexMap,
-                            startPadding: 8 + startPadding,
-                          )),
-                      ...controller.getNodes.map((e) => LocalNodeBinder(
-                            key: ValueKey(e.index),
-                            item: e,
-                            indexMap: controller.indexMap,
-                            startPadding: 8 + startPadding,
-                          )),
-                    ]),
-              )
+            ? ListView(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                children: [
+                    ...controller.getItem.map((e) => LocalItemBinder(
+                          key: ValueKey(e.index),
+                          item: e,
+                          indexMap: controller.indexMap,
+                          startPadding: 8 + startPadding,
+                        )),
+                    ...controller.getNodes.map((e) => LocalNodeBinder(
+                          key: ValueKey(e.index),
+                          item: e,
+                          indexMap: controller.indexMap,
+                          startPadding: 8 + startPadding,
+                        )),
+                  ])
             : const SizedBox(),
       );
 }

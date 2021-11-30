@@ -23,11 +23,10 @@ class LocalItemWidget extends StatelessWidget {
   Widget build(BuildContext context) => Container(
         padding: isHeader ? const EdgeInsets.only(bottom: 8) : null,
         decoration: BoxDecoration(
-          color: isHeader ? Get.theme.bottomAppBarColor : null,
+          color: isHeader ? Colors.black45 : null,
           border: Border(
             bottom: BorderSide(
-              color: Get.theme.colorScheme.primary.withOpacity(0.5),
-              width: 1,
+              color: Colors.blueGrey.shade300,
             ),
           ),
         ),

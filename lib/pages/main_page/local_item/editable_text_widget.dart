@@ -40,9 +40,11 @@ class QEditableText extends StatelessWidget {
                         ),
                       )
                     : Container(
-                        color: controller.text.trim().isEmpty
-                            ? Colors.red.withOpacity(0.3)
-                            : null,
+                        decoration: BoxDecoration(
+                          color: controller.text.trim().isEmpty
+                              ? Colors.red.withOpacity(0.3)
+                              : null,
+                        ),
                         alignment: Alignment.centerLeft,
                         child: Text(
                           controller.text,

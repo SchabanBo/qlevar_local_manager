@@ -8,7 +8,7 @@ class ExitIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-        tooltip: 'Add Language',
+        tooltip: 'Exit App',
         onPressed: () async {
           Get.reset();
           Get.off(const SplashPage());

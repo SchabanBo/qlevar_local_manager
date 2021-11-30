@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import '../../../helpers/constants.dart';
 import '../../settings_page/settings.dart';
@@ -11,6 +12,8 @@ class MainController extends GetxController {
   final openAllNodes = false.obs;
   final loading = false.obs;
   final filter = ''.obs;
+  late final treeController = ScrollController();
+  late final gridController = ScrollController();
   MainController({required this.appfile, required QlevarLocal locals})
       : locals = locals.obs;
 
@@ -104,5 +107,12 @@ class MainController extends GetxController {
     final data = locals().toData();
     await File(appfile.path).writeAsString(data.toJson());
     loading(false);
+  }
+
+  @override
+  void onClose() {
+    treeController.dispose();
+    gridController.dispose();
+    super.onClose();
   }
 }
