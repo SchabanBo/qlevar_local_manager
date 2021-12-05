@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../local_item/header.dart';
 import '../tree/widget.dart';
 import '../../import_page/import_icon.dart';
 import 'exit_icon.dart';
@@ -41,14 +42,14 @@ class MainView extends GetView<MainController> {
 
   Widget get _buildList => Obx(() => Column(
         children: [
-          LocalItemWidget(
-            controller: LocalItemController(
-                QlevarLocalItem(key: 'Keys')
-                  ..values.addEntries(
-                      controller.locals().languages.map((e) => MapEntry(e, e))),
-                [0]),
-            isHeader: true,
-          ),
+          HeaderWidget(
+              controller: LocalItemController(
+                  QlevarLocalItem(key: 'Keys')
+                    ..values.addEntries(controller
+                        .locals()
+                        .languages
+                        .map((e) => MapEntry(e, e))),
+                  [0])),
           Expanded(
             child: ListView(controller: controller.gridController, children: [
               ...controller.getItem.map((e) => LocalItemBinder(

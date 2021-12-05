@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import '../local_node/add_item.dart';
 import 'options_widget.dart';
 import 'editable_text_widget.dart';
 import 'controller.dart';
@@ -8,10 +6,8 @@ import 'controller.dart';
 class LocalItemWidget extends StatelessWidget {
   final double startPadding;
   final LocalItemController controller;
-  final bool isHeader;
   const LocalItemWidget({
     required this.controller,
-    this.isHeader = false,
     this.startPadding = 0,
     Key? key,
   }) : super(key: key);
@@ -21,41 +17,23 @@ class LocalItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-        padding: isHeader ? const EdgeInsets.only(bottom: 8) : null,
         decoration: BoxDecoration(
-          color: isHeader ? Colors.black45 : null,
-          border: Border(
-            bottom: BorderSide(
-              color: Colors.blueGrey.shade300,
-            ),
-          ),
+          color: null,
+          border: Border(bottom: BorderSide(color: Colors.blueGrey.shade300)),
         ),
         child: Row(
           children: [
             SizedBox(width: startPadding + 8),
             Expanded(
-                child: isHeader
-                    ? Text(controller.item.key, style: headerStyle)
-                    : QEditableText(
-                        text: controller.item.key,
-                        onEdit: (s) => controller.updateKey(s))),
+                child: QEditableText(
+                    text: controller.item.key,
+                    onEdit: (s) => controller.updateKey(s))),
             ...controller.item.values.entries.map((kv) => Expanded(
-                child: isHeader
-                    ? Text(kv.value, style: headerStyle)
-                    : QEditableText(
-                        key: Key(kv.key + "_" + kv.value),
-                        text: kv.value,
-                        onEdit: (s) => controller.updateValue(kv.key, s)))),
-            isHeader
-                ? Row(
-                    children: const [
-                      SizedBox(width: 5),
-                      AddLocalNode(indexMap: [0]),
-                      SizedBox(width: 5),
-                      AddLocalItem(indexMap: [0]),
-                    ],
-                  )
-                : OptionsWidget(controller: controller),
+                child: QEditableText(
+                    key: Key(kv.key + "_" + kv.value),
+                    text: kv.value,
+                    onEdit: (s) => controller.updateValue(kv.key, s)))),
+            OptionsWidget(controller: controller),
             const SizedBox(width: 8),
           ],
         ),
