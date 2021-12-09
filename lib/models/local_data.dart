@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+const _jsonEncoder = JsonEncoder.withIndent('  ');
+
 class LocalData {
   final data = <LocalNode>[];
   LocalData();
@@ -20,7 +22,7 @@ class LocalData {
     return _data;
   }
 
-  String toJson() => json.encode(toMap());
+  String toJson() => _jsonEncoder.convert(toMap());
 
   factory LocalData.fromJson(String source) =>
       LocalData.fromMap(json.decode(source));
@@ -50,7 +52,7 @@ class LocalNode {
     }
   }
 
-  String toJson() => json.encode(toMap());
+  String toJson() => _jsonEncoder.convert(toMap());
 }
 
 class LocalItem {
@@ -75,7 +77,7 @@ class LocalItem {
     );
   }
 
-  String toJson() => json.encode(toMap());
+  String toJson() => _jsonEncoder.convert(toMap());
 
   factory LocalItem.fromJson(String source) =>
       LocalItem.fromMap(json.decode(source));
