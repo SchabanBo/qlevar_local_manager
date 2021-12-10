@@ -12,14 +12,11 @@ class LocalItemWidget extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  final TextStyle headerStyle =
-      const TextStyle(fontSize: 20, fontWeight: FontWeight.bold);
-
   @override
   Widget build(BuildContext context) => Container(
         decoration: BoxDecoration(
           color: null,
-          border: Border(bottom: BorderSide(color: Colors.blueGrey.shade300)),
+          border: Border(bottom: BorderSide(color: Colors.grey.shade700)),
         ),
         child: Row(
           children: [

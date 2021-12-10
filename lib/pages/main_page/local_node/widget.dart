@@ -20,12 +20,8 @@ class LocalNodeWidget extends StatelessWidget {
         decoration: BoxDecoration(
           color: Get.theme.bottomAppBarColor.withOpacity(0.2),
           border: Border(
-            left: BorderSide(
-              color: Colors.blueGrey.shade300,
-            ),
-            bottom: BorderSide(
-              color: Colors.blueGrey.shade300,
-            ),
+            left: BorderSide(color: Colors.grey.shade700),
+            bottom: BorderSide(color: Colors.grey.shade700),
           ),
         ),
         child: Obx(() => Column(
