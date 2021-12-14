@@ -25,8 +25,7 @@ class OptionsRow extends StatelessWidget {
               ),
               tooltip:
                   controller.openAllNodes.isTrue ? 'Close All' : 'Expand All',
-              onPressed: () =>
-                  controller.openAllNodes(!controller.openAllNodes.value),
+              onPressed: () => controller.openAllNodes(true),
             ))
       ]);
 }

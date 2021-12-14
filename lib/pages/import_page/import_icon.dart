@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../helpers/constants.dart';
 import '../../helpers/path_picker.dart';
 import '../../services/importers/json_import.dart';
 
@@ -10,7 +11,10 @@ class ImportIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return IconButton(
       onPressed: import,
-      icon: const Icon(Icons.download),
+      icon: const Icon(
+        Icons.download,
+        color: Constants.iconColors,
+      ),
       tooltip: 'Import Data',
     );
   }

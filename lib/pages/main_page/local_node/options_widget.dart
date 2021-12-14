@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import '../../../helpers/constants.dart';
 import 'add_item.dart';
 import '../controllers/main_controller.dart';
-import 'controller.dart';
+import '../controllers/node_controller.dart';
 
 class OptionsWidget extends StatelessWidget {
   final LocalNodeController controller;
@@ -28,7 +28,7 @@ class OptionsWidget extends StatelessWidget {
             onTap: () => Get.defaultDialog(
                 title: 'Delete',
                 middleText:
-                    'Are you sure you want to delete ${controller.item.value.key}?',
+                    'Are you sure you want to delete ${controller.item.value.name}?',
                 onConfirm: () {
                   Get.find<MainController>().removeNode(controller.indexMap);
                   Get.back();

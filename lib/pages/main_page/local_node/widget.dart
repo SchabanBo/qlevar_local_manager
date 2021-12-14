@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../models/drag_request.dart';
+import '../../../models/qlocal.dart';
 import '../local_item/editable_text_widget.dart';
 import '../controllers/main_controller.dart';
 import 'options_widget.dart';
 import '../local_item/binder.dart';
 import 'binder.dart';
-import 'controller.dart';
+import '../controllers/node_controller.dart';
 
 class LocalNodeWidget extends StatelessWidget {
   final double startPadding;
@@ -18,8 +19,10 @@ class LocalNodeWidget extends StatelessWidget {
     controller: controller,
     startPadding: startPadding,
   );
+
   late final _dragRequest =
       NodeDragRequest(controller.item.value, controller.indexMap);
+
   @override
   Widget build(BuildContext context) => Draggable<NodeDragRequest>(
       feedback: const SizedBox.shrink(),
@@ -42,41 +45,39 @@ class _LocalNodeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Container(
         margin: EdgeInsets.only(left: startPadding),
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           border: Border(
-            left: BorderSide(color: Colors.grey.shade700),
-            bottom: BorderSide(color: Colors.grey.shade700),
+            left: BorderSide(color: Colors.grey),
+            bottom: BorderSide(color: Colors.grey),
           ),
         ),
-        child: Obx(() => Column(
-              children: [
-                header,
-                body,
-              ],
-            )),
+        child: Obx(() => Column(children: [header, body])),
       );
 
   Widget get header => Container(
-        color: const Color(0xff303030),
+        decoration: const BoxDecoration(
+          color: Color(0xff303030),
+          border: Border(
+            bottom: BorderSide(color: Colors.grey),
+          ),
+        ),
         child: Row(
           children: [
             const SizedBox(width: 8),
             Flexible(
               flex: 1,
               child: QEditableText(
-                  text: controller.item().key,
-                  onEdit: (s) => controller.item().key = s),
+                  text: controller.item().name,
+                  onEdit: (s) => controller.item().name = s),
             ),
             Expanded(
               flex: Get.find<MainController>().locals().languages.length,
               child: InkWell(
-                onTap: () {
-                  controller.item.value.isOpen.toggle();
-                },
+                onTap: controller.isOpen.toggle,
                 child: Align(
                   alignment: Alignment.centerRight,
                   child: Obx(() => Icon(
-                        controller.item.value.isOpen.isTrue
+                        controller.isOpen.isTrue
                             ? Icons.expand_less
                             : Icons.expand_more,
                         size: 30,
@@ -97,23 +98,24 @@ class _LocalNodeWidget extends StatelessWidget {
         duration: const Duration(milliseconds: 500),
         transitionBuilder: (c, a) =>
             SizeTransition(sizeFactor: a, child: c, axis: Axis.vertical),
-        child: controller.item.value.isOpen.isTrue
+        child: controller.isOpen.isTrue
             ? ListView(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 children: [
-                    ...controller.getItem.map((e) => LocalItemBinder(
-                          key: ValueKey(e.hashCode),
-                          item: e,
-                          indexMap: controller.indexMap,
-                          startPadding: 8 + startPadding,
-                        )),
-                    ...controller.getNodes.map((e) => LocalNodeBinder(
-                          key: ValueKey(e.hashCode),
-                          item: e,
-                          indexMap: controller.indexMap,
-                          startPadding: 8 + startPadding,
-                        )),
+                    ...controller.children.map((e) => e is LocalItem
+                        ? LocalItemBinder(
+                            key: ValueKey(e.hashCode),
+                            item: e,
+                            indexMap: controller.indexMap,
+                            startPadding: 8 + startPadding,
+                          )
+                        : LocalNodeBinder(
+                            key: ValueKey(e.hashCode),
+                            item: e as LocalNode,
+                            indexMap: controller.indexMap,
+                            startPadding: 8 + startPadding,
+                          )),
                   ])
             : const SizedBox(),
       );

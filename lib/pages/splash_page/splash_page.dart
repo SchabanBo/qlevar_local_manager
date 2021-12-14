@@ -6,7 +6,7 @@ import '../settings_page/controller.dart';
 import '../settings_page/settings.dart';
 import '../settings_page/views/settings_view.dart';
 import '../../models/qlocal.dart';
-import '../../models/local_data.dart';
+import '../../models/json/data.dart';
 import '../main_page/controllers/main_controller.dart';
 import '../main_page/views/main_view.dart';
 
@@ -54,7 +54,6 @@ class _SplashPageState extends State<SplashPage> {
       const SettingsPage(isSelectApp: true),
       enableDrag: true,
       barrierColor: Colors.transparent,
-      backgroundColor: Get.theme.backgroundColor,
     );
     _isBottomSheetOpen = false;
     if (app == null) {
@@ -80,7 +79,7 @@ class _SplashPageState extends State<SplashPage> {
       }
 
       final data = await File(appLocalFile.path).readAsString();
-      final l = LocalData.fromJson(data);
+      final l = JsonData.fromJson(data);
       return QlevarLocal.fromData(l);
     } catch (e) {
       Get.defaultDialog(

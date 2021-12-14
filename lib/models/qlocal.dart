@@ -1,40 +1,39 @@
-import 'package:get/get.dart';
+import 'json/data.dart';
 
-import 'local_data.dart';
-
-class QlevarLocal extends QlevarLocalNode {
+class QlevarLocal extends LocalNode {
   final List<String> languages = [];
 
-  QlevarLocal() : super(key: '');
+  QlevarLocal() : super(name: '');
 
-  factory QlevarLocal.fromData(LocalData data) {
+  factory QlevarLocal.fromData(JsonData data) {
     final result = QlevarLocal();
     result.languages.addAll(data.data.map((e) => e.name));
 
     for (var rootObject in data.data) {
       final currentLan = rootObject.name;
-      for (final obj in rootObject.nodes) {
-        result.addLocalObject(currentLan, obj);
-      }
-      for (final node in rootObject.items) {
-        result.addLocalNode(currentLan, node);
+      for (var child in rootObject.children) {
+        if (child is JsonNode) {
+          result.addLocalNode(currentLan, child);
+        } else if (child is JsonItem) {
+          result.addLocalItem(currentLan, child);
+        }
       }
     }
 
     result.ensureAllLanguagesExist(result.languages);
-    result.isOpen.toggle();
     return result;
   }
 
-  LocalData toData() {
-    final result = LocalData();
+  JsonData toData() {
+    final result = JsonData();
     for (var currentLan in languages) {
-      final obj = LocalNode(currentLan);
-      for (var item in nodes) {
-        obj.nodes.add(item.getNode(currentLan));
-      }
-      for (var item in items) {
-        obj.items.add(item.getItem(currentLan));
+      final obj = JsonNode(currentLan);
+      for (var child in children) {
+        if (child is LocalNode) {
+          obj.children.add(child.getNode(currentLan));
+        } else if (child is LocalItem) {
+          obj.children.add(child.getItem(currentLan));
+        }
       }
       result.data.add(obj);
     }
@@ -42,70 +41,84 @@ class QlevarLocal extends QlevarLocalNode {
   }
 }
 
-class QlevarLocalNode {
-  String key;
-  final nodes = <QlevarLocalNode>[];
-  final items = <QlevarLocalItem>[];
+abstract class LocalBase {
+  String get name;
 
-  bool get hasChildren => nodes.isNotEmpty || items.isNotEmpty;
-  QlevarLocalNode({required this.key});
-  RxBool isOpen = false.obs;
+  bool filter(String f);
 
-  void addLocalObject(String currentLan, LocalNode obj) {
-    if (!nodes.any((e) => e.key == obj.name)) {
-      nodes.add(QlevarLocalNode(key: obj.name));
+  void ensureAllLanguagesExist(List<String> languages);
+}
+
+class LocalNode extends LocalBase {
+  @override
+  String name;
+  final children = <LocalBase>[];
+
+  List<LocalItem> get items => children.whereType<LocalItem>().toList();
+  List<LocalNode> get nodes => children.whereType<LocalNode>().toList();
+  bool get hasChildren => children.isNotEmpty;
+
+  LocalNode({required this.name});
+
+  void addLocalNode(String currentLan, JsonNode obj) {
+    if (!children.any((e) => e.name == obj.name)) {
+      children.add(LocalNode(name: obj.name));
     }
-    final match = nodes.firstWhere((e) => e.key == obj.name);
-    for (var item in obj.nodes) {
-      match.addLocalObject(currentLan, item);
-    }
-    for (var item in obj.items) {
-      match.addLocalNode(currentLan, item);
+    final match =
+        children.whereType<LocalNode>().firstWhere((e) => e.name == obj.name);
+    for (var child in obj.children) {
+      if (child is JsonNode) {
+        match.addLocalNode(currentLan, child);
+      } else if (child is JsonItem) {
+        match.addLocalItem(currentLan, child);
+      }
     }
   }
 
-  void addLocalNode(String currentLan, LocalItem node) {
-    if (!items.any((e) => e.key == node.key)) {
-      items.add(QlevarLocalItem(key: node.key));
+  void addLocalItem(String currentLan, JsonItem node) {
+    if (!children.any((e) => e.name == node.name)) {
+      children.add(LocalItem(name: node.name));
     }
-    items.firstWhere((e) => e.key == node.key).add(currentLan, node.value);
+    children
+        .whereType<LocalItem>()
+        .firstWhere((e) => e.name == node.name)
+        .add(currentLan, node.value);
   }
 
+  @override
   void ensureAllLanguagesExist(List<String> languages) {
-    for (var item in nodes) {
-      item.ensureAllLanguagesExist(languages);
-    }
-    for (var item in items) {
-      item.ensureAllLanguagesExist(languages);
+    for (var child in children) {
+      child.ensureAllLanguagesExist(languages);
     }
   }
 
-  LocalNode getNode(String currentLan) {
-    final result = LocalNode(key);
-    for (var item in nodes) {
-      result.nodes.add(item.getNode(currentLan));
-    }
-    for (var item in items) {
-      result.items.add(item.getItem(currentLan));
+  JsonNode getNode(String currentLan) {
+    final result = JsonNode(name);
+    for (var child in children) {
+      if (child is LocalNode) {
+        result.children.add(child.getNode(currentLan));
+      } else if (child is LocalItem) {
+        result.children.add(child.getItem(currentLan));
+      }
     }
     return result;
   }
 
-  bool filter(String f) =>
-      key.contains(f) ||
-      items.any((i) => i.filter(f)) ||
-      nodes.any((i) => i.filter(f));
+  @override
+  bool filter(String f) => name.contains(f) || children.any((i) => i.filter(f));
 }
 
-class QlevarLocalItem {
-  String key;
+class LocalItem extends LocalBase {
+  @override
+  String name;
   final values = <String, String>{};
-  QlevarLocalItem({required this.key});
+  LocalItem({required this.name});
 
   void add(String currentLan, String value) {
     values.addAll({currentLan: value});
   }
 
+  @override
   void ensureAllLanguagesExist(List<String> languages) {
     for (var language in languages) {
       if (!values.containsKey(language)) {
@@ -114,9 +127,10 @@ class QlevarLocalItem {
     }
   }
 
-  LocalItem getItem(String currentLan) {
-    return LocalItem(key: key, value: values[currentLan] ?? '');
+  JsonItem getItem(String currentLan) {
+    return JsonItem(name: name, value: values[currentLan] ?? '');
   }
 
-  bool filter(String f) => key.contains(f);
+  @override
+  bool filter(String f) => name.contains(f);
 }

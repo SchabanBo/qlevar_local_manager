@@ -1,10 +1,10 @@
 import 'package:get/get.dart';
 import '../../../models/drag_request.dart';
-import '../controllers/main_controller.dart';
+import 'main_controller.dart';
 import '../../../models/qlocal.dart';
 
 class LocalItemController extends GetxController {
-  final QlevarLocalItem item;
+  final LocalItem item;
   final List<int> indexMap;
   final MainController mainController = Get.find();
   LocalItemController(

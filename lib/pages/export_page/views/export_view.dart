@@ -12,6 +12,7 @@ class ExportView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
+          color: Colors.grey.shade900,
           borderRadius: const BorderRadius.vertical(top: Radius.circular(15))),
       child: Padding(
         padding: const EdgeInsets.all(18.0),
@@ -21,8 +22,12 @@ class ExportView extends StatelessWidget {
             const Text('Export Data', style: TextStyle(fontSize: 24)),
             const Divider(),
             Obx(() => ToggleButtons(
-                children:
-                    ExportAs.values.map((e) => Text(describeEnum(e))).toList(),
+                children: ExportAs.values
+                    .map((e) => Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(describeEnum(e)),
+                        ))
+                    .toList(),
                 onPressed: (i) => controller.exportAs(ExportAs.values[i]),
                 isSelected: ExportAs.values
                     .map((e) => e == controller.exportAs())

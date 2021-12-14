@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../local_node/add_item.dart';
-import 'controller.dart';
+import '../controllers/item_controller.dart';
 
 class HeaderWidget extends StatelessWidget {
   final double startPadding;
@@ -26,7 +26,7 @@ class HeaderWidget extends StatelessWidget {
         child: Row(
           children: [
             SizedBox(width: startPadding + 8),
-            Expanded(child: Text(controller.item.key, style: headerStyle)),
+            Expanded(child: Text(controller.item.name, style: headerStyle)),
             ...controller.item.values.entries.map(
                 (kv) => Expanded(child: Text(kv.value, style: headerStyle))),
             Row(

@@ -7,12 +7,23 @@
     "long": "this is long text to test the text size in the widget that show it",
     "make": {
       "something": "make something",
-      "coffee": "make coffee",
-      "tee": "make tee"
+      "tee": "make tee",
+      "coffee": "make coffee"
     },
     "office": {
       "work": "work",
-      "meeting": "meeting"
+      "meeting": "meeting",
+      "test": {
+        "ho": {
+          "hi": "hi"
+        },
+        "stuff": {
+          "disk": "office disk",
+          "hi": "hi",
+          "paper": "office paper",
+          "pen": "office pen"
+        }
+      }
     }
   },
   "de": {
@@ -23,12 +34,23 @@
     "long": "",
     "make": {
       "something": "mach etwas",
-      "coffee": "mach coffee",
-      "tee": "mach tee"
+      "tee": "mach tee",
+      "coffee": "mach coffee"
     },
     "office": {
       "work": "arbeit",
-      "meeting": "meeting"
+      "meeting": "meeting",
+      "test": {
+        "ho": {
+          "hi": ""
+        },
+        "stuff": {
+          "disk": "Büro Tisch",
+          "hi": "",
+          "paper": "Büro papier",
+          "pen": "Büro Stift"
+        }
+      }
     }
   },
   "ar": {
@@ -39,12 +61,23 @@
     "long": "نص طويل لتجريب كيفية استجابة العنصر للنص الطويل",
     "make": {
       "something": "افعل شيئا",
-      "coffee": "اصنع قهوة",
-      "tee": "اصنع شاي"
+      "tee": "اصنع شاي",
+      "coffee": "اصنع قهوة"
     },
     "office": {
       "work": "عمل",
-      "meeting": "اجتماع"
+      "meeting": "اجتماع",
+      "test": {
+        "ho": {
+          "hi": ""
+        },
+        "stuff": {
+          "disk": "مكتب العمل",
+          "hi": "",
+          "paper": "ورق العمل",
+          "pen": "قلم العمل"
+        }
+      }
     }
   }
 }

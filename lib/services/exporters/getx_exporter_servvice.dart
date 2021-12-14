@@ -1,15 +1,15 @@
 import 'dart:convert';
 import 'dart:io';
 
-import '../../models/local_data.dart';
+import '../../models/json/data.dart';
 
 class GetxExporterService {
-  final LocalData data;
+  final JsonData data;
   GetxExporterService({required this.data});
 
   void export(String toFile) {
     final String _class = '''
-// Code generated at ${DateTime.now()} by Qlevar local manager
+// Code generated at ${DateTime.now()} by Qlevar Local Manager
 
 class AppTranslation {
   static Map<String, Map<String, String>> translations = {${getDataAsString()}  };
@@ -27,13 +27,15 @@ class AppTranslation {
     return result;
   }
 
-  Map<String, String> flatNodes(String parent, LocalNode node) {
+  Map<String, String> flatNodes(String parent, JsonNode node) {
     final result = <String, String>{};
     parent = parent.isEmpty ? '' : parent + '_';
-    result.addEntries(node.items.map(
-        (e) => MapEntry('\n      "$parent${e.key}"', jsonEncode(e.value))));
-    for (var item in node.nodes) {
-      result.addAll(flatNodes('$parent${item.name}', item));
+    for (var child in node.children) {
+      if (child is JsonNode) {
+        result.addAll(flatNodes('$parent${child.name}', child));
+      } else if (child is JsonItem) {
+        result['\n      "$parent${child.name}"'] = jsonEncode(child.value);
+      }
     }
     return result;
   }

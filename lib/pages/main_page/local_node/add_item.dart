@@ -21,7 +21,7 @@ class AddLocalNode extends StatelessWidget {
         if (key == null || key.isEmpty) {
           return;
         }
-        Get.find<MainController>().addNode(indexMap, QlevarLocalNode(key: key));
+        Get.find<MainController>().addNode(indexMap, LocalNode(name: key));
       });
 }
 
@@ -42,7 +42,7 @@ class AddLocalItem extends StatelessWidget {
         if (key == null || key.isEmpty) {
           return;
         }
-        Get.find<MainController>().addItem(indexMap, QlevarLocalItem(key: key));
+        Get.find<MainController>().addItem(indexMap, LocalItem(name: key));
       });
 }
 

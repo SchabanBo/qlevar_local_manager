@@ -26,8 +26,9 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(15))),
+      decoration: BoxDecoration(
+          color: Colors.grey.shade900,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(15))),
       child: Padding(
         padding: const EdgeInsets.all(18.0),
         child: SingleChildScrollView(
