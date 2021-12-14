@@ -12,7 +12,6 @@ class ExportView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: Get.theme.bottomAppBarColor,
           borderRadius: const BorderRadius.vertical(top: Radius.circular(15))),
       child: Padding(
         padding: const EdgeInsets.all(18.0),

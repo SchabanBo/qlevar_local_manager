@@ -11,8 +11,8 @@ class ExitIcon extends StatelessWidget {
     return IconButton(
         tooltip: 'Exit App',
         onPressed: () async {
-          Get.off(const SplashPage());
           Get.delete<MainController>();
+          Get.offAll(() => const SplashPage());
         },
         icon: const Icon(Icons.logout));
   }

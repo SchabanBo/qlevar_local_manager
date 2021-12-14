@@ -19,7 +19,7 @@ class LocalNodeController extends GetxController {
     List<int> _indexMap,
   )   : item = _item.obs,
         indexMap = List.from(_indexMap) {
-    indexMap.add(_item.index);
+    indexMap.add(_item.hashCode);
   }
 
   Iterable<QlevarLocalItem> get getItem => filter.isEmpty

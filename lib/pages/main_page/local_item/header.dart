@@ -18,12 +18,9 @@ class HeaderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Container(
         padding: const EdgeInsets.only(bottom: 8),
-        decoration: BoxDecoration(
-          color: Colors.black45,
+        decoration: const BoxDecoration(
           border: Border(
-            bottom: BorderSide(
-              color: Colors.blueGrey.shade300,
-            ),
+            bottom: BorderSide(color: Colors.white),
           ),
         ),
         child: Row(

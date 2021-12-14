@@ -1,0 +1,50 @@
+{
+  "en": {
+    "hello": "hello",
+    "ok": "ok",
+    "bye": "bye",
+    "yes": "",
+    "long": "this is long text to test the text size in the widget that show it",
+    "make": {
+      "something": "make something",
+      "coffee": "make coffee",
+      "tee": "make tee"
+    },
+    "office": {
+      "work": "work",
+      "meeting": "meeting"
+    }
+  },
+  "de": {
+    "hello": "hallo",
+    "ok": "ok",
+    "bye": "Tschüss",
+    "yes": "ja",
+    "long": "",
+    "make": {
+      "something": "mach etwas",
+      "coffee": "mach coffee",
+      "tee": "mach tee"
+    },
+    "office": {
+      "work": "arbeit",
+      "meeting": "meeting"
+    }
+  },
+  "ar": {
+    "hello": "مرحبا",
+    "ok": "حسنا",
+    "bye": "وداعا",
+    "yes": "",
+    "long": "نص طويل لتجريب كيفية استجابة العنصر للنص الطويل",
+    "make": {
+      "something": "افعل شيئا",
+      "coffee": "اصنع قهوة",
+      "tee": "اصنع شاي"
+    },
+    "office": {
+      "work": "عمل",
+      "meeting": "اجتماع"
+    }
+  }
+}

@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../settings_page/controller.dart';
@@ -22,6 +21,7 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Colors.black,
         body: FutureBuilder<Settings>(
             future: Future.delayed(
                 const Duration(seconds: 1), () => SettingsLoader().load()),
@@ -51,9 +51,11 @@ class _SplashPageState extends State<SplashPage> {
     }
     _isBottomSheetOpen = true;
     final app = await Get.bottomSheet<AppLocalFile>(
-        const SettingsPage(isSelectApp: true),
-        enableDrag: true,
-        barrierColor: Colors.transparent);
+      const SettingsPage(isSelectApp: true),
+      enableDrag: true,
+      barrierColor: Colors.transparent,
+      backgroundColor: Get.theme.backgroundColor,
+    );
     _isBottomSheetOpen = false;
     if (app == null) {
       setState(() {});
@@ -63,7 +65,7 @@ class _SplashPageState extends State<SplashPage> {
     if (loclas == null) {
       setState(() {});
     }
-    Get.put(MainController(appfile: app, locals: loclas!));
+    Get.lazyPut(() => MainController(appfile: app, locals: loclas!));
     Get.offAll(() => const MainView());
   }
 

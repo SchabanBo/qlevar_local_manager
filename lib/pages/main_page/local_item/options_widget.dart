@@ -82,10 +82,10 @@ class OptionsWidget extends StatelessWidget {
     var result = '';
     QlevarLocalNode node = Get.find<MainController>().locals();
     for (var i = 1; i < indexMap.length - 1; i++) {
-      node = node.nodes.firstWhere((e) => e.index == indexMap[i]);
+      node = node.nodes.firstWhere((e) => e.hashCode == indexMap[i]);
       result += node.key + '_';
     }
-    final item = node.items.firstWhere((e) => e.index == indexMap.last);
+    final item = node.items.firstWhere((e) => e.hashCode == indexMap.last);
     result += item.key;
     Clipboard.setData(ClipboardData(text: result));
   }

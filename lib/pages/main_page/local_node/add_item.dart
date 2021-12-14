@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../helpers/constants.dart';
+import '../../../models/qlocal.dart';
 import '../controllers/main_controller.dart';
 
 class AddLocalNode extends StatelessWidget {
@@ -20,7 +21,7 @@ class AddLocalNode extends StatelessWidget {
         if (key == null || key.isEmpty) {
           return;
         }
-        Get.find<MainController>().addNode(indexMap, key);
+        Get.find<MainController>().addNode(indexMap, QlevarLocalNode(key: key));
       });
 }
 
@@ -41,7 +42,7 @@ class AddLocalItem extends StatelessWidget {
         if (key == null || key.isEmpty) {
           return;
         }
-        Get.find<MainController>().addItem(indexMap, key);
+        Get.find<MainController>().addItem(indexMap, QlevarLocalItem(key: key));
       });
 }
 

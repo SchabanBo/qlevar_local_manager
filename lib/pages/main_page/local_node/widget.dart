@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../models/drag_request.dart';
 import '../local_item/editable_text_widget.dart';
 import '../controllers/main_controller.dart';
 import 'options_widget.dart';
@@ -10,7 +11,31 @@ import 'controller.dart';
 class LocalNodeWidget extends StatelessWidget {
   final double startPadding;
   final LocalNodeController controller;
-  const LocalNodeWidget(
+  LocalNodeWidget({required this.controller, this.startPadding = 0, Key? key})
+      : super(key: key);
+
+  late final _widget = _LocalNodeWidget(
+    controller: controller,
+    startPadding: startPadding,
+  );
+  late final _dragRequest =
+      NodeDragRequest(controller.item.value, controller.indexMap);
+  @override
+  Widget build(BuildContext context) => Draggable<NodeDragRequest>(
+      feedback: const SizedBox.shrink(),
+      data: _dragRequest,
+      childWhenDragging: Container(
+        height: 30,
+        width: Get.width,
+        color: Colors.grey.shade700,
+      ),
+      child: _widget);
+}
+
+class _LocalNodeWidget extends StatelessWidget {
+  final double startPadding;
+  final LocalNodeController controller;
+  const _LocalNodeWidget(
       {required this.controller, this.startPadding = 0, Key? key})
       : super(key: key);
 
@@ -18,7 +43,6 @@ class LocalNodeWidget extends StatelessWidget {
   Widget build(BuildContext context) => Container(
         margin: EdgeInsets.only(left: startPadding),
         decoration: BoxDecoration(
-          color: Get.theme.bottomAppBarColor.withOpacity(0.2),
           border: Border(
             left: BorderSide(color: Colors.grey.shade700),
             bottom: BorderSide(color: Colors.grey.shade700),
@@ -33,7 +57,7 @@ class LocalNodeWidget extends StatelessWidget {
       );
 
   Widget get header => Container(
-        color: Get.theme.bottomAppBarColor,
+        color: const Color(0xff303030),
         child: Row(
           children: [
             const SizedBox(width: 8),
@@ -79,13 +103,13 @@ class LocalNodeWidget extends StatelessWidget {
                 physics: const NeverScrollableScrollPhysics(),
                 children: [
                     ...controller.getItem.map((e) => LocalItemBinder(
-                          key: ValueKey(e.index),
+                          key: ValueKey(e.hashCode),
                           item: e,
                           indexMap: controller.indexMap,
                           startPadding: 8 + startPadding,
                         )),
                     ...controller.getNodes.map((e) => LocalNodeBinder(
-                          key: ValueKey(e.index),
+                          key: ValueKey(e.hashCode),
                           item: e,
                           indexMap: controller.indexMap,
                           startPadding: 8 + startPadding,

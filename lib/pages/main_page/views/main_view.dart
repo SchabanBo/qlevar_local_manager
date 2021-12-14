@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../local_item/header.dart';
-import '../tree/widget.dart';
 import '../../import_page/import_icon.dart';
 import 'exit_icon.dart';
 import 'add_language.dart';
 import '../local_item/controller.dart';
-import '../local_item/widget.dart';
 import '../../settings_page/settings_icon.dart';
 import '../../export_page/views/export_icon.dart';
 import '../local_item/binder.dart';
@@ -53,12 +51,12 @@ class MainView extends GetView<MainController> {
           Expanded(
             child: ListView(controller: controller.gridController, children: [
               ...controller.getItem.map((e) => LocalItemBinder(
-                    key: ValueKey(e.index),
+                    key: ValueKey(e.hashCode),
                     item: e,
                     indexMap: const [0],
                   )),
               ...controller.getNodes.map((e) => LocalNodeBinder(
-                    key: ValueKey(e.index),
+                    key: ValueKey(e.hashCode),
                     item: e,
                     indexMap: const [0],
                   )),
