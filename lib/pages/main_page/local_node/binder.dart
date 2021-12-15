@@ -6,13 +6,11 @@ import 'widget.dart';
 
 class LocalNodeBinder extends StatelessWidget {
   final LocalNode item;
-  final double startPadding;
   final List<int> indexMap;
 
   const LocalNodeBinder({
     required this.item,
     required this.indexMap,
-    this.startPadding = 0,
     Key? key,
   }) : super(key: key);
 
@@ -23,7 +21,6 @@ class LocalNodeBinder extends StatelessWidget {
         init: LocalNodeController(item, indexMap),
         builder: (c) => LocalNodeWidget(
               controller: c,
-              startPadding: startPadding,
             ));
   }
 }

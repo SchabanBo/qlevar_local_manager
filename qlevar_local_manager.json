@@ -3,13 +3,13 @@
     "hello": "hello",
     "ok": "ok",
     "bye": "bye",
-    "yes": "",
-    "long": "this is long text to test the text size in the widget that show it",
     "make": {
       "something": "make something",
       "tee": "make tee",
       "coffee": "make coffee"
     },
+    "yes": "",
+    "long": "this is long text to test the text size in the widget that show it",
     "office": {
       "work": "work",
       "meeting": "meeting",
@@ -30,13 +30,13 @@
     "hello": "hallo",
     "ok": "ok",
     "bye": "Tschüss",
-    "yes": "ja",
-    "long": "",
     "make": {
       "something": "mach etwas",
       "tee": "mach tee",
       "coffee": "mach coffee"
     },
+    "yes": "ja",
+    "long": "",
     "office": {
       "work": "arbeit",
       "meeting": "meeting",
@@ -57,13 +57,13 @@
     "hello": "مرحبا",
     "ok": "حسنا",
     "bye": "وداعا",
-    "yes": "",
-    "long": "نص طويل لتجريب كيفية استجابة العنصر للنص الطويل",
     "make": {
       "something": "افعل شيئا",
       "tee": "اصنع شاي",
       "coffee": "اصنع قهوة"
     },
+    "yes": "",
+    "long": "نص طويل لتجريب كيفية استجابة العنصر للنص الطويل",
     "office": {
       "work": "عمل",
       "meeting": "اجتماع",

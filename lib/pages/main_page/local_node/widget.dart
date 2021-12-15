@@ -10,14 +10,11 @@ import 'binder.dart';
 import '../controllers/node_controller.dart';
 
 class LocalNodeWidget extends StatelessWidget {
-  final double startPadding;
   final LocalNodeController controller;
-  LocalNodeWidget({required this.controller, this.startPadding = 0, Key? key})
-      : super(key: key);
+  LocalNodeWidget({required this.controller, Key? key}) : super(key: key);
 
   late final _widget = _LocalNodeWidget(
     controller: controller,
-    startPadding: startPadding,
   );
 
   late final _dragRequest =
@@ -36,15 +33,13 @@ class LocalNodeWidget extends StatelessWidget {
 }
 
 class _LocalNodeWidget extends StatelessWidget {
-  final double startPadding;
   final LocalNodeController controller;
-  const _LocalNodeWidget(
-      {required this.controller, this.startPadding = 0, Key? key})
+  const _LocalNodeWidget({required this.controller, Key? key})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) => Container(
-        margin: EdgeInsets.only(left: startPadding),
+        margin: const EdgeInsets.only(left: 10),
         decoration: const BoxDecoration(
           border: Border(
             left: BorderSide(color: Colors.grey),
@@ -108,13 +103,11 @@ class _LocalNodeWidget extends StatelessWidget {
                             key: ValueKey(e.hashCode),
                             item: e,
                             indexMap: controller.indexMap,
-                            startPadding: 8 + startPadding,
                           )
                         : LocalNodeBinder(
                             key: ValueKey(e.hashCode),
                             item: e as LocalNode,
                             indexMap: controller.indexMap,
-                            startPadding: 8 + startPadding,
                           )),
                   ])
             : const SizedBox(),

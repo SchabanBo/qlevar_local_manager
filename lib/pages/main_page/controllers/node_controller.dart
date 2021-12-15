@@ -13,6 +13,9 @@ class LocalNodeController extends GetxController {
   void onInit() {
     super.onInit();
     _mainController.openAllNodes.listen(isOpen);
+    if (_mainController.openAllNodes.isTrue) {
+      isOpen.value = true;
+    }
   }
 
   LocalNodeController(
