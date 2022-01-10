@@ -9,6 +9,9 @@ import '../local_item/binder.dart';
 import 'binder.dart';
 import '../controllers/node_controller.dart';
 
+const _noChildren =
+    Padding(padding: EdgeInsets.all(8.0), child: Text('No Children'));
+
 class LocalNodeWidget extends StatelessWidget {
   final LocalNodeController controller;
   LocalNodeWidget({required this.controller, Key? key}) : super(key: key);
@@ -94,22 +97,24 @@ class _LocalNodeWidget extends StatelessWidget {
         transitionBuilder: (c, a) =>
             SizeTransition(sizeFactor: a, child: c, axis: Axis.vertical),
         child: controller.isOpen.isTrue
-            ? ListView(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                children: [
-                    ...controller.children.map((e) => e is LocalItem
-                        ? LocalItemBinder(
-                            key: ValueKey(e.hashCode),
-                            item: e,
-                            indexMap: controller.indexMap,
-                          )
-                        : LocalNodeBinder(
-                            key: ValueKey(e.hashCode),
-                            item: e as LocalNode,
-                            indexMap: controller.indexMap,
-                          )),
-                  ])
+            ? controller.children.isEmpty
+                ? _noChildren
+                : ListView(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    children: [
+                        ...controller.children.map((e) => e is LocalItem
+                            ? LocalItemBinder(
+                                key: ValueKey(e.hashCode),
+                                item: e,
+                                indexMap: controller.indexMap,
+                              )
+                            : LocalNodeBinder(
+                                key: ValueKey(e.hashCode),
+                                item: e as LocalNode,
+                                indexMap: controller.indexMap,
+                              )),
+                      ])
             : const SizedBox(),
       );
 }

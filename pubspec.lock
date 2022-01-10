@@ -70,7 +70,7 @@ packages:
       name: filepicker_windows
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0"
+    version: "2.0.1"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -99,7 +99,7 @@ packages:
       name: get
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.5.1"
+    version: "4.6.1"
   js:
     dependency: transitive
     description:
@@ -121,13 +121,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.12.11"
-  material_color_utilities:
-    dependency: transitive
-    description:
-      name: material_color_utilities
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.2"
   meta:
     dependency: transitive
     description:
@@ -190,14 +183,28 @@ packages:
       name: shared_preferences
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.6"
+    version: "2.0.11"
+  shared_preferences_android:
+    dependency: transitive
+    description:
+      name: shared_preferences_android
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.9"
+  shared_preferences_ios:
+    dependency: transitive
+    description:
+      name: shared_preferences_ios
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.8"
   shared_preferences_linux:
     dependency: transitive
     description:
       name: shared_preferences_linux
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0"
+    version: "2.0.3"
   shared_preferences_macos:
     dependency: transitive
     description:
@@ -225,7 +232,7 @@ packages:
       name: shared_preferences_windows
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0"
+    version: "2.0.3"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -272,7 +279,7 @@ packages:
       name: test_api
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.8"
+    version: "0.4.3"
   typed_data:
     dependency: transitive
     description:
@@ -293,7 +300,7 @@ packages:
       name: win32
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.2.4"
+    version: "2.3.3"
   xdg_directories:
     dependency: transitive
     description:
@@ -303,4 +310,4 @@ packages:
     version: "0.2.0"
 sdks:
   dart: ">=2.14.0 <3.0.0"
-  flutter: ">=1.20.0"
+  flutter: ">=2.5.0"

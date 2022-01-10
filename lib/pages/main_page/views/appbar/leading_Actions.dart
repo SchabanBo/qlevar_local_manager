@@ -10,6 +10,7 @@ class LeadingActions extends StatelessWidget {
     final controller = Get.find<MainController>();
     return Row(
       children: [
+        const SizedBox(width: 8),
         SizedBox(
           width: 250,
           child: TextField(

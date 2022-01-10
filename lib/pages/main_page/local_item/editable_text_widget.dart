@@ -18,10 +18,10 @@ class QEditableText extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(4.0),
               child: AnimatedSwitcher(
-                duration: const Duration(milliseconds: 500),
+                duration: const Duration(milliseconds: 400),
                 transitionBuilder: (c, a) => SizeTransition(
-                    axisAlignment: 1,
-                    axis: Axis.horizontal,
+                    axisAlignment: 0,
+                    axis: Axis.vertical,
                     sizeFactor: CurvedAnimation(
                         parent: a, curve: Curves.linearToEaseOut),
                     child: c),
