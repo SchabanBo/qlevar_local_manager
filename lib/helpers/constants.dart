@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 class Constants {
   static const Duration animationDuration = Duration(milliseconds: 500);
-  static const Color iconColors = Color(0xffCC9B06);
+  static const Color iconColors = Color.fromARGB(255, 189, 189, 189);
 }
 
 void showError(String title, String message) => Get.snackbar(title, message,

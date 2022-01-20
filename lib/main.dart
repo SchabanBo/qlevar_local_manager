@@ -14,23 +14,17 @@ class MyApp extends StatelessWidget {
       title: 'Qlevar Local Manager',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        backgroundColor: const Color(0xFF212121),
+        canvasColor: const Color(0xFF212121),
+        appBarTheme:
+            const AppBarTheme(color: Colors.black, shadowColor: Colors.white30),
         colorScheme:
             ColorScheme.fromSwatch(brightness: Brightness.dark).copyWith(
-          secondary: const Color(0xffCC9B06),
-          primary: Colors.blueGrey.shade300,
+          secondary: const Color(0xffB7B327),
+          primary: Colors.amber,
         ),
       ),
       home: const SplashPage(),
     );
   }
 }
-	// #4e5258
-	// #393e46
-	// #22262b
-
-
-// #806104
-// #FFD454
-// #ffc107
-// #806A2A
-// #CC9B06

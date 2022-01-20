@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../helpers/constants.dart';
 import '../controllers/main_controller.dart';
 
 class AddLanguageIcon extends StatelessWidget {
@@ -19,7 +20,10 @@ class AddLanguageIcon extends StatelessWidget {
           con.locals().ensureAllLanguagesExist(con.locals().languages);
           con.locals.refresh();
         },
-        icon: const Icon(Icons.language));
+        icon: const Icon(
+          Icons.language,
+          color: Constants.iconColors,
+        ));
   }
 }
 

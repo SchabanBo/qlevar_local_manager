@@ -1,10 +1,10 @@
 import 'dart:io';
 
 import '../../helpers/constants.dart';
-import '../../models/local_data.dart';
+import '../../models/json/data.dart';
 
 class EasyLocalizationExporterService {
-  final LocalData data;
+  final JsonData data;
   EasyLocalizationExporterService({required this.data});
 
   void export(String toFolder) {
@@ -17,7 +17,7 @@ class EasyLocalizationExporterService {
     }
   }
 
-  void _export(String toFile, LocalNode node) async {
+  void _export(String toFile, JsonNode node) async {
     final file = File(toFile);
     if (await file.exists() == false) {
       file.create(recursive: true);

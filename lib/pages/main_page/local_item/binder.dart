@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../models/qlocal.dart';
-import 'controller.dart';
+import '../controllers/item_controller.dart';
 import 'widget.dart';
 
 class LocalItemBinder extends StatelessWidget {
-  final QlevarLocalItem item;
+  final LocalItem item;
   final double startPadding;
   final List<int> indexMap;
 

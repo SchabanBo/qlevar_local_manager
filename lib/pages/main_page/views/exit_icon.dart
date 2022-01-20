@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../helpers/constants.dart';
 import '../../splash_page/splash_page.dart';
 import '../controllers/main_controller.dart';
 
@@ -11,9 +12,12 @@ class ExitIcon extends StatelessWidget {
     return IconButton(
         tooltip: 'Exit App',
         onPressed: () async {
-          Get.off(const SplashPage());
           Get.delete<MainController>();
+          Get.offAll(() => const SplashPage());
         },
-        icon: const Icon(Icons.logout));
+        icon: const Icon(
+          Icons.logout,
+          color: Constants.iconColors,
+        ));
   }
 }

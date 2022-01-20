@@ -27,7 +27,7 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: Get.theme.bottomAppBarColor,
+          color: Colors.grey.shade900,
           borderRadius: const BorderRadius.vertical(top: Radius.circular(15))),
       child: Padding(
         padding: const EdgeInsets.all(18.0),

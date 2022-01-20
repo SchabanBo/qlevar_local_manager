@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../local_node/add_item.dart';
-import 'controller.dart';
+import '../controllers/item_controller.dart';
 
 class HeaderWidget extends StatelessWidget {
   final double startPadding;
@@ -18,18 +18,15 @@ class HeaderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Container(
         padding: const EdgeInsets.only(bottom: 8),
-        decoration: BoxDecoration(
-          color: Colors.black45,
+        decoration: const BoxDecoration(
           border: Border(
-            bottom: BorderSide(
-              color: Colors.blueGrey.shade300,
-            ),
+            bottom: BorderSide(color: Colors.white),
           ),
         ),
         child: Row(
           children: [
             SizedBox(width: startPadding + 8),
-            Expanded(child: Text(controller.item.key, style: headerStyle)),
+            Expanded(child: Text(controller.item.name, style: headerStyle)),
             ...controller.item.values.entries.map(
                 (kv) => Expanded(child: Text(kv.value, style: headerStyle))),
             Row(

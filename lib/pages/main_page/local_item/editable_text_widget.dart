@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+const _textStyle = TextStyle(fontSize: 18);
+
 class QEditableText extends StatelessWidget {
   final String text;
   final Function(String) onEdit;
@@ -16,10 +18,10 @@ class QEditableText extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(4.0),
               child: AnimatedSwitcher(
-                duration: const Duration(milliseconds: 500),
+                duration: const Duration(milliseconds: 400),
                 transitionBuilder: (c, a) => SizeTransition(
-                    axisAlignment: 1,
-                    axis: Axis.horizontal,
+                    axisAlignment: 0,
+                    axis: Axis.vertical,
                     sizeFactor: CurvedAnimation(
                         parent: a, curve: Curves.linearToEaseOut),
                     child: c),
@@ -36,19 +38,19 @@ class QEditableText extends StatelessWidget {
                           autofocus: true,
                           maxLines: null,
                           controller: controller,
-                          style: const TextStyle(fontSize: 18),
+                          style: _textStyle,
                         ),
                       )
                     : Container(
                         decoration: BoxDecoration(
                           color: controller.text.trim().isEmpty
-                              ? Colors.red.withOpacity(0.3)
+                              ? Colors.red.withOpacity(0.25)
                               : null,
                         ),
                         alignment: Alignment.centerLeft,
                         child: Text(
                           controller.text,
-                          style: const TextStyle(fontSize: 18),
+                          style: _textStyle,
                         ),
                       ),
               ),

@@ -5,7 +5,7 @@ class GoogleTranslatorService extends GetConnect {
   final String apiKey;
   GoogleTranslatorService(this.apiKey);
 
-  Future<QlevarLocalItem> tranlate(QlevarLocalItem item, String from) async {
+  Future<LocalItem> tranlate(LocalItem item, String from) async {
     try {
       for (var i = 0; i < item.values.length; i++) {
         final key = item.values.keys.elementAt(i);

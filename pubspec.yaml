@@ -8,9 +8,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  shared_preferences: ^2.0.6
-  get: ^4.5.1
-  filepicker_windows: ^2.0.0
+  shared_preferences: ^2.0.11
+  get: ^4.6.1
+  filepicker_windows: ^2.0.1
   
 dev_dependencies:
   flutter_test:

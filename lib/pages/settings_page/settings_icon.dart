@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../helpers/constants.dart';
 import 'views/settings_view.dart';
 
 class SettingsIcon extends StatelessWidget {
@@ -9,7 +10,10 @@ class SettingsIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return IconButton(
       onPressed: () => Get.bottomSheet(const SettingsPage()),
-      icon: const Icon(Icons.settings),
+      icon: const Icon(
+        Icons.settings,
+        color: Constants.iconColors,
+      ),
       tooltip: 'Settings',
     );
   }

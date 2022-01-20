@@ -1,19 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../local_item/header.dart';
-import '../tree/widget.dart';
-import '../../import_page/import_icon.dart';
-import 'exit_icon.dart';
-import 'add_language.dart';
-import '../local_item/controller.dart';
-import '../local_item/widget.dart';
-import '../../settings_page/settings_icon.dart';
-import '../../export_page/views/export_icon.dart';
+import 'appbar/appbar.dart';
+import '../controllers/item_controller.dart';
 import '../local_item/binder.dart';
 import '../local_node/binder.dart';
 import '../../../models/qlocal.dart';
 import '../controllers/main_controller.dart';
-import 'save_data_widget.dart';
 
 class MainView extends GetView<MainController> {
   const MainView({Key? key}) : super(key: key);
@@ -21,21 +14,7 @@ class MainView extends GetView<MainController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          title: Text(controller.appfile.name),
-          actions: const [
-            SaveDataWidget(),
-            ExportIcon(),
-            ImportIcon(),
-            AddLanguageIcon(),
-            SettingsIcon(),
-            ExitIcon(),
-          ],
-          bottom: PreferredSize(
-              preferredSize: const Size.fromHeight(5),
-              child: Obx(() => controller.loading.isTrue
-                  ? const LinearProgressIndicator()
-                  : const SizedBox.shrink()))),
+      appBar: QAppBar(),
       body: _buildList,
     );
   }
@@ -44,7 +23,7 @@ class MainView extends GetView<MainController> {
         children: [
           HeaderWidget(
               controller: LocalItemController(
-                  QlevarLocalItem(key: 'Keys')
+                  LocalItem(name: 'Keys')
                     ..values.addEntries(controller
                         .locals()
                         .languages
@@ -52,16 +31,17 @@ class MainView extends GetView<MainController> {
                   [0])),
           Expanded(
             child: ListView(controller: controller.gridController, children: [
-              ...controller.getItem.map((e) => LocalItemBinder(
-                    key: ValueKey(e.index),
-                    item: e,
-                    indexMap: const [0],
-                  )),
-              ...controller.getNodes.map((e) => LocalNodeBinder(
-                    key: ValueKey(e.index),
-                    item: e,
-                    indexMap: const [0],
-                  )),
+              ...controller.children.map((e) => e is LocalItem
+                  ? LocalItemBinder(
+                      key: ValueKey(e.hashCode),
+                      item: e,
+                      indexMap: const [0],
+                    )
+                  : LocalNodeBinder(
+                      key: ValueKey(e.hashCode),
+                      item: e as LocalNode,
+                      indexMap: const [0],
+                    )),
             ]),
           ),
         ],

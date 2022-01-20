@@ -6,7 +6,7 @@ import '../../settings_page/controller.dart';
 import '../../../services/translators/google_translator_service.dart';
 import '../../../helpers/constants.dart';
 import '../controllers/main_controller.dart';
-import 'controller.dart';
+import '../controllers/item_controller.dart';
 
 class OptionsWidget extends StatelessWidget {
   final LocalItemController controller;
@@ -47,7 +47,7 @@ class OptionsWidget extends StatelessWidget {
             onTap: () => Get.defaultDialog(
                 title: 'Delete',
                 middleText:
-                    'Are you sure you want to delete ${controller.item.key}?',
+                    'Are you sure you want to delete ${controller.item.name}?',
                 onConfirm: () {
                   Get.find<MainController>().removeItem(controller.indexMap);
                   Get.back();
@@ -80,13 +80,16 @@ class OptionsWidget extends StatelessWidget {
   void copyPath() {
     final indexMap = controller.indexMap;
     var result = '';
-    QlevarLocalNode node = Get.find<MainController>().locals();
+    LocalNode node = Get.find<MainController>().locals();
+
     for (var i = 1; i < indexMap.length - 1; i++) {
-      node = node.nodes.firstWhere((e) => e.index == indexMap[i]);
-      result += node.key + '_';
+      node = node.children
+          .whereType<LocalNode>()
+          .firstWhere((e) => e.hashCode == indexMap[i]);
+      result += node.name + '_';
     }
-    final item = node.items.firstWhere((e) => e.index == indexMap.last);
-    result += item.key;
+    final item = node.children.firstWhere((e) => e.hashCode == indexMap.last);
+    result += item.name;
     Clipboard.setData(ClipboardData(text: result));
   }
 }

@@ -1,13 +1,13 @@
+import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../settings_page/controller.dart';
 import '../settings_page/settings.dart';
 import '../settings_page/views/settings_view.dart';
 import '../../models/qlocal.dart';
-import '../../models/local_data.dart';
+import '../../models/json/data.dart';
 import '../main_page/controllers/main_controller.dart';
 import '../main_page/views/main_view.dart';
 
@@ -22,6 +22,7 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Colors.black,
         body: FutureBuilder<Settings>(
             future: Future.delayed(
                 const Duration(seconds: 1), () => SettingsLoader().load()),
@@ -51,9 +52,10 @@ class _SplashPageState extends State<SplashPage> {
     }
     _isBottomSheetOpen = true;
     final app = await Get.bottomSheet<AppLocalFile>(
-        const SettingsPage(isSelectApp: true),
-        enableDrag: true,
-        barrierColor: Colors.transparent);
+      const SettingsPage(isSelectApp: true),
+      enableDrag: true,
+      barrierColor: Colors.transparent,
+    );
     _isBottomSheetOpen = false;
     if (app == null) {
       setState(() {});
@@ -63,7 +65,7 @@ class _SplashPageState extends State<SplashPage> {
     if (loclas == null) {
       setState(() {});
     }
-    Get.put(MainController(appfile: app, locals: loclas!));
+    Get.lazyPut(() => MainController(appfile: app, locals: loclas!));
     Get.offAll(() => const MainView());
   }
 
@@ -78,7 +80,7 @@ class _SplashPageState extends State<SplashPage> {
       }
 
       final data = await File(appLocalFile.path).readAsString();
-      final l = LocalData.fromJson(data);
+      final l = JsonData.fromJson(data);
       return QlevarLocal.fromData(l);
     } catch (e) {
       Get.defaultDialog(

@@ -12,94 +12,105 @@ class MainController extends GetxController {
   final openAllNodes = false.obs;
   final loading = false.obs;
   final filter = ''.obs;
-  late final treeController = ScrollController();
   late final gridController = ScrollController();
   MainController({required this.appfile, required QlevarLocal locals})
       : locals = locals.obs;
 
-  int get listItemsCount => locals().items.length + locals().nodes.length;
+  int get listItemsCount => locals().children.length;
 
-  Iterable<QlevarLocalItem> get getItem => filter.isEmpty
-      ? locals().items
-      : locals().items.where((i) => i.filter(filter()));
+  Iterable<LocalBase> get children => filter.isEmpty
+      ? locals().children
+      : locals().children.where((i) => i.filter(filter()));
 
-  Iterable<QlevarLocalNode> get getNodes => filter.isEmpty
-      ? locals().nodes
-      : locals().nodes.where((i) => i.filter(filter()));
-
-  void addItem(List<int> indexMap, String key) {
-    QlevarLocalNode node = locals();
-    for (var i = 1; i < indexMap.length; i++) {
-      node = node.nodes.firstWhere((e) => e.index == indexMap[i]);
+  void addItem(List<int> hashMap, LocalItem item, {int? inserthashCode}) {
+    LocalNode node = locals();
+    for (var i = 1; i < hashMap.length; i++) {
+      node = node.nodes.firstWhere((e) => e.hashCode == hashMap[i]);
     }
-    if (node.items.any((e) => e.key == key)) {
-      showError('Error', 'Key with name $key already exist');
+    if (node.items.any((e) => e.name == item.name)) {
+      showError('Error', 'Key with name ${item.name} already exist');
       return;
     }
-    final item = QlevarLocalItem(key: key);
     item.ensureAllLanguagesExist(locals().languages);
-    item.values[locals().languages.first] = key;
-    node.items.add(item);
+    if (item.values.entries.first.value.isEmpty) {
+      item.values[locals().languages.first] = item.name;
+    }
+
+    if (inserthashCode != null) {
+      node.children.insert(
+          node.items.indexWhere((e) => e.hashCode == inserthashCode), item);
+    } else {
+      node.children.add(item);
+    }
+
     locals.refresh();
   }
 
-  void addNode(List<int> indexMap, String key) {
-    QlevarLocalNode node = locals();
-    for (var i = 1; i < indexMap.length; i++) {
-      node = node.nodes.firstWhere((e) => e.index == indexMap[i]);
+  void addNode(List<int> hashMap, LocalNode newNode, {int? inserthashCode}) {
+    LocalNode node = locals();
+    for (var i = 1; i < hashMap.length; i++) {
+      node = node.nodes.firstWhere((e) => e.hashCode == hashMap[i]);
     }
-    if (node.items.any((e) => e.key == key)) {
-      showError('Error', 'Key with name $key already exist');
+    if (node.items.any((e) => e.name == newNode.name)) {
+      showError('Error', 'Key with name ${node.name} already exist');
       return;
     }
-    final item = QlevarLocalNode(key: key);
-    node.nodes.add(item);
+    if (inserthashCode != null) {
+      node.children.insert(
+          node.items.indexWhere((e) => e.hashCode == inserthashCode), newNode);
+    } else {
+      node.children.add(newNode);
+    }
     locals.refresh();
   }
 
-  void updateLocalItem(List<int> indexMap, String language, String value) {
-    QlevarLocalNode node = locals();
-    for (var i = 1; i < indexMap.length - 1; i++) {
-      node = node.nodes.firstWhere((e) => e.index == indexMap[i]);
+  void updateLocalItem(List<int> hashMap, String language, String value) {
+    LocalNode node = locals();
+    for (var i = 1; i < hashMap.length - 1; i++) {
+      node = node.nodes.firstWhere((e) => e.hashCode == hashMap[i]);
     }
-    final item = node.items.firstWhere((e) => e.index == indexMap.last);
+    final item = node.items.firstWhere((e) => e.hashCode == hashMap.last);
     item.values[language] = value;
     locals.refresh();
   }
 
-  void updateLocalItemKey(List<int> indexMap, String value) {
-    QlevarLocalNode node = locals();
-    for (var i = 1; i < indexMap.length - 1; i++) {
-      node = node.nodes.firstWhere((e) => e.index == indexMap[i]);
+  void updateLocalItemKey(List<int> hashMap, String value) {
+    LocalNode node = locals();
+    for (var i = 1; i < hashMap.length - 1; i++) {
+      node = node.nodes.firstWhere((e) => e.hashCode == hashMap[i]);
     }
-    if (node.items.any((e) => e.index != indexMap.last && e.key == value)) {
+    if (node.items.any((e) => e.hashCode != hashMap.last && e.name == value)) {
       showError('Error', 'Key with name $value already exist');
       update();
       return;
     }
-    final item = node.items.firstWhere((e) => e.index == indexMap.last);
-    item.key = value;
+    final item = node.items.firstWhere((e) => e.hashCode == hashMap.last);
+    item.name = value;
     locals.refresh();
   }
 
-  void removeItem(List<int> indexMap) {
-    QlevarLocalNode node = locals();
-    for (var i = 1; i < indexMap.length - 1; i++) {
-      node = node.nodes.firstWhere((e) => e.index == indexMap[i]);
+  void removeItem(List<int> hashMap, {bool update = true}) {
+    LocalNode node = locals();
+    for (var i = 1; i < hashMap.length - 1; i++) {
+      node = node.nodes.firstWhere((e) => e.hashCode == hashMap[i]);
     }
-    final item = node.items.firstWhere((e) => e.index == indexMap.last);
-    node.items.remove(item);
-    locals.refresh();
+    final item = node.items.firstWhere((e) => e.hashCode == hashMap.last);
+    node.children.remove(item);
+    if (update) {
+      locals.refresh();
+    }
   }
 
-  void removeNode(List<int> indexMap) {
-    QlevarLocalNode node = locals();
-    for (var i = 1; i < indexMap.length - 1; i++) {
-      node = node.nodes.firstWhere((e) => e.index == indexMap[i]);
+  void removeNode(List<int> hashMap, {bool update = true}) {
+    LocalNode node = locals();
+    for (var i = 1; i < hashMap.length - 1; i++) {
+      node = node.nodes.firstWhere((e) => e.hashCode == hashMap[i]);
     }
-    final item = node.nodes.firstWhere((e) => e.index == indexMap.last);
-    node.nodes.remove(item);
-    locals.refresh();
+    final item = node.nodes.firstWhere((e) => e.hashCode == hashMap.last);
+    node.children.remove(item);
+    if (update) {
+      locals.refresh();
+    }
   }
 
   Future<void> saveData() async {
@@ -111,7 +122,6 @@ class MainController extends GetxController {
 
   @override
   void onClose() {
-    treeController.dispose();
     gridController.dispose();
     super.onClose();
   }

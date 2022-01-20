@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../models/qlocal.dart';
-import 'controller.dart';
+import '../controllers/node_controller.dart';
 import 'widget.dart';
 
 class LocalNodeBinder extends StatelessWidget {
-  final QlevarLocalNode item;
-  final double startPadding;
+  final LocalNode item;
   final List<int> indexMap;
 
   const LocalNodeBinder({
     required this.item,
     required this.indexMap,
-    this.startPadding = 0,
     Key? key,
   }) : super(key: key);
 
@@ -23,7 +21,6 @@ class LocalNodeBinder extends StatelessWidget {
         init: LocalNodeController(item, indexMap),
         builder: (c) => LocalNodeWidget(
               controller: c,
-              startPadding: startPadding,
             ));
   }
 }

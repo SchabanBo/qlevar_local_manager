@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../helpers/constants.dart';
 import '../controllers/main_controller.dart';
 
 class SaveDataWidget extends GetView<MainController> {
@@ -10,6 +11,9 @@ class SaveDataWidget extends GetView<MainController> {
     return IconButton(
         tooltip: 'Save',
         onPressed: () => controller.saveData(),
-        icon: const Icon(Icons.save));
+        icon: const Icon(
+          Icons.save,
+          color: Constants.iconColors,
+        ));
   }
 }
