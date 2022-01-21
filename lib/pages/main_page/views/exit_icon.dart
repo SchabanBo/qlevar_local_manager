@@ -17,7 +17,7 @@ class ExitIcon extends StatelessWidget {
         },
         icon: const Icon(
           Icons.logout,
-          color: Constants.iconColors,
+          color: AppColors.icon,
         ));
   }
 }

@@ -13,7 +13,7 @@ class SaveDataWidget extends GetView<MainController> {
         onPressed: () => controller.saveData(),
         icon: const Icon(
           Icons.save,
-          color: Constants.iconColors,
+          color: AppColors.icon,
         ));
   }
 }

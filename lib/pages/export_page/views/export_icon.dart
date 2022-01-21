@@ -12,7 +12,7 @@ class ExportIcon extends StatelessWidget {
       onPressed: () => Get.bottomSheet(ExportView()),
       icon: const Icon(
         Icons.upload,
-        color: Constants.iconColors,
+        color: AppColors.icon,
       ),
       tooltip: 'Export Data',
     );

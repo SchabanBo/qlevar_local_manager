@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
-import '../export_page/controller.dart';
-import '../main_page/controllers/main_controller.dart';
-import 'settings.dart';
+import '../../export_page/controller.dart';
+import '../../main_page/controllers/main_controller.dart';
+import '../models/models.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 

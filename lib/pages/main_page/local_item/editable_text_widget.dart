@@ -44,7 +44,7 @@ class QEditableText extends StatelessWidget {
                     : Container(
                         decoration: BoxDecoration(
                           color: controller.text.trim().isEmpty
-                              ? Colors.red.withOpacity(0.25)
+                              ? Colors.red.withOpacity(0.5)
                               : null,
                         ),
                         alignment: Alignment.centerLeft,

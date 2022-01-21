@@ -2,8 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import '../../../helpers/constants.dart';
 import '../../export_page/controller.dart';
-import '../controller.dart';
+import '../controllers/settings_controller.dart';
 
 class AutoSaveSection extends StatelessWidget {
   final SettingsController controller;
@@ -57,6 +58,7 @@ class AutoSaveSection extends StatelessWidget {
                       child: CheckboxListTile(
                           title: const Text('Export'),
                           value: controller.settings.value.autoSave.export,
+                          activeColor: AppColors.primary,
                           onChanged: (value) {
                             controller.settings.value.autoSave.export =
                                 value ?? true;
@@ -68,7 +70,7 @@ class AutoSaveSection extends StatelessWidget {
                         children: ExportAs.values
                             .map((e) => Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: Text(describeEnum(e)),
+                                  child: Text(e.name),
                                 ))
                             .toList(),
                         onPressed: (i) {

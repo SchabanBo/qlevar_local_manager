@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../helpers/constants.dart';
 import '../../../models/drag_request.dart';
 import '../../../models/qlocal.dart';
 import '../local_item/editable_text_widget.dart';
@@ -30,7 +31,7 @@ class LocalNodeWidget extends StatelessWidget {
       childWhenDragging: Container(
         height: 30,
         width: Get.width,
-        color: Colors.grey.shade700,
+        color: AppColors.drag,
       ),
       child: _widget);
 }
@@ -45,8 +46,8 @@ class _LocalNodeWidget extends StatelessWidget {
         margin: const EdgeInsets.only(left: 10),
         decoration: const BoxDecoration(
           border: Border(
-            left: BorderSide(color: Colors.grey),
-            bottom: BorderSide(color: Colors.grey),
+            left: BorderSide(color: AppColors.border),
+            bottom: BorderSide(color: AppColors.border),
           ),
         ),
         child: Obx(() => Column(children: [header, body])),
@@ -54,9 +55,9 @@ class _LocalNodeWidget extends StatelessWidget {
 
   Widget get header => Container(
         decoration: const BoxDecoration(
-          color: Color(0xff303030),
+          color: AppColors.node,
           border: Border(
-            bottom: BorderSide(color: Colors.grey),
+            bottom: BorderSide(color: AppColors.border),
           ),
         ),
         child: Row(

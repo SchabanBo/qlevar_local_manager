@@ -13,7 +13,7 @@ class ImportIcon extends StatelessWidget {
       onPressed: import,
       icon: const Icon(
         Icons.download,
-        color: Constants.iconColors,
+        color: AppColors.icon,
       ),
       tooltip: 'Import Data',
     );

@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import '../../../helpers/constants.dart';
-import '../../settings_page/settings.dart';
+import '../../settings_page/models/models.dart';
 import '../../../models/qlocal.dart';
 
 class MainController extends GetxController {

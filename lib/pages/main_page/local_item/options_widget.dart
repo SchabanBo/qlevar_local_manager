@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import '../../../models/qlocal.dart';
-import '../../settings_page/controller.dart';
+import '../../settings_page/controllers/settings_controller.dart';
 import '../../../services/translators/google_translator_service.dart';
 import '../../../helpers/constants.dart';
 import '../controllers/main_controller.dart';
@@ -22,7 +22,7 @@ class OptionsWidget extends StatelessWidget {
                 message: 'Copy Path',
                 child: Icon(
                   Icons.copy,
-                  color: Constants.iconColors,
+                  color: AppColors.icon,
                 )),
             onTap: copyPath,
           ),
@@ -32,7 +32,7 @@ class OptionsWidget extends StatelessWidget {
                 message: 'Translate',
                 child: Icon(
                   Icons.translate,
-                  color: Constants.iconColors,
+                  color: AppColors.icon,
                 )),
             onTap: translate,
           ),
@@ -42,7 +42,7 @@ class OptionsWidget extends StatelessWidget {
                 message: 'Delete',
                 child: Icon(
                   Icons.delete_outline,
-                  color: Constants.iconColors,
+                  color: AppColors.icon,
                 )),
             onTap: () => Get.defaultDialog(
                 title: 'Delete',

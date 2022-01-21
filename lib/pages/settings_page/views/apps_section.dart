@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../../helpers/path_picker.dart';
-import '../controller.dart';
+import '../controllers/settings_controller.dart';
 import 'package:get/get.dart';
-import '../settings.dart';
+import '../models/models.dart';
 
 class AppsSection extends StatefulWidget {
   final SettingsController controller;

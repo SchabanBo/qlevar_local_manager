@@ -12,7 +12,7 @@ class SettingsIcon extends StatelessWidget {
       onPressed: () => Get.bottomSheet(const SettingsPage()),
       icon: const Icon(
         Icons.settings,
-        color: Constants.iconColors,
+        color: AppColors.icon,
       ),
       tooltip: 'Settings',
     );

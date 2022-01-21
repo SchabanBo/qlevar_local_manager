@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../controller.dart';
+import '../controllers/settings_controller.dart';
 
 class TranslationSection extends StatelessWidget {
   final SettingsController controller;

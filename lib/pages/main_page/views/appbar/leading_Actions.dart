@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../../helpers/constants.dart';
 import '../../controllers/main_controller.dart';
 
 class LeadingActions extends StatelessWidget {
@@ -16,9 +17,9 @@ class LeadingActions extends StatelessWidget {
           child: TextField(
             onChanged: controller.filter,
             decoration: const InputDecoration(
-              prefixIcon: Icon(Icons.search),
+              prefixIcon: Icon(Icons.search, color: AppColors.icon),
               hintText: 'Filter',
-              fillColor: Colors.grey,
+              fillColor: AppColors.icon,
             ),
           ),
         ),

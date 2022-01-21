@@ -22,7 +22,7 @@ class AddLanguageIcon extends StatelessWidget {
         },
         icon: const Icon(
           Icons.language,
-          color: Constants.iconColors,
+          color: AppColors.icon,
         ));
   }
 }

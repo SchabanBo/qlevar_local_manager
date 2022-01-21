@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../helpers/constants.dart';
 import '../../../models/drag_request.dart';
-import '../controllers/main_controller.dart';
-import '../controllers/node_controller.dart';
 import 'options_widget.dart';
 import 'editable_text_widget.dart';
 import '../controllers/item_controller.dart';
@@ -35,13 +34,13 @@ class LocalItemWidget extends StatelessWidget {
                 childWhenDragging: Container(
                   height: 30,
                   width: Get.width,
-                  color: Colors.grey.shade700,
+                  color: AppColors.drag,
                 ),
                 child: _widget)
             : Column(
                 children: [
                   Material(
-                    color: Colors.grey.shade700,
+                    color: AppColors.drag,
                     child: Container(
                       padding: EdgeInsets.symmetric(
                           horizontal: startPadding + 8, vertical: 4),
@@ -69,7 +68,7 @@ class _LocalItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
-        border: Border(bottom: BorderSide(color: Colors.grey)),
+        border: Border(bottom: BorderSide(color: AppColors.border)),
       ),
       child: Row(
         children: [

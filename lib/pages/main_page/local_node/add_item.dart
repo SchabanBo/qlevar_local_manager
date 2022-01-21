@@ -14,7 +14,7 @@ class AddLocalNode extends StatelessWidget {
           message: 'Add new Node',
           child: Icon(
             Icons.add_box_outlined,
-            color: Constants.iconColors,
+            color: AppColors.icon,
           )),
       onTap: () async {
         final key = await Get.dialog<String>(_GetItemKey());
@@ -35,7 +35,7 @@ class AddLocalItem extends StatelessWidget {
           message: 'Add new Item',
           child: Icon(
             Icons.add,
-            color: Constants.iconColors,
+            color: AppColors.icon,
           )),
       onTap: () async {
         final key = await Get.dialog<String>(_GetItemKey());

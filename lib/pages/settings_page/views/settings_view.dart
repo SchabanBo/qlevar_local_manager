@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'auto_save_section.dart';
 import 'apps_section.dart';
 import 'translation_settings.dart';
-import '../controller.dart';
+import '../controllers/settings_controller.dart';
 
 class SettingsPage extends StatefulWidget {
   final bool isSelectApp;

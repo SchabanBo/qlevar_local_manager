@@ -13,7 +13,7 @@ class TitleWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 28),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
-        color: Colors.grey.shade800,
+        color: const Color(0xFF303030),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,

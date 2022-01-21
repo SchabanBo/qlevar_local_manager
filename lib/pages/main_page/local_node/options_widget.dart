@@ -23,7 +23,7 @@ class OptionsWidget extends StatelessWidget {
                 message: 'Delete',
                 child: Icon(
                   Icons.delete_outline,
-                  color: Constants.iconColors,
+                  color: AppColors.icon,
                 )),
             onTap: () => Get.defaultDialog(
                 title: 'Delete',

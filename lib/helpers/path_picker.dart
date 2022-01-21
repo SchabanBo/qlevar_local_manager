@@ -1,4 +1,4 @@
-import 'package:filepicker_windows/filepicker_windows.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
 enum PathType {
@@ -57,31 +57,32 @@ class _PathPickerState extends State<PathPicker> {
     setState(() {});
   }
 
-  void pickFile() {
-    final file = OpenFilePicker()
-      ..filterSpecification = {
-        'json (*.json)': '*.json',
-      }
-      ..defaultFilterIndex = 0
-      ..defaultExtension = 'json'
-      ..title = widget.title;
+  Future pickFile() async {
+    final file = await FilePicker.platform.pickFiles(
+      dialogTitle: widget.title,
+      type: FileType.custom,
+      allowedExtensions: ['[json]'],
+    );
 
-    final result = file.getFile();
+    if (file?.paths.isEmpty ?? true) {
+      return;
+    }
+
+    final result = file!.paths.first;
     if (result == null) {
       return;
     }
-    path = result.path;
+    path = result;
     widget.onChange(path);
   }
 
-  void pickFolder() {
-    final file = DirectoryPicker()..title = widget.title;
-
-    final result = file.getDirectory();
+  Future pickFolder() async {
+    final result =
+        await FilePicker.platform.getDirectoryPath(dialogTitle: widget.title);
     if (result == null) {
       return;
     }
-    path = result.path;
+    path = result;
     widget.onChange(path);
   }
 }

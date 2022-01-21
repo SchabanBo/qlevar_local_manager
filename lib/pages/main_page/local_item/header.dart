@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../helpers/constants.dart';
 import '../local_node/add_item.dart';
 import '../controllers/item_controller.dart';
 
@@ -19,8 +20,9 @@ class HeaderWidget extends StatelessWidget {
   Widget build(BuildContext context) => Container(
         padding: const EdgeInsets.only(bottom: 8),
         decoration: const BoxDecoration(
+          color: AppColors.node,
           border: Border(
-            bottom: BorderSide(color: Colors.white),
+            bottom: BorderSide(color: AppColors.primary),
           ),
         ),
         child: Row(

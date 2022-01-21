@@ -1,10 +1,9 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../settings_page/controller.dart';
-import '../settings_page/settings.dart';
+import '../settings_page/controllers/settings_controller.dart';
+import '../settings_page/models/models.dart';
 import '../settings_page/views/settings_view.dart';
 import '../../models/qlocal.dart';
 import '../../models/json/data.dart';
