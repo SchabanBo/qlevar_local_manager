@@ -1,8 +1,8 @@
-# qlevar_local_manager
+# qlevar_local_manager [QLM]
 
-This app will help you manage you applications locals easily. set you locals in groups, translate them with google translation and then export them to a class that is useable with Getx.
+This app will help you manage you applications locals easily. set you locals in groups, translate them with google translation and then export them to a class that is useable with GetX.
 
-- [qlevar_local_manager](#qlevar_local_manager)
+- [qlevar_local_manager [QLM]](#qlevar_local_manager-qlm)
   - [Quick Demo](#quick-demo)
   - [Getting Started](#getting-started)
   - [Data Schema](#data-schema)
@@ -21,10 +21,10 @@ https://user-images.githubusercontent.com/49782771/124331112-1095ef80-db8f-11eb-
 - launch the application
 - add you first app
   - The name of you app
-  - The path where to save the locals in form to reuse them later (this should be in you repo files, so any update on you locals will be saved with the project)
+  - The path where to save the locals in form to reuse them later (this should be in you repo files, so any update on you locals will be saved with the project). This will generate a json file to save your locals, to reopen them in 'QLM' later by you or anyone has the file. so you can share this file with your team.
   - The path where to export the generated files.
 - Open you app.
-- Add go.
+- Go.
 
 ## Data Schema
 
@@ -57,6 +57,3 @@ To export the data to json files with this [structure](https://github.com/aissat
 - Chose easyLocalization
 - Pick the folder to export the files to.
 - Json files will be generated every file has the name of language and contains the translations for this language.
-
-
-

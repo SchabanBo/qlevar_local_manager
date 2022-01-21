@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 enum PathType {
@@ -45,34 +48,36 @@ class _PathPickerState extends State<PathPicker> {
     );
   }
 
-  void pick() {
+  void pick() async {
     switch (widget.type) {
       case PathType.file:
-        pickFile();
+        await pickFile();
         break;
       case PathType.folder:
-        pickFolder();
+        await pickFolder();
         break;
     }
     setState(() {});
   }
 
-  Future pickFile() async {
+  Future<void> pickFile() async {
     final file = await FilePicker.platform.pickFiles(
       dialogTitle: widget.title,
+      withData: kIsWeb,
       type: FileType.custom,
-      allowedExtensions: ['[json]'],
+      allowedExtensions: ['json'],
     );
 
-    if (file?.paths.isEmpty ?? true) {
+    if (file?.files.isEmpty ?? true) {
       return;
     }
-
-    final result = file!.paths.first;
-    if (result == null) {
+    final result = file!.files.first;
+    if (kIsWeb) {
+      path = result.name;
+      widget.onChange(utf8.decode(result.bytes!));
       return;
     }
-    path = result;
+    path = result.path!;
     widget.onChange(path);
   }
 
