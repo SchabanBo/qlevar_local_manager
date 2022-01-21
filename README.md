@@ -11,12 +11,13 @@ This app will help you manage you applications locals easily. set you locals in 
     - [GetX](#getx)
     - [Easy Localization](#easy-localization)
 
-
 ## Quick Demo
 
 https://user-images.githubusercontent.com/49782771/124331112-1095ef80-db8f-11eb-8641-92eb7e58fb29.mp4
 
 ## Getting Started
+
+### Windows
 
 - launch the application
 - add you first app
@@ -25,6 +26,14 @@ https://user-images.githubusercontent.com/49782771/124331112-1095ef80-db8f-11eb-
   - The path where to export the generated files.
 - Open you app.
 - Go.
+
+### Web
+
+- Navigate to the page.
+- Open you app
+  - Add new app and the locals data will be save in the local storage so you can return to them again and you can download then at any time.
+  - Import an app from the downloaded file you have.
+- Go
 
 ## Data Schema
 
@@ -40,7 +49,14 @@ Only Local items can be translated. and this will translate only the empty local
 ## Export
 
 After adding all the data and translate them. you can export it and use it with [GetX](https://pub.dev/packages/get) or [EasyLocalization](https://pub.dev/packages/easy_localization)
-In the AppBar click on Export and Export sheet will appear
+In the AppBar click on Export and Export dialog will appear.
+
+### Windows
+
+You can pick the directory where the files should be exported to.
+### Web
+
+The exported files will be downloaded.
 
 ### GetX
 
