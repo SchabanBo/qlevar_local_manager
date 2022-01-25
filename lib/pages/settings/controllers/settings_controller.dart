@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import '../../export/controllers/export_controller.dart';
+import '../../../widgets/export/controllers/export_controller.dart';
 import '../../main/controllers/main_controller.dart';
 import '../models/models.dart';
 

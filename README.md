@@ -13,6 +13,8 @@ This app will help you manage you applications locals easily. set you locals in 
 
 ## Quick Demo
 
+[Website](https://local-manager.netlify.app)
+
 https://user-images.githubusercontent.com/49782771/124331112-1095ef80-db8f-11eb-8641-92eb7e58fb29.mp4
 
 ## Getting Started

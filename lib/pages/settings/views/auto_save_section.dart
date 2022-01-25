@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import '../../export/controllers/export_controller.dart';
+import '../../../widgets/export/controllers/export_controller.dart';
 import '../controllers/settings_controller.dart';
 
 class AutoSaveSection extends StatelessWidget {
