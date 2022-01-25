@@ -1,5 +1,7 @@
 import 'dart:convert';
-import 'dart:io';
+
+import 'package:get/get.dart';
+import '../storage_service.dart';
 
 import '../../models/json/data.dart';
 
@@ -16,7 +18,7 @@ class AppTranslation {
 }
   ''';
 
-    File(toFile).writeAsStringSync(_class);
+    Get.find<StorageService>().writeFile(toFile, _class);
   }
 
   String getDataAsString() {

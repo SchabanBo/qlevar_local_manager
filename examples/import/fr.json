@@ -1,0 +1,27 @@
+{
+    "hello": "Bonjour",
+    "ok": "d'accord",
+    "bye": "au revoir",
+    "yes": "Oui",
+    "long": "c'est un texte long pour tester la taille du texte dans le widget qui l'affiche",
+    "make": {
+        "something": "faire quelque chose",
+        "tea": "faire du thé",
+        "coffee": "faire du café"
+    },
+    "office": {
+        "work": "travail",
+        "meeting": "Rencontre",
+        "stuff": {
+            "disk": "office disk",
+            "paper": "papier de bureau",
+            "pen": "stylo de bureau"
+        },
+        "test": {
+            "hi": "",
+            "ho": {
+                "hi": "salut"
+            }
+        }
+    }
+}

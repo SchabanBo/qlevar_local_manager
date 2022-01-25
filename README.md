@@ -1,8 +1,8 @@
-# qlevar_local_manager
+# qlevar_local_manager [QLM]
 
-This app will help you manage you applications locals easily. set you locals in groups, translate them with google translation and then export them to a class that is useable with Getx.
+This app will help you manage you applications locals easily. set you locals in groups, translate them with google translation and then export them to a class that is useable with GetX.
 
-- [qlevar_local_manager](#qlevar_local_manager)
+- [qlevar_local_manager [QLM]](#qlevar_local_manager-qlm)
   - [Quick Demo](#quick-demo)
   - [Getting Started](#getting-started)
   - [Data Schema](#data-schema)
@@ -11,20 +11,29 @@ This app will help you manage you applications locals easily. set you locals in 
     - [GetX](#getx)
     - [Easy Localization](#easy-localization)
 
-
 ## Quick Demo
 
 https://user-images.githubusercontent.com/49782771/124331112-1095ef80-db8f-11eb-8641-92eb7e58fb29.mp4
 
 ## Getting Started
 
+### Windows
+
 - launch the application
 - add you first app
   - The name of you app
-  - The path where to save the locals in form to reuse them later (this should be in you repo files, so any update on you locals will be saved with the project)
+  - The path where to save the locals in form to reuse them later (this should be in you repo files, so any update on you locals will be saved with the project). This will generate a json file to save your locals, to reopen them in 'QLM' later by you or anyone has the file. so you can share this file with your team.
   - The path where to export the generated files.
 - Open you app.
-- Add go.
+- Go.
+
+### Web
+
+- Navigate to the page.
+- Open you app
+  - Add new app and the locals data will be save in the local storage so you can return to them again and you can download then at any time.
+  - Import an app from the downloaded file you have.
+- Go
 
 ## Data Schema
 
@@ -40,7 +49,14 @@ Only Local items can be translated. and this will translate only the empty local
 ## Export
 
 After adding all the data and translate them. you can export it and use it with [GetX](https://pub.dev/packages/get) or [EasyLocalization](https://pub.dev/packages/easy_localization)
-In the AppBar click on Export and Export sheet will appear
+In the AppBar click on Export and Export dialog will appear.
+
+### Windows
+
+You can pick the directory where the files should be exported to.
+### Web
+
+The exported files will be downloaded.
 
 ### GetX
 
@@ -57,6 +73,3 @@ To export the data to json files with this [structure](https://github.com/aissat
 - Chose easyLocalization
 - Pick the folder to export the files to.
 - Json files will be generated every file has the name of language and contains the translations for this language.
-
-
-
