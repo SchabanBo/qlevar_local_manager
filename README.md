@@ -11,6 +11,13 @@ This app will help you manage you applications locals easily. set you locals in 
     - [GetX](#getx)
     - [Easy Localization](#easy-localization)
 
+## Features
+
+- Organize your locals in multiple nodes and every node can have multiple nodes and items.
+- Export your local to [Getx](#getx) or [Easy-localization](#easy-localization)
+- Darg and drop your locals to rearrange them
+- Translate them with google Translator to how many language you want
+
 ## Quick Demo
 
 [Website](https://local-manager.netlify.app)
