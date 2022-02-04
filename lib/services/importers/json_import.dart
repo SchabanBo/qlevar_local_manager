@@ -1,26 +1,36 @@
 import 'dart:convert';
-import 'dart:io';
-
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import '../../pages/main_page/controllers/main_controller.dart';
+import '../storage_service.dart';
+import '../../pages/main/controllers/main_controller.dart';
 import '../../helpers/constants.dart';
-import '../../models/local_data.dart';
+import '../../models/json/data.dart';
 
 class JsonFileImporter {
   Future<void> import(String file, String lan) async {
-    final locals = Get.find<MainController>().locals;
-    if (locals().languages.contains(lan)) {
-      showError('Language already exist', 'Update not support yet');
+    if (!kIsWeb) {
+      final data = await Get.find<StorageService>().readFile(file);
+      if (data == null) {
+        showError('File not found', 'File not found');
+        return;
+      }
+      file = data;
     }
-    final data = await File(file).readAsString();
-    final node = LocalNode(lan);
+
+    importData(file, lan);
+  }
+
+  Future<void> importData(String data, String lan) async {
+    final locals = Get.find<MainController>().locals;
+    final node = JsonNode(lan);
     node.fromMap(jsonDecode(data) as Map<String, dynamic>);
     locals().languages.add(lan);
-    for (var item in node.nodes) {
-      locals().addLocalObject(lan, item);
-    }
-    for (var item in node.items) {
-      locals().addLocalNode(lan, item);
+    for (var child in node.children) {
+      if (child is JsonNode) {
+        locals().addLocalNode(lan, child);
+      } else if (child is JsonItem) {
+        locals().addLocalItem(lan, child);
+      }
     }
     locals.refresh();
   }

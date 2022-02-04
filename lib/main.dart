@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'pages/splash_page/splash_page.dart';
+import 'services/storage_service.dart';
+import 'pages/splash/splash_page.dart';
 
 void main() {
+  Get.put(StorageService());
   runApp(const MyApp());
 }
 
@@ -14,23 +16,16 @@ class MyApp extends StatelessWidget {
       title: 'Qlevar Local Manager',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        backgroundColor: const Color(0xFF212121),
+        canvasColor: const Color(0xFF212121),
         colorScheme:
             ColorScheme.fromSwatch(brightness: Brightness.dark).copyWith(
-          secondary: const Color(0xffCC9B06),
-          primary: Colors.blueGrey.shade300,
+          secondary: const Color(0xffB7B327),
+          primary: Colors.amber,
         ),
+        toggleableActiveColor: Colors.amber,
       ),
       home: const SplashPage(),
     );
   }
 }
-	// #4e5258
-	// #393e46
-	// #22262b
-
-
-// #806104
-// #FFD454
-// #ffc107
-// #806A2A
-// #CC9B06

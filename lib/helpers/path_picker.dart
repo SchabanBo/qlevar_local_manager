@@ -1,4 +1,7 @@
-import 'package:filepicker_windows/filepicker_windows.dart';
+import 'dart:convert';
+
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 enum PathType {
@@ -45,43 +48,46 @@ class _PathPickerState extends State<PathPicker> {
     );
   }
 
-  void pick() {
+  void pick() async {
     switch (widget.type) {
       case PathType.file:
-        pickFile();
+        await pickFile();
         break;
       case PathType.folder:
-        pickFolder();
+        await pickFolder();
         break;
     }
     setState(() {});
   }
 
-  void pickFile() {
-    final file = OpenFilePicker()
-      ..filterSpecification = {
-        'json (*.json)': '*.json',
-      }
-      ..defaultFilterIndex = 0
-      ..defaultExtension = 'json'
-      ..title = widget.title;
+  Future<void> pickFile() async {
+    final file = await FilePicker.platform.pickFiles(
+      dialogTitle: widget.title,
+      withData: kIsWeb,
+      type: FileType.custom,
+      allowedExtensions: ['json'],
+    );
 
-    final result = file.getFile();
-    if (result == null) {
+    if (file?.files.isEmpty ?? true) {
       return;
     }
-    path = result.path;
+    final result = file!.files.first;
+    if (kIsWeb) {
+      path = result.name;
+      widget.onChange(utf8.decode(result.bytes!));
+      return;
+    }
+    path = result.path!;
     widget.onChange(path);
   }
 
-  void pickFolder() {
-    final file = DirectoryPicker()..title = widget.title;
-
-    final result = file.getDirectory();
+  Future pickFolder() async {
+    final result =
+        await FilePicker.platform.getDirectoryPath(dialogTitle: widget.title);
     if (result == null) {
       return;
     }
-    path = result.path;
+    path = result;
     widget.onChange(path);
   }
 }

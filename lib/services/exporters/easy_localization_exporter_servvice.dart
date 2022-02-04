@@ -1,27 +1,21 @@
-import 'dart:io';
+import 'package:get/get.dart';
+import '../storage_service.dart';
 
 import '../../helpers/constants.dart';
-import '../../models/local_data.dart';
+import '../../models/json/data.dart';
 
 class EasyLocalizationExporterService {
-  final LocalData data;
+  final JsonData data;
   EasyLocalizationExporterService({required this.data});
 
   void export(String toFolder) {
     try {
+      final storage = Get.find<StorageService>();
       for (var lan in data.data) {
-        _export('$toFolder/${lan.name}.json', lan);
+        storage.writeFile('$toFolder/${lan.name}.json', lan.toJson());
       }
     } catch (e) {
       showError('Error Exporting', e.toString());
     }
-  }
-
-  void _export(String toFile, LocalNode node) async {
-    final file = File(toFile);
-    if (await file.exists() == false) {
-      file.create(recursive: true);
-    }
-    await file.writeAsString(node.toJson());
   }
 }
