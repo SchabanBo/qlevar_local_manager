@@ -41,7 +41,7 @@ class _SplashPageState extends State<SplashPage> {
             builder: (c, s) {
               if (s.hasData) {
                 Get.put(SettingsController(s.data!), permanent: true);
-                WidgetsBinding.instance!
+                WidgetsBinding.instance
                     .addPostFrameCallback((_) => selectApp());
               }
               return welcome;

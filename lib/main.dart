@@ -4,6 +4,7 @@ import 'services/storage_service.dart';
 import 'pages/splash/splash_page.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   Get.put(StorageService());
   runApp(const MyApp());
 }
