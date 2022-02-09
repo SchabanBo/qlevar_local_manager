@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import '../../../models/notification.dart';
 import '../../../services/storage_service.dart';
 import '../../../helpers/constants.dart';
 import '../../settings/models/models.dart';
@@ -11,9 +12,17 @@ class MainController extends GetxController {
   final openAllNodes = false.obs;
   final loading = false.obs;
   final filter = ''.obs;
+  final notification = Rx<QNotification>(QNotification.empty());
   late final gridController = ScrollController();
   MainController({required this.appfile, required QlevarLocal locals})
-      : locals = locals.obs;
+      : locals = locals.obs {
+    notification.listen((n) {
+      if (n.isEmpty) return;
+      Future.delayed(const Duration(seconds: 3), () {
+        notification(QNotification.empty());
+      });
+    });
+  }
 
   int get listItemsCount => locals().children.length;
 
@@ -116,6 +125,7 @@ class MainController extends GetxController {
     loading(true);
     Get.find<StorageService>().saveLocals(appfile, locals());
     loading(false);
+    notification(QNotification.success(message: 'Data saved'));
   }
 
   @override
