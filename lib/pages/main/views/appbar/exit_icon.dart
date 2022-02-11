@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../helpers/constants.dart';
-import '../../splash/splash_page.dart';
-import '../controllers/main_controller.dart';
+import '../../../../helpers/constants.dart';
+import '../../../splash/splash_page.dart';
+import '../../controllers/main_controller.dart';
 
 class ExitIcon extends StatelessWidget {
   const ExitIcon({Key? key}) : super(key: key);
@@ -13,7 +13,8 @@ class ExitIcon extends StatelessWidget {
         tooltip: 'Exit App',
         onPressed: () async {
           Get.delete<MainController>();
-          Get.offAll(() => const SplashPage());
+          final route = MaterialPageRoute(builder: (_) => const SplashPage());
+          Navigator.pushReplacement(context, route);
         },
         icon: const Icon(
           Icons.logout,

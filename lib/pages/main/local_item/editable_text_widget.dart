@@ -38,6 +38,7 @@ class QEditableText extends StatelessWidget {
                           autofocus: true,
                           maxLines: null,
                           controller: controller,
+                          onSubmitted: (_) => save(edit),
                           style: _textStyle,
                         ),
                       )

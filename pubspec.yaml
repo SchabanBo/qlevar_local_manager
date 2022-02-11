@@ -11,7 +11,9 @@ dependencies:
   shared_preferences: ^2.0.11
   get: ^4.6.1
   file_picker: ^4.3.2
-  
+  q_overlay:
+    git: https://github.com/SchabanBo/q_overlay.git
+    
 dev_dependencies:
   flutter_test:
     sdk: flutter

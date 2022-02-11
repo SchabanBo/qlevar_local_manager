@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import '../../../models/notification.dart';
 import '../../../services/storage_service.dart';
 import '../../../helpers/constants.dart';
+import '../../../widgets/notification.dart';
 import '../../settings/models/models.dart';
 import '../../../models/qlocal.dart';
 
@@ -12,23 +12,22 @@ class MainController extends GetxController {
   final openAllNodes = false.obs;
   final loading = false.obs;
   final filter = ''.obs;
-  final notification = Rx<QNotification>(QNotification.empty());
   late final gridController = ScrollController();
   MainController({required this.appfile, required QlevarLocal locals})
-      : locals = locals.obs {
-    notification.listen((n) {
-      if (n.isEmpty) return;
-      Future.delayed(const Duration(seconds: 3), () {
-        notification(QNotification.empty());
-      });
-    });
-  }
+      : locals = locals.obs;
 
   int get listItemsCount => locals().children.length;
 
   Iterable<LocalBase> get children => filter.isEmpty
       ? locals().children
       : locals().children.where((i) => i.filter(filter()));
+
+  @override
+  void onClose() {
+    super.onClose();
+    gridController.dispose();
+    saveData();
+  }
 
   void addItem(List<int> hashMap, LocalItem item, {int? inserthashCode}) {
     LocalNode node = locals();
@@ -125,12 +124,6 @@ class MainController extends GetxController {
     loading(true);
     Get.find<StorageService>().saveLocals(appfile, locals());
     loading(false);
-    notification(QNotification.success(message: 'Data saved'));
-  }
-
-  @override
-  void onClose() {
-    gridController.dispose();
-    super.onClose();
+    showNotification('Success', 'Data saved');
   }
 }

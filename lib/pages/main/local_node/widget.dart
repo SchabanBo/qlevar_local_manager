@@ -30,7 +30,7 @@ class LocalNodeWidget extends StatelessWidget {
       data: _dragRequest,
       childWhenDragging: Container(
         height: 30,
-        width: Get.width,
+        width: double.infinity,
         color: AppColors.drag,
       ),
       child: _widget);

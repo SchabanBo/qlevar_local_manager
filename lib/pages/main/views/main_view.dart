@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../widgets/notification_widget.dart';
 import '../local_item/header.dart';
 import 'appbar/appbar.dart';
 import '../controllers/item_controller.dart';
@@ -22,7 +21,6 @@ class MainView extends GetView<MainController> {
 
   Widget get _buildList => Obx(() => Column(
         children: [
-          const NotificationWidget(),
           HeaderWidget(
               controller: LocalItemController(
                   LocalItem(name: 'Keys')

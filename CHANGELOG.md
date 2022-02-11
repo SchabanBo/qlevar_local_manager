@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## Unreleased
+
+- Add Notification
+- Remove GetMaterialApp
+- Use QOverlay
+- Edit Text with double click
+- Save the data when logout
+
 ## [1.2.0] 26.01.2022
 
 - Add Drag and drop functionality

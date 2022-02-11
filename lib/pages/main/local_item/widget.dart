@@ -33,7 +33,7 @@ class LocalItemWidget extends StatelessWidget {
                 data: _dragRequest,
                 childWhenDragging: Container(
                   height: 30,
-                  width: Get.width,
+                  width: double.infinity,
                   color: AppColors.drag,
                 ),
                 child: _widget)
@@ -44,7 +44,7 @@ class LocalItemWidget extends StatelessWidget {
                     child: Container(
                       padding: EdgeInsets.symmetric(
                           horizontal: startPadding + 8, vertical: 4),
-                      width: Get.width,
+                      width: double.infinity,
                       child: Text(data.first!.key,
                           style: const TextStyle(fontSize: 18)),
                     ),

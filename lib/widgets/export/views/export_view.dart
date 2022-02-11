@@ -38,7 +38,7 @@ class ExportView extends StatelessWidget {
         ElevatedButton(
             onPressed: () {
               controller.export();
-              Get.back();
+              Navigator.pop(context);
             },
             child: const Text('Export')),
       ],
