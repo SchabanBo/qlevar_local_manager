@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:q_overlay/q_overlay.dart';
 import '../../helpers/constants.dart';
 import 'views/settings_view.dart';
 
@@ -9,7 +9,10 @@ class SettingsIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      onPressed: () => Get.bottomSheet(const SettingsPage()),
+      onPressed: () => QPanel(
+        child: const SettingsPage(),
+        alignment: Alignment.centerRight,
+      ).show(),
       icon: const Icon(
         Icons.settings,
         color: AppColors.icon,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:q_overlay/q_overlay.dart';
 import '../../../models/qlocal.dart';
 import '../../settings/controllers/settings_controller.dart';
 import '../../../services/translators/google_translator_service.dart';
@@ -59,13 +60,19 @@ class OptionsWidget extends StatelessWidget {
 
   void translate() async {
     final languages = Get.find<MainController>().locals().languages;
-    final lan = await Get.dialog(AlertDialog(
-      title: const Text('Translate from'),
-      actions: languages
-          .map((e) =>
-              TextButton(onPressed: () => Get.back(result: e), child: Text(e)))
-          .toList(),
-    ));
+    final lan = await QPanel(
+        child: Column(
+      children: [
+        const Text('Translate from'),
+        ...languages
+            .map((e) => TextButton(
+                  onPressed: () => QOverlay.dismissLast(result: e),
+                  child: Text(e),
+                ))
+            .toList()
+      ],
+    )).show<String>();
+    if (lan == null) return;
     final settings = Get.find<SettingsController>().settings().tranlation;
     if (settings.googleApi.isEmpty) {
       showError('api key is missing',

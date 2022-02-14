@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import '../../../services/storage_service.dart';
 import '../../../helpers/constants.dart';
+import '../../../widgets/notification.dart';
 import '../../settings/models/models.dart';
 import '../../../models/qlocal.dart';
 
@@ -20,6 +21,13 @@ class MainController extends GetxController {
   Iterable<LocalBase> get children => filter.isEmpty
       ? locals().children
       : locals().children.where((i) => i.filter(filter()));
+
+  @override
+  void onClose() {
+    super.onClose();
+    gridController.dispose();
+    saveData();
+  }
 
   void addItem(List<int> hashMap, LocalItem item, {int? inserthashCode}) {
     LocalNode node = locals();
@@ -116,11 +124,6 @@ class MainController extends GetxController {
     loading(true);
     Get.find<StorageService>().saveLocals(appfile, locals());
     loading(false);
-  }
-
-  @override
-  void onClose() {
-    gridController.dispose();
-    super.onClose();
+    showNotification('Success', 'Data saved');
   }
 }

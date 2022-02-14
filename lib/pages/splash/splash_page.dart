@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:q_overlay/q_overlay.dart';
 import '../../helpers/constants.dart';
 import '../../services/storage_service.dart';
 import '../settings/controllers/settings_controller.dart';
@@ -29,7 +30,7 @@ class _SplashPageState extends State<SplashPage> {
     ),
   ]);
 
-  var _isBottomSheetOpen = false;
+  var _isPanelOpen = false;
 
   @override
   Widget build(BuildContext context) {
@@ -42,23 +43,22 @@ class _SplashPageState extends State<SplashPage> {
               if (s.hasData) {
                 Get.put(SettingsController(s.data!), permanent: true);
                 WidgetsBinding.instance
-                    .addPostFrameCallback((_) => selectApp());
+                    .addPostFrameCallback((_) => selectApp(context));
               }
               return welcome;
             }));
   }
 
-  Future<void> selectApp() async {
-    if (_isBottomSheetOpen) {
+  Future<void> selectApp(BuildContext context) async {
+    if (_isPanelOpen) {
       return;
     }
-    _isBottomSheetOpen = true;
-    final app = await Get.bottomSheet<AppLocalFile>(
-      const SettingsPage(isSelectApp: true),
-      enableDrag: true,
-      barrierColor: Colors.transparent,
-    );
-    _isBottomSheetOpen = false;
+    _isPanelOpen = true;
+    final app = await QPanel(
+      child: const SettingsPage(isSelectApp: true),
+      backgroundFilter: BackgroundFilterSettings.transparent(),
+    ).show<AppLocalFile>();
+    _isPanelOpen = false;
     if (app == null) {
       setState(() {});
       return;
@@ -69,6 +69,7 @@ class _SplashPageState extends State<SplashPage> {
       return;
     }
     Get.lazyPut(() => MainController(appfile: app, locals: loclas));
-    Get.offAll(() => const MainView());
+    Navigator.of(context)
+        .pushReplacement(MaterialPageRoute(builder: (_) => const MainView()));
   }
 }

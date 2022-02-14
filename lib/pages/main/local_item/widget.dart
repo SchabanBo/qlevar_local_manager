@@ -33,7 +33,7 @@ class LocalItemWidget extends StatelessWidget {
                 data: _dragRequest,
                 childWhenDragging: Container(
                   height: 30,
-                  width: Get.width,
+                  width: double.infinity,
                   color: AppColors.drag,
                 ),
                 child: _widget)
@@ -44,7 +44,7 @@ class LocalItemWidget extends StatelessWidget {
                     child: Container(
                       padding: EdgeInsets.symmetric(
                           horizontal: startPadding + 8, vertical: 4),
-                      width: Get.width,
+                      width: double.infinity,
                       child: Text(data.first!.key,
                           style: const TextStyle(fontSize: 18)),
                     ),
@@ -77,11 +77,14 @@ class _LocalItemWidget extends StatelessWidget {
               child: QEditableText(
                   text: controller.item.name,
                   onEdit: (s) => controller.updateKey(s))),
-          ...controller.item.values.entries.map((kv) => Expanded(
-              child: QEditableText(
-                  key: Key(kv.key + "_" + kv.value),
-                  text: kv.value,
-                  onEdit: (s) => controller.updateValue(kv.key, s)))),
+          ...controller.mainController.locals().languages.map((l) {
+            final value = controller.item.values[l] ?? '';
+            return Expanded(
+                child: QEditableText(
+                    key: Key(l + "_" + value),
+                    text: value,
+                    onEdit: (s) => controller.updateValue(l, s)));
+          }),
           OptionsWidget(controller: controller),
           const SizedBox(width: 8),
         ],
