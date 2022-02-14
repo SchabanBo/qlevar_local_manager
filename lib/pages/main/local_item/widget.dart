@@ -77,11 +77,14 @@ class _LocalItemWidget extends StatelessWidget {
               child: QEditableText(
                   text: controller.item.name,
                   onEdit: (s) => controller.updateKey(s))),
-          ...controller.item.values.entries.map((kv) => Expanded(
-              child: QEditableText(
-                  key: Key(kv.key + "_" + kv.value),
-                  text: kv.value,
-                  onEdit: (s) => controller.updateValue(kv.key, s)))),
+          ...controller.mainController.locals().languages.map((l) {
+            final value = controller.item.values[l] ?? '';
+            return Expanded(
+                child: QEditableText(
+                    key: Key(l + "_" + value),
+                    text: value,
+                    onEdit: (s) => controller.updateValue(l, s)));
+          }),
           OptionsWidget(controller: controller),
           const SizedBox(width: 8),
         ],

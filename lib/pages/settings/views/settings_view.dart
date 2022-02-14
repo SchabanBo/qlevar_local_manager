@@ -36,8 +36,10 @@ class _SettingsPageState extends State<SettingsPage> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(widget.isSelectApp ? 'Select App' : 'Settings',
-                  style: const TextStyle(fontSize: 24)),
+              Center(
+                child: Text(widget.isSelectApp ? 'Select App' : 'Settings',
+                    style: const TextStyle(fontSize: 24)),
+              ),
               const SizedBox(height: 15),
               AppsSection(widget.isSelectApp),
               TranslationSection(controller),

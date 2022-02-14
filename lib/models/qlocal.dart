@@ -47,6 +47,10 @@ abstract class LocalBase {
   bool filter(String f);
 
   void ensureAllLanguagesExist(List<String> languages);
+
+  void removeLanguage(String language);
+
+  void updateLanguage(String oldLanguage, String newLanguage);
 }
 
 class LocalNode extends LocalBase {
@@ -92,6 +96,20 @@ class LocalNode extends LocalBase {
     }
   }
 
+  @override
+  void removeLanguage(String language) {
+    for (var child in children) {
+      child.removeLanguage(language);
+    }
+  }
+
+  @override
+  void updateLanguage(String oldLanguage, String newLanguage) {
+    for (var child in children) {
+      child.updateLanguage(oldLanguage, newLanguage);
+    }
+  }
+
   JsonNode getNode(String currentLan) {
     final result = JsonNode(name);
     for (var child in children) {
@@ -124,6 +142,22 @@ class LocalItem extends LocalBase {
       if (!values.containsKey(language)) {
         add(language, '');
       }
+    }
+  }
+
+  @override
+  void removeLanguage(String language) {
+    if (values.containsKey(language)) {
+      values.removeWhere((key, value) => key == language);
+    }
+  }
+
+  @override
+  void updateLanguage(String oldLanguage, String newLanguage) {
+    if (values.containsKey(oldLanguage)) {
+      final value = values[oldLanguage]!;
+      values.remove(oldLanguage);
+      values.addAll({newLanguage: value});
     }
   }
 

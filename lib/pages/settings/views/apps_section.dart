@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:q_overlay/q_overlay.dart';
+import '../../../helpers/constants.dart';
 import '../../../services/storage_service.dart';
 import '../../../helpers/path_picker.dart';
 import '../controllers/settings_controller.dart';
@@ -44,18 +45,20 @@ class _AppsSectionState extends State<AppsSection> {
                   itemCount: controller.settings().apps.length,
                   itemBuilder: (c, i) {
                     final app = controller.settings().apps[i];
-                    return ListTile(
-                      title: Text(app.name),
-                      subtitle: kIsWeb ? null : Text(app.path),
-                      trailing: InkWell(
-                        onTap: () {
-                          controller.settings().apps.remove(app);
-                          setState(() {});
-                        },
-                        child: const Icon(Icons.delete, color: Colors.red),
+                    return Card(
+                      child: ListTile(
+                        title: Text(app.name),
+                        subtitle: kIsWeb ? null : Text(app.path),
+                        trailing: InkWell(
+                          onTap: () {
+                            controller.settings().apps.remove(app);
+                            setState(() {});
+                          },
+                          child: const Icon(Icons.delete, color: Colors.red),
+                        ),
+                        onTap: () =>
+                            QOverlay.dismissLast<AppLocalFile>(result: app),
                       ),
-                      onTap: () =>
-                          QOverlay.dismissLast<AppLocalFile>(result: app),
                     );
                   }),
         ],
