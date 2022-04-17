@@ -1,12 +1,13 @@
 # CHANGELOG
 
-## Unreleased
+## [1.3.0] 16.02.2022
 
 - Add Notification
 - Remove GetMaterialApp
 - Use QOverlay
 - Edit Text with double click
 - Save the data when logout
+- Add/Edit/Delete Language
 
 ## [1.2.0] 26.01.2022
 

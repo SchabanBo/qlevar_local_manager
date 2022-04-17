@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:q_overlay/q_overlay.dart';
+
 import '../../../helpers/constants.dart';
-import 'add_item.dart';
 import '../controllers/main_controller.dart';
 import '../controllers/node_controller.dart';
+import 'add_item.dart';
 
 class OptionsWidget extends StatelessWidget {
   final LocalNodeController controller;
@@ -25,15 +27,36 @@ class OptionsWidget extends StatelessWidget {
                   Icons.delete_outline,
                   color: AppColors.icon,
                 )),
-            onTap: () => Get.defaultDialog(
-                title: 'Delete',
-                middleText:
-                    'Are you sure you want to delete ${controller.item.value.name}?',
-                onConfirm: () {
-                  Get.find<MainController>().removeNode(controller.indexMap);
-                  Get.back();
-                },
-                onCancel: () {}),
+            onTap: () => QDialog(
+                child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                      'Are you sure you want to delete ${controller.item.value.name}?'),
+                  const SizedBox(height: 8),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Spacer(),
+                      TextButton(
+                          onPressed: QOverlay.dismissLast,
+                          child: const Text('No')),
+                      const SizedBox(width: 8),
+                      TextButton(
+                          onPressed: () {
+                            Get.find<MainController>()
+                                .removeNode(controller.indexMap);
+                            QOverlay.dismissLast();
+                          },
+                          child: const Text('Yes')),
+                    ],
+                  )
+                ],
+              ),
+            )).show(),
           ),
         ],
       );

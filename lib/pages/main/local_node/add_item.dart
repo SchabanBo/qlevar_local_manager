@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:q_overlay/q_overlay.dart';
+
 import '../../../helpers/constants.dart';
 import '../../../models/qlocal.dart';
 import '../controllers/main_controller.dart';
@@ -18,10 +19,7 @@ class AddLocalNode extends StatelessWidget {
             color: AppColors.icon,
           )),
       onTap: () async {
-        final key = await QPanel(
-          child: _GetItemKey(),
-          alignment: Alignment.center,
-        ).show<String>();
+        final key = await QDialog(child: _GetItemKey()).show<String>();
         if (key == null || key.isEmpty) {
           return;
         }
@@ -42,10 +40,7 @@ class AddLocalItem extends StatelessWidget {
             color: AppColors.icon,
           )),
       onTap: () async {
-        final key = await QPanel(
-          child: _GetItemKey(),
-          alignment: Alignment.center,
-        ).show<String>();
+        final key = await QDialog(child: _GetItemKey()).show<String>();
         if (key == null || key.isEmpty) {
           return;
         }
