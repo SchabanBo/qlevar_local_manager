@@ -28,33 +28,36 @@ class OptionsWidget extends StatelessWidget {
                   color: AppColors.icon,
                 )),
             onTap: () => QDialog(
-                child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                      'Are you sure you want to delete ${controller.item.value.name}?'),
-                  const SizedBox(height: 8),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Spacer(),
-                      TextButton(
-                          onPressed: QOverlay.dismissLast,
-                          child: const Text('No')),
-                      const SizedBox(width: 8),
-                      TextButton(
-                          onPressed: () {
-                            Get.find<MainController>()
-                                .removeNode(controller.indexMap);
-                            QOverlay.dismissLast();
-                          },
-                          child: const Text('Yes')),
-                    ],
-                  )
-                ],
+                child: SizedBox(
+              width: 250,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                        'Are you sure you want to delete ${controller.item.value.name}?'),
+                    const SizedBox(height: 8),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Spacer(),
+                        TextButton(
+                            onPressed: QOverlay.dismissLast,
+                            child: const Text('No')),
+                        const SizedBox(width: 8),
+                        TextButton(
+                            onPressed: () {
+                              Get.find<MainController>()
+                                  .removeNode(controller.indexMap);
+                              QOverlay.dismissLast();
+                            },
+                            child: const Text('Yes')),
+                      ],
+                    )
+                  ],
+                ),
               ),
             )).show(),
           ),

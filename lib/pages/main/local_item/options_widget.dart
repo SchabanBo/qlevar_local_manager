@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:q_overlay/q_overlay.dart';
-import '../../../models/qlocal.dart';
-import '../../settings/controllers/settings_controller.dart';
-import '../../../services/translators/google_translator_service.dart';
+
 import '../../../helpers/constants.dart';
-import '../controllers/main_controller.dart';
+import '../../../models/qlocal.dart';
+import '../../../services/translators/google_translator_service.dart';
+import '../../settings/controllers/settings_controller.dart';
 import '../controllers/item_controller.dart';
+import '../controllers/main_controller.dart';
 
 class OptionsWidget extends StatelessWidget {
   final LocalItemController controller;
@@ -39,22 +40,45 @@ class OptionsWidget extends StatelessWidget {
           ),
           const SizedBox(width: 5),
           InkWell(
-            child: const Tooltip(
-                message: 'Delete',
-                child: Icon(
-                  Icons.delete_outline,
-                  color: AppColors.icon,
-                )),
-            onTap: () => Get.defaultDialog(
-                title: 'Delete',
-                middleText:
-                    'Are you sure you want to delete ${controller.item.name}?',
-                onConfirm: () {
-                  Get.find<MainController>().removeItem(controller.indexMap);
-                  Get.back();
-                },
-                onCancel: () {}),
-          ),
+              child: const Tooltip(
+                  message: 'Delete',
+                  child: Icon(
+                    Icons.delete_outline,
+                    color: AppColors.icon,
+                  )),
+              onTap: () => QDialog(
+                      child: SizedBox(
+                    width: 250,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                              'Are you sure you want to delete ${controller.item.name}?'),
+                          const SizedBox(height: 8),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Spacer(),
+                              TextButton(
+                                  onPressed: QOverlay.dismissLast,
+                                  child: const Text('No')),
+                              const SizedBox(width: 8),
+                              TextButton(
+                                  onPressed: () {
+                                    Get.find<MainController>()
+                                        .removeItem(controller.indexMap);
+                                    QOverlay.dismissLast();
+                                  },
+                                  child: const Text('Yes')),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                  )).show()),
         ],
       );
 

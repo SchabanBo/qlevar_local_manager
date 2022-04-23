@@ -53,25 +53,44 @@ class _GetItemKey extends StatelessWidget {
   final controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      title: const Text('Add Key'),
-      content: TextFormField(
-        autofocus: true,
-        controller: controller,
-        onFieldSubmitted: (s) => submit(),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: SizedBox(
+        width: 250,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text('Add Key'),
+            const SizedBox(height: 8),
+            TextFormField(
+              autofocus: true,
+              controller: controller,
+              onFieldSubmitted: (s) => submit(),
+            ),
+            const SizedBox(height: 8),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Spacer(),
+                TextButton(
+                    onPressed: QOverlay.dismissLast,
+                    child: const Text('Cancel')),
+                const SizedBox(width: 8),
+                TextButton(onPressed: submit, child: const Text('Ok')),
+              ],
+            )
+          ],
+        ),
       ),
-      actions: [
-        ElevatedButton(onPressed: Get.back, child: const Text('Cancel')),
-        ElevatedButton(onPressed: submit, child: const Text('Ok')),
-      ],
     );
   }
 
   void submit() {
     if (controller.text.contains(' ')) {
-      showError('Error', 'Key con not conains white spaces');
+      showError('Error', 'Key con not contains white spaces');
       return;
     }
-    Get.back<String>(result: controller.text);
+    QOverlay.dismissLast(result: controller.text);
   }
 }
