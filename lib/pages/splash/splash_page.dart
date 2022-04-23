@@ -20,34 +20,40 @@ class SplashPage extends StatefulWidget {
 class _SplashPageState extends State<SplashPage> {
   final StorageService _storageController = Get.find<StorageService>();
 
-  final Widget welcome = Column(children: const [
-    SizedBox(height: 50),
-    Center(
-      child: Text('Qlevar localization manager',
+  final Widget welcome = Column(
+    children: const [
+      SizedBox(height: 50),
+      Center(
+        child: Text(
+          'Qlevar localization manager',
           style: TextStyle(
             fontSize: 28,
             color: Colors.amber,
-          )),
-    ),
-  ]);
+          ),
+        ),
+      ),
+    ],
+  );
 
   var _isPanelOpen = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: AppColors.node,
-        body: FutureBuilder<Settings>(
-            future: Future.delayed(const Duration(seconds: 1),
-                () => _storageController.loadSettings()),
-            builder: (c, s) {
-              if (s.hasData) {
-                Get.put(SettingsController(s.data!), permanent: true);
-                WidgetsBinding.instance
-                    .addPostFrameCallback((_) => selectApp(context));
-              }
-              return welcome;
-            }));
+      backgroundColor: AppColors.node,
+      body: FutureBuilder<Settings>(
+        future: Future.delayed(const Duration(seconds: 1),
+            () => _storageController.loadSettings()),
+        builder: (c, s) {
+          if (s.hasData) {
+            Get.put(SettingsController(s.data!), permanent: true);
+            WidgetsBinding.instance
+                .addPostFrameCallback((_) => selectApp(context));
+          }
+          return welcome;
+        },
+      ),
+    );
   }
 
   Future<void> selectApp(BuildContext context) async {
@@ -72,7 +78,8 @@ class _SplashPageState extends State<SplashPage> {
       setState(() {});
       return;
     }
-    Get.lazyPut(() => MainController(appFile: app, locals: locals));
+    await Get.delete<MainController>();
+    Get.put(MainController(appFile: app, locals: locals));
     Navigator.of(context)
         .pushReplacement(MaterialPageRoute(builder: (_) => const MainView()));
   }

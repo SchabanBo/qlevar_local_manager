@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../controllers/main_controller.dart';
-import 'leading_actions.dart';
 import 'actions_widget.dart';
+import 'leading_actions.dart';
 import 'title_widget.dart';
 
 class QAppBar extends StatelessWidget with PreferredSizeWidget {
@@ -15,10 +15,10 @@ class QAppBar extends StatelessWidget with PreferredSizeWidget {
     return Container(
       decoration: const BoxDecoration(color: Color(0xFF1A1A1A)),
       child: Row(
-        children: [
-          const Expanded(child: LeadingActions()),
+        children: const [
+          Expanded(child: LeadingActions()),
           TitleWidget(),
-          const Expanded(child: ActionsWidget()),
+          Expanded(child: ActionsWidget()),
         ],
       ),
     );
