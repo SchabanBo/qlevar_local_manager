@@ -1,18 +1,20 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import '../../../services/storage_service.dart';
+
 import '../../../helpers/constants.dart';
-import '../../settings/models/models.dart';
 import '../../../models/qlocal.dart';
+import '../../../services/storage_service.dart';
+import '../../../widgets/notification.dart';
+import '../../settings/models/models.dart';
 
 class MainController extends GetxController {
-  final AppLocalFile appfile;
+  final AppLocalFile appFile;
   final Rx<QlevarLocal> locals;
   final openAllNodes = false.obs;
   final loading = false.obs;
   final filter = ''.obs;
   late final gridController = ScrollController();
-  MainController({required this.appfile, required QlevarLocal locals})
+  MainController({required this.appFile, required QlevarLocal locals})
       : locals = locals.obs;
 
   int get listItemsCount => locals().children.length;
@@ -21,7 +23,14 @@ class MainController extends GetxController {
       ? locals().children
       : locals().children.where((i) => i.filter(filter()));
 
-  void addItem(List<int> hashMap, LocalItem item, {int? inserthashCode}) {
+  @override
+  void onClose() {
+    super.onClose();
+    gridController.dispose();
+    saveData();
+  }
+
+  void addItem(List<int> hashMap, LocalItem item, {int? insertHashCode}) {
     LocalNode node = locals();
     for (var i = 1; i < hashMap.length; i++) {
       node = node.nodes.firstWhere((e) => e.hashCode == hashMap[i]);
@@ -35,9 +44,9 @@ class MainController extends GetxController {
       item.values[locals().languages.first] = item.name;
     }
 
-    if (inserthashCode != null) {
+    if (insertHashCode != null) {
       node.children.insert(
-          node.items.indexWhere((e) => e.hashCode == inserthashCode), item);
+          node.items.indexWhere((e) => e.hashCode == insertHashCode), item);
     } else {
       node.children.add(item);
     }
@@ -45,7 +54,7 @@ class MainController extends GetxController {
     locals.refresh();
   }
 
-  void addNode(List<int> hashMap, LocalNode newNode, {int? inserthashCode}) {
+  void addNode(List<int> hashMap, LocalNode newNode, {int? insertHashCode}) {
     LocalNode node = locals();
     for (var i = 1; i < hashMap.length; i++) {
       node = node.nodes.firstWhere((e) => e.hashCode == hashMap[i]);
@@ -54,9 +63,9 @@ class MainController extends GetxController {
       showError('Error', 'Key with name ${node.name} already exist');
       return;
     }
-    if (inserthashCode != null) {
+    if (insertHashCode != null) {
       node.children.insert(
-          node.items.indexWhere((e) => e.hashCode == inserthashCode), newNode);
+          node.items.indexWhere((e) => e.hashCode == insertHashCode), newNode);
     } else {
       node.children.add(newNode);
     }
@@ -114,13 +123,8 @@ class MainController extends GetxController {
 
   Future<void> saveData() async {
     loading(true);
-    Get.find<StorageService>().saveLocals(appfile, locals());
+    Get.find<StorageService>().saveLocals(appFile, locals());
     loading(false);
-  }
-
-  @override
-  void onClose() {
-    gridController.dispose();
-    super.onClose();
+    showNotification('Success', 'Data saved');
   }
 }

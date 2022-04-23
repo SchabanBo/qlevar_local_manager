@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import '../../helpers/constants.dart';
 import '../../helpers/path_picker.dart';
 import '../../services/importers/json_import.dart';
@@ -10,7 +9,7 @@ class ImportIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      onPressed: import,
+      onPressed: () => import(context),
       icon: const Icon(
         Icons.download,
         color: AppColors.icon,
@@ -19,31 +18,43 @@ class ImportIcon extends StatelessWidget {
     );
   }
 
-  void import() async {
+  void import(BuildContext context) async {
     var path = '';
     var lan = '';
-    await Get.defaultDialog(
-      title: 'Import',
-      middleText: 'Import language from json file',
-      content: Column(
-        children: [
-          TextField(
-            onChanged: (value) => lan = value,
-            decoration: const InputDecoration(
-              hintText: 'Language',
-              border: OutlineInputBorder(),
-            ),
-          ),
-          PathPicker(
-            path: path,
-            title: 'Select file',
-            onChange: (s) => path = s,
-            type: PathType.file,
-          ),
-        ],
-      ),
-      onConfirm: Get.back,
-    );
+
+    await showDialog(
+        context: context,
+        builder: (c) => AlertDialog(
+              title: const Text('Import language from json file'),
+              content:
+                  Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+                TextField(
+                  onChanged: (value) => lan = value,
+                  decoration: const InputDecoration(
+                    hintText: 'Language',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                PathPicker(
+                  path: path,
+                  title: 'Select file',
+                  onChange: (s) => path = s,
+                  type: PathType.file,
+                ),
+              ]),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      lan = '';
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Cancel')),
+                TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: const Text('Import'))
+              ],
+            ));
+
     if (path.isEmpty || lan.isEmpty) {
       return;
     }

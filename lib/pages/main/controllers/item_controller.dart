@@ -1,7 +1,8 @@
 import 'package:get/get.dart';
+
 import '../../../models/drag_request.dart';
-import 'main_controller.dart';
 import '../../../models/qlocal.dart';
+import 'main_controller.dart';
 
 class LocalItemController extends GetxController {
   final LocalItem item;
@@ -38,7 +39,7 @@ class LocalItemController extends GetxController {
     mainController.addItem(
       map,
       request.item,
-      inserthashCode: item.hashCode,
+      insertHashCode: item.hashCode,
     );
   }
 
@@ -49,7 +50,7 @@ class LocalItemController extends GetxController {
     mainController.addNode(
       map,
       request.node,
-      inserthashCode: item.hashCode,
+      insertHashCode: item.hashCode,
     );
   }
 }

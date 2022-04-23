@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:q_overlay/q_overlay.dart';
+
 import '../../helpers/constants.dart';
 import '../../services/storage_service.dart';
+import '../main/controllers/main_controller.dart';
+import '../main/views/main_view.dart';
 import '../settings/controllers/settings_controller.dart';
 import '../settings/models/models.dart';
 import '../settings/views/settings_view.dart';
-import '../main/controllers/main_controller.dart';
-import '../main/views/main_view.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);
@@ -29,7 +31,7 @@ class _SplashPageState extends State<SplashPage> {
     ),
   ]);
 
-  var _isBottomSheetOpen = false;
+  var _isPanelOpen = false;
 
   @override
   Widget build(BuildContext context) {
@@ -41,34 +43,37 @@ class _SplashPageState extends State<SplashPage> {
             builder: (c, s) {
               if (s.hasData) {
                 Get.put(SettingsController(s.data!), permanent: true);
-                WidgetsBinding.instance!
-                    .addPostFrameCallback((_) => selectApp());
+                WidgetsBinding.instance
+                    .addPostFrameCallback((_) => selectApp(context));
               }
               return welcome;
             }));
   }
 
-  Future<void> selectApp() async {
-    if (_isBottomSheetOpen) {
+  Future<void> selectApp(BuildContext context) async {
+    if (_isPanelOpen) {
       return;
     }
-    _isBottomSheetOpen = true;
-    final app = await Get.bottomSheet<AppLocalFile>(
-      const SettingsPage(isSelectApp: true),
-      enableDrag: true,
-      barrierColor: Colors.transparent,
-    );
-    _isBottomSheetOpen = false;
+    _isPanelOpen = true;
+    final app = await QPanel(
+      child: const SettingsPage(isSelectApp: true),
+      backgroundFilter: const BackgroundFilterSettings(
+        blurX: 0.001,
+        blurY: 0.001,
+      ),
+    ).show<AppLocalFile>();
+    _isPanelOpen = false;
     if (app == null) {
       setState(() {});
       return;
     }
-    final loclas = await _storageController.loadLocals(app);
-    if (loclas == null) {
+    final locals = await _storageController.loadLocals(app);
+    if (locals == null) {
       setState(() {});
       return;
     }
-    Get.lazyPut(() => MainController(appfile: app, locals: loclas));
-    Get.offAll(() => const MainView());
+    Get.lazyPut(() => MainController(appFile: app, locals: locals));
+    Navigator.of(context)
+        .pushReplacement(MaterialPageRoute(builder: (_) => const MainView()));
   }
 }

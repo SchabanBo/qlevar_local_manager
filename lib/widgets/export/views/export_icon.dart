@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import '../../../helpers/constants.dart';
 import 'export_view.dart';
 
@@ -9,7 +8,10 @@ class ExportIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      onPressed: () => Get.dialog(ExportView()),
+      onPressed: () => showDialog(
+        context: context,
+        builder: (_) => ExportView(),
+      ),
       icon: const Icon(
         Icons.upload,
         color: AppColors.icon,

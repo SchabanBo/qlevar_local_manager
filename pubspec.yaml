@@ -1,7 +1,7 @@
 name: qlevar_local_manager
-description: A new Flutter project.
+description: This app will help you manage you applications locals easily. set you locals in groups, translate them with google translation and then export them to a class that is useable with Getx.
 publish_to: 'none' 
-version: 1.0.0+1
+version: 1.3.0
 environment:
   sdk: ">=2.12.0 <3.0.0"
 
@@ -11,7 +11,9 @@ dependencies:
   shared_preferences: ^2.0.11
   get: ^4.6.1
   file_picker: ^4.3.2
-  
+  q_overlay:
+    git: https://github.com/SchabanBo/q_overlay.git
+    
 dev_dependencies:
   flutter_test:
     sdk: flutter

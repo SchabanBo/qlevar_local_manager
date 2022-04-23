@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:q_overlay/q_overlay.dart';
 import 'services/storage_service.dart';
 import 'pages/splash/splash_page.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   Get.put(StorageService());
   runApp(const MyApp());
 }
@@ -12,8 +14,11 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
+    final key = GlobalKey<NavigatorState>();
+    QOverlay.navigationKey = key;
+    return MaterialApp(
       title: 'Qlevar Local Manager',
+      navigatorKey: key,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         backgroundColor: const Color(0xFF212121),

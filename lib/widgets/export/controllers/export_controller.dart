@@ -1,10 +1,12 @@
 import 'package:get/get.dart';
+
 import '../../../pages/main/controllers/main_controller.dart';
 import '../../../services/exporters/easy_localization_exporter_servvice.dart';
 import '../../../services/exporters/getx_exporter_servvice.dart';
+import '../../notification.dart';
 
 class ExportController extends GetxController {
-  final RxString path = Get.find<MainController>().appfile.exportPath.obs;
+  final RxString path = Get.find<MainController>().appFile.exportPath.obs;
   final Rx<ExportAs> exportAs = ExportAs.getx.obs;
 
   void export() {
@@ -21,6 +23,7 @@ class ExportController extends GetxController {
     }
 
     mainCon.loading.value = false;
+    showNotification('Export Success', 'Locals exported successfully');
   }
 }
 

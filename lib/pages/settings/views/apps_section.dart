@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:q_overlay/q_overlay.dart';
+import '../../../helpers/constants.dart';
 import '../../../services/storage_service.dart';
 import '../../../helpers/path_picker.dart';
 import '../controllers/settings_controller.dart';
@@ -43,20 +45,20 @@ class _AppsSectionState extends State<AppsSection> {
                   itemCount: controller.settings().apps.length,
                   itemBuilder: (c, i) {
                     final app = controller.settings().apps[i];
-                    return ListTile(
-                      title: Text(app.name),
-                      subtitle: kIsWeb ? null : Text(app.path),
-                      trailing: InkWell(
-                        onTap: () {
-                          controller.settings().apps.remove(app);
-                          setState(() {});
-                        },
-                        child: const Icon(
-                          Icons.delete,
-                          color: Colors.red,
+                    return Card(
+                      child: ListTile(
+                        title: Text(app.name),
+                        subtitle: kIsWeb ? null : Text(app.path),
+                        trailing: InkWell(
+                          onTap: () {
+                            controller.settings().apps.remove(app);
+                            setState(() {});
+                          },
+                          child: const Icon(Icons.delete, color: Colors.red),
                         ),
+                        onTap: () =>
+                            QOverlay.dismissLast<AppLocalFile>(result: app),
                       ),
-                      onTap: () => Get.back<AppLocalFile>(result: app),
                     );
                   }),
         ],
@@ -90,28 +92,41 @@ class _AppsSectionState extends State<AppsSection> {
   void _openAppFromFile() async {
     var data = '';
     var appName = '';
-    await Get.defaultDialog(
-      title: 'Import',
-      middleText: 'Import app from file',
-      content: Column(
-        children: [
-          TextField(
-            onChanged: (value) => appName = value,
-            decoration: const InputDecoration(
-              hintText: 'App Name',
-              border: OutlineInputBorder(),
-            ),
-          ),
-          PathPicker(
-            path: data,
-            title: 'Select file',
-            onChange: (s) => data = s,
-            type: PathType.file,
-          ),
-        ],
-      ),
-      onConfirm: Get.back,
-    );
+
+    await showDialog(
+        context: context,
+        builder: (c) => AlertDialog(
+              title: const Text('Import Data'),
+              content:
+                  Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+                const Text('Import language from json file'),
+                TextField(
+                  onChanged: (value) => appName = value,
+                  decoration: const InputDecoration(
+                    hintText: 'App Name',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                PathPicker(
+                  path: data,
+                  title: 'Select file',
+                  onChange: (s) => data = s,
+                  type: PathType.file,
+                ),
+              ]),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      data = '';
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Cancel')),
+                TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: const Text('Import'))
+              ],
+            ));
+
     if (data.isEmpty || appName.isEmpty) return;
     final app = AppLocalFile(
       name: appName,
@@ -121,7 +136,7 @@ class _AppsSectionState extends State<AppsSection> {
     controller.settings().apps.add(app);
     Get.find<StorageService>().saveSettings(controller.settings.value);
     await Get.find<StorageService>().importLocalsWeb(appName, data);
-    Get.back<AppLocalFile>(result: app);
+    QOverlay.dismissLast<AppLocalFile>(result: app);
   }
 }
 
