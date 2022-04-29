@@ -1,11 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:q_overlay/q_overlay.dart';
-import '../../../helpers/constants.dart';
-import '../../../services/storage_service.dart';
-import '../../../helpers/path_picker.dart';
-import '../controllers/settings_controller.dart';
 import 'package:get/get.dart';
+import 'package:q_overlay/q_overlay.dart';
+
+import '../../../helpers/path_picker.dart';
+import '../../../services/storage_service.dart';
+import '../controllers/settings_controller.dart';
 import '../models/models.dart';
 
 class AppsSection extends StatefulWidget {
@@ -92,40 +92,54 @@ class _AppsSectionState extends State<AppsSection> {
   void _openAppFromFile() async {
     var data = '';
     var appName = '';
-
-    await showDialog(
-        context: context,
-        builder: (c) => AlertDialog(
-              title: const Text('Import Data'),
-              content:
-                  Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-                const Text('Import language from json file'),
-                TextField(
-                  onChanged: (value) => appName = value,
-                  decoration: const InputDecoration(
-                    hintText: 'App Name',
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-                PathPicker(
-                  path: data,
-                  title: 'Select file',
-                  onChange: (s) => data = s,
-                  type: PathType.file,
-                ),
-              ]),
-              actions: [
+    await QDialog(
+      child: Container(
+        padding: const EdgeInsets.all(8),
+        width: 500,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text(
+              'Import Data',
+              style: TextStyle(fontSize: 24),
+            ),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text('Import language from json file'),
+            ),
+            TextField(
+              onChanged: (value) => appName = value,
+              decoration: const InputDecoration(
+                hintText: 'App Name',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            PathPicker(
+              path: data,
+              title: 'Select file',
+              onChange: (s) => data = s,
+              type: PathType.file,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
                 TextButton(
-                    onPressed: () {
-                      data = '';
-                      Navigator.pop(context);
-                    },
-                    child: const Text('Cancel')),
+                  onPressed: () {
+                    data = '';
+                    QOverlay.dismissLast();
+                  },
+                  child: const Text('Cancel'),
+                ),
                 TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: const Text('Import'))
+                  onPressed: () => QOverlay.dismissLast(),
+                  child: const Text('Import'),
+                )
               ],
-            ));
+            )
+          ],
+        ),
+      ),
+    ).show();
 
     if (data.isEmpty || appName.isEmpty) return;
     final app = AppLocalFile(

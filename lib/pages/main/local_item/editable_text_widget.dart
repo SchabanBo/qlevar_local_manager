@@ -14,7 +14,9 @@ class QEditableText extends StatelessWidget {
   Widget build(BuildContext context) {
     return ObxValue<RxBool>(
         (edit) => InkWell(
-            onDoubleTap: () => edit.toggle(),
+            onDoubleTap: () {
+              edit(!edit());
+            },
             child: Padding(
               padding: const EdgeInsets.all(4.0),
               child: AnimatedSwitcher(
@@ -61,6 +63,6 @@ class QEditableText extends StatelessWidget {
 
   void save(RxBool edit) {
     onEdit(controller.text);
-    edit.toggle();
+    edit(!edit());
   }
 }

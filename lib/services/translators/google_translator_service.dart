@@ -1,36 +1,38 @@
 import 'package:get/get.dart';
+
 import '../../models/qlocal.dart';
+import '../../widgets/notification.dart';
 
 class GoogleTranslatorService extends GetConnect {
   final String apiKey;
   GoogleTranslatorService(this.apiKey);
 
-  Future<LocalItem> tranlate(LocalItem item, String from) async {
+  Future<LocalItem> translate(LocalItem item, String from) async {
     try {
       for (var i = 0; i < item.values.length; i++) {
         final key = item.values.keys.elementAt(i);
         if (key == from || item.values.values.elementAt(i).isNotEmpty) {
           continue;
         }
-        item.values[key] = await getTranlation(item.values[from]!, from, key);
+        item.values[key] = await getTranslation(item.values[from]!, from, key);
       }
     } on Exception catch (e) {
-      Get.defaultDialog(title: 'Error Tranlating', middleText: e.toString());
+      showNotification('Error Translating', e.toString());
     }
     return item;
   }
 
-  Future<String> getTranlation(String value, String from, String to) async {
+  Future<String> getTranslation(String value, String from, String to) async {
     final request = await get(
         'https://translation.googleapis.com/language/translate/v2',
         query: {
           'key': apiKey,
           'q': value,
-          'target': to,
-          'source': from,
+          'target': to.substring(0, 2),
+          'source': from.substring(0, 2),
         });
     if (request.status.code != 200) {
-      throw Exception(request.body['error']['message']);
+      throw Exception(request.bodyString);
     }
     final result = request.body["data"]!["translations"]![0]!["translatedText"];
     return result;

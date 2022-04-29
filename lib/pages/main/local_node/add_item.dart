@@ -4,6 +4,7 @@ import 'package:q_overlay/q_overlay.dart';
 
 import '../../../helpers/constants.dart';
 import '../../../models/qlocal.dart';
+import '../../../widgets/notification.dart';
 import '../controllers/main_controller.dart';
 
 class AddLocalNode extends StatelessWidget {
@@ -88,7 +89,7 @@ class _GetItemKey extends StatelessWidget {
 
   void submit() {
     if (controller.text.contains(' ')) {
-      showError('Error', 'Key con not contains white spaces');
+      showNotification('Error', 'Key con not contains white spaces');
       return;
     }
     QOverlay.dismissLast(result: controller.text);

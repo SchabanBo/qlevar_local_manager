@@ -6,6 +6,7 @@ import 'package:q_overlay/q_overlay.dart';
 import '../../../helpers/constants.dart';
 import '../../../models/qlocal.dart';
 import '../../../services/translators/google_translator_service.dart';
+import '../../../widgets/notification.dart';
 import '../../settings/controllers/settings_controller.dart';
 import '../controllers/item_controller.dart';
 import '../controllers/main_controller.dart';
@@ -84,27 +85,37 @@ class OptionsWidget extends StatelessWidget {
 
   void translate() async {
     final languages = Get.find<MainController>().locals().languages;
-    final lan = await QPanel(
-        child: Column(
-      children: [
-        const Text('Translate from'),
-        ...languages
-            .map((e) => TextButton(
-                  onPressed: () => QOverlay.dismissLast(result: e),
-                  child: Text(e),
-                ))
-            .toList()
-      ],
-    )).show<String>();
+    final lan = await QDialog(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text(
+              'Translate from :',
+              style: TextStyle(
+                fontSize: 24,
+              ),
+            ),
+            ...languages
+                .map((e) => TextButton(
+                      onPressed: () => QOverlay.dismissLast(result: e),
+                      child: Text(e),
+                    ))
+                .toList()
+          ],
+        ),
+      ),
+    ).show<String>();
     if (lan == null) return;
     final settings = Get.find<SettingsController>().settings().tranlation;
     if (settings.googleApi.isEmpty) {
-      showError('api key is missing',
+      showNotification('api key is missing',
           'Google api key is empty, please set it first in the settings');
       return;
     }
     final serivce = GoogleTranslatorService(settings.googleApi);
-    await serivce.tranlate(controller.item, lan);
+    await serivce.translate(controller.item, lan);
     Get.find<MainController>().locals.refresh();
   }
 

@@ -64,6 +64,7 @@ class _SplashPageState extends State<SplashPage> {
     final app = await QPanel(
       child: const SettingsPage(isSelectApp: true),
       backgroundFilter: const BackgroundFilterSettings(
+        color: Colors.transparent,
         blurX: 0.001,
         blurY: 0.001,
       ),

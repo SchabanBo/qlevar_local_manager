@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import '../../../helpers/constants.dart';
 import '../../../models/drag_request.dart';
 import '../../../models/qlocal.dart';
-import '../local_item/editable_text_widget.dart';
 import '../controllers/main_controller.dart';
-import 'options_widget.dart';
-import '../local_item/binder.dart';
-import 'binder.dart';
 import '../controllers/node_controller.dart';
+import '../local_item/binder.dart';
+import '../local_item/editable_text_widget.dart';
+import 'binder.dart';
+import 'options_widget.dart';
 
 const _noChildren =
     Padding(padding: EdgeInsets.all(8.0), child: Text('No Children'));
@@ -72,7 +73,7 @@ class _LocalNodeWidget extends StatelessWidget {
             Expanded(
               flex: Get.find<MainController>().locals().languages.length,
               child: InkWell(
-                onTap: controller.isOpen.toggle,
+                onTap: () => controller.isOpen(!controller.isOpen()),
                 child: Align(
                   alignment: Alignment.centerRight,
                   child: Obx(() => Icon(

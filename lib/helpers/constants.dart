@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class AppColors {
   static const Color icon = Colors.white;
@@ -9,6 +8,3 @@ class AppColors {
   static const Color secondary = Color(0xffB7B327);
   static const Color primary = Colors.amber;
 }
-
-void showError(String title, String message) => Get.snackbar(title, message,
-    colorText: Colors.white, snackPosition: SnackPosition.BOTTOM);

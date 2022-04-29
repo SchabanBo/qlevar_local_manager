@@ -12,7 +12,7 @@ class _Notification extends StatelessWidget {
       margin: const EdgeInsets.all(8),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
-        color: Colors.amber,
+        color: Colors.grey.shade700,
         borderRadius: BorderRadius.circular(8),
       ),
       child: Column(
@@ -27,9 +27,10 @@ class _Notification extends StatelessWidget {
 
 void showNotification(String title, String message) {
   QNotification(
-      child: _Notification(title, message),
-      backgroundDecoration: BoxDecoration(
-        color: Colors.transparent,
-        borderRadius: BorderRadius.circular(5),
-      )).show();
+    child: _Notification(title, message),
+    backgroundDecoration: BoxDecoration(
+      color: Colors.transparent,
+      borderRadius: BorderRadius.circular(5),
+    ),
+  ).show();
 }

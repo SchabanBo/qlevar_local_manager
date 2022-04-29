@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
-import '../../../helpers/constants.dart';
 import '../../../models/qlocal.dart';
 import '../../../services/storage_service.dart';
 import '../../../widgets/notification.dart';
@@ -36,7 +35,7 @@ class MainController extends GetxController {
       node = node.nodes.firstWhere((e) => e.hashCode == hashMap[i]);
     }
     if (node.items.any((e) => e.name == item.name)) {
-      showError('Error', 'Key with name ${item.name} already exist');
+      showNotification('Error', 'Key with name ${item.name} already exist');
       return;
     }
     item.ensureAllLanguagesExist(locals().languages);
@@ -60,7 +59,7 @@ class MainController extends GetxController {
       node = node.nodes.firstWhere((e) => e.hashCode == hashMap[i]);
     }
     if (node.items.any((e) => e.name == newNode.name)) {
-      showError('Error', 'Key with name ${node.name} already exist');
+      showNotification('Error', 'Key with name ${node.name} already exist');
       return;
     }
     if (insertHashCode != null) {
@@ -88,7 +87,7 @@ class MainController extends GetxController {
       node = node.nodes.firstWhere((e) => e.hashCode == hashMap[i]);
     }
     if (node.items.any((e) => e.hashCode != hashMap.last && e.name == value)) {
-      showError('Error', 'Key with name $value already exist');
+      showNotification('Error', 'Key with name $value already exist');
       update();
       return;
     }

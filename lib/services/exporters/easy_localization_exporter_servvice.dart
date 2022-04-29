@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
-import '../storage_service.dart';
 
-import '../../helpers/constants.dart';
 import '../../models/json/data.dart';
+import '../../widgets/notification.dart';
+import '../storage_service.dart';
 
 class EasyLocalizationExporterService {
   final JsonData data;
@@ -15,7 +15,7 @@ class EasyLocalizationExporterService {
         storage.writeFile('$toFolder/${lan.name}.json', lan.toJson());
       }
     } catch (e) {
-      showError('Error Exporting', e.toString());
+      showNotification('Error Exporting', e.toString());
     }
   }
 }
