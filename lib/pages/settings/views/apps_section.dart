@@ -71,7 +71,7 @@ class _AppsSectionState extends State<AppsSection> {
           position:
               Tween<Offset>(begin: const Offset(-1, 0), end: const Offset(0, 0))
                   .animate(a),
-          child: ScaleTransition(child: c, scale: a)),
+          child: ScaleTransition(scale: a, child: c)),
       duration: const Duration(milliseconds: 800),
       child: addNewApp
           ? AddNewAppWidget(() {

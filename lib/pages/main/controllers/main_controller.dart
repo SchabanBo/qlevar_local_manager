@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:get_it/get_it.dart';
 import 'package:reactive_state/reactive_state.dart';
 
 import '../../../models/qlocal.dart';
@@ -7,7 +10,7 @@ import '../../../services/storage_service.dart';
 import '../../../widgets/notification.dart';
 import '../../settings/models/models.dart';
 
-class MainController extends GetxController {
+class MainController implements Disposable {
   final AppLocalFile appFile;
   final Observable<QlevarLocal> locals;
   final openAllNodes = false.asObservable;
@@ -24,8 +27,7 @@ class MainController extends GetxController {
       : locals.value.children.where((i) => i.filter(filter.value));
 
   @override
-  void onClose() {
-    super.onClose();
+  FutureOr onDispose() {
     gridController.dispose();
     saveData();
   }
@@ -89,7 +91,7 @@ class MainController extends GetxController {
     }
     if (node.items.any((e) => e.hashCode != hashMap.last && e.name == value)) {
       showNotification('Error', 'Key with name $value already exist');
-      update();
+      locals.refresh();
       return;
     }
     final item = node.items.firstWhere((e) => e.hashCode == hashMap.last);

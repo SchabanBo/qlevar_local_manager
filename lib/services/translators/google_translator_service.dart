@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import '../../models/qlocal.dart';
 import '../../widgets/notification.dart';
 
+// TODO user http
 class GoogleTranslatorService extends GetConnect {
   final String apiKey;
   GoogleTranslatorService(this.apiKey);

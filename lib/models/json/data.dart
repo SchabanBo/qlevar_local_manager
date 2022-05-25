@@ -13,13 +13,13 @@ class JsonData {
   }
 
   factory JsonData.fromMap(Map<String, dynamic> map) {
-    final _data = JsonData();
+    final data = JsonData();
     for (var item in map.entries) {
       final d = JsonNode(item.key);
       d.fromMap(item.value as Map<String, dynamic>);
-      _data.data.add(d);
+      data.data.add(d);
     }
-    return _data;
+    return data;
   }
 
   String toJson() => _jsonEncoder.convert(toMap());

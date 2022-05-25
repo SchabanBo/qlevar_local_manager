@@ -118,8 +118,8 @@ class LanguageView extends GetView<LanguageController> {
                       const SizedBox(width: 8),
                       Expanded(
                         child: TextButton(
-                            child: const Text('No'),
-                            onPressed: QOverlay.dismissLast),
+                            onPressed: QOverlay.dismissLast,
+                            child: const Text('No')),
                       ),
                     ],
                   ),

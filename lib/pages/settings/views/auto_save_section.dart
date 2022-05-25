@@ -74,12 +74,6 @@ class AutoSaveSection extends StatelessWidget {
                             absorbing:
                                 !controller.settings.value.autoSave.export,
                             child: ToggleButtons(
-                                children: ExportAs.values
-                                    .map((e) => Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Text(e.name),
-                                        ))
-                                    .toList(),
                                 onPressed: (i) {
                                   controller.settings.value.autoSave.exportAs =
                                       ExportAs.values[i];
@@ -90,6 +84,12 @@ class AutoSaveSection extends StatelessWidget {
                                         e ==
                                         controller
                                             .settings.value.autoSave.exportAs)
+                                    .toList(),
+                                children: ExportAs.values
+                                    .map((e) => Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(e.name),
+                                        ))
                                     .toList()),
                           ),
                         ],

@@ -23,7 +23,7 @@ class PathPicker extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _PathPickerState createState() => _PathPickerState();
+  State createState() => _PathPickerState();
 }
 
 class _PathPickerState extends State<PathPicker> {
@@ -37,10 +37,10 @@ class _PathPickerState extends State<PathPicker> {
           Text(widget.title, style: const TextStyle(fontSize: 16)),
           const SizedBox(width: 10),
           InkWell(
+              onTap: pick,
               child: const Icon(
                 Icons.folder,
-              ),
-              onTap: pick),
+              )),
           const SizedBox(width: 10),
           Text(path),
         ],

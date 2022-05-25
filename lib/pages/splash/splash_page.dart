@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:q_overlay/q_overlay.dart';
 
 import '../../helpers/constants.dart';
+import '../../services/di_service.dart';
 import '../../services/storage_service.dart';
 import '../main/controllers/main_controller.dart';
 import '../main/views/main_view.dart';
@@ -14,11 +14,11 @@ class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);
 
   @override
-  _SplashPageState createState() => _SplashPageState();
+  State createState() => _SplashPageState();
 }
 
 class _SplashPageState extends State<SplashPage> {
-  final StorageService _storageController = Get.find<StorageService>();
+  final StorageService _storageController = getService<StorageService>();
 
   final Widget welcome = Column(
     children: const [
@@ -46,9 +46,9 @@ class _SplashPageState extends State<SplashPage> {
             () => _storageController.loadSettings()),
         builder: (c, s) {
           if (s.hasData) {
-            Get.put(SettingsController(s.data!), permanent: true);
+            addService(SettingsController(s.data!));
             WidgetsBinding.instance
-                .addPostFrameCallback((_) => selectApp(context));
+                .addPostFrameCallback((_) => selectApp(Navigator.of(context)));
           }
           return welcome;
         },
@@ -56,7 +56,7 @@ class _SplashPageState extends State<SplashPage> {
     );
   }
 
-  Future<void> selectApp(BuildContext context) async {
+  Future<void> selectApp(NavigatorState navigator) async {
     if (_isPanelOpen) {
       return;
     }
@@ -79,9 +79,10 @@ class _SplashPageState extends State<SplashPage> {
       setState(() {});
       return;
     }
-    await Get.delete<MainController>();
-    Get.put(MainController(appFile: app, locals: locals));
-    Navigator.of(context)
-        .pushReplacement(MaterialPageRoute(builder: (_) => const MainView()));
+    removeService<MainController>();
+    addService(MainController(appFile: app, locals: locals));
+    navigator.pushReplacement(MaterialPageRoute(
+      builder: (_) => const MainView(),
+    ));
   }
 }

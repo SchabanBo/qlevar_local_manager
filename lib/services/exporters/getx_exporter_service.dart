@@ -1,16 +1,15 @@
 import 'dart:convert';
 
-import 'package:get/get.dart';
-import '../storage_service.dart';
-
 import '../../models/json/data.dart';
+import '../di_service.dart';
+import '../storage_service.dart';
 
 class GetxExporterService {
   final JsonData data;
   GetxExporterService({required this.data});
 
   void export(String toFile) {
-    final String _class = '''
+    final result = '''
 // Code generated at ${DateTime.now()} by Qlevar Local Manager
 
 class AppTranslation {
@@ -18,7 +17,7 @@ class AppTranslation {
 }
   ''';
 
-    Get.find<StorageService>().writeFile(toFile, _class);
+    getService<StorageService>().writeFile(toFile, result);
   }
 
   String getDataAsString() {
@@ -31,7 +30,7 @@ class AppTranslation {
 
   Map<String, String> flatNodes(String parent, JsonNode node) {
     final result = <String, String>{};
-    parent = parent.isEmpty ? '' : parent + '_';
+    parent = parent.isEmpty ? '' : '${parent}_';
     for (var child in node.children) {
       if (child is JsonNode) {
         result.addAll(flatNodes('$parent${child.name}', child));

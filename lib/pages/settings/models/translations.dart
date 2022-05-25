@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-class TranlationSettings {
+class TranslationSettings {
   String googleApi;
 
-  TranlationSettings({
+  TranslationSettings({
     this.googleApi = '',
   });
 
@@ -13,14 +13,14 @@ class TranlationSettings {
     };
   }
 
-  factory TranlationSettings.fromMap(Map<String, dynamic> map) {
-    return TranlationSettings(
+  factory TranslationSettings.fromMap(Map<String, dynamic> map) {
+    return TranslationSettings(
       googleApi: map['googleApi'],
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory TranlationSettings.fromJson(String source) =>
-      TranlationSettings.fromMap(json.decode(source));
+  factory TranslationSettings.fromJson(String source) =>
+      TranslationSettings.fromMap(json.decode(source));
 }

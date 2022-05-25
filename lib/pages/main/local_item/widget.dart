@@ -81,7 +81,7 @@ class _LocalItemWidget extends StatelessWidget {
             final value = controller.item.values[l] ?? '';
             return Expanded(
                 child: QEditableText(
-                    key: Key(l + "_" + value),
+                    key: Key("${l}_$value"),
                     text: value,
                     onEdit: (s) => controller.updateValue(l, s)));
           }),

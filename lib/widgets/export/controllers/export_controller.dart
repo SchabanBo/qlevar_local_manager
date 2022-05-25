@@ -17,7 +17,7 @@ class ExportController extends GetxController {
     final data = mainCon.locals.value.toData();
     switch (exportAs.value) {
       case ExportAs.getx:
-        GetxExporterService(data: data).export(path.value + '/locals.g.dart');
+        GetxExporterService(data: data).export('${path.value}/locals.g.dart');
         break;
       case ExportAs.easyLocalization:
         EasyLocalizationExporterService(data: data).export(path.value);

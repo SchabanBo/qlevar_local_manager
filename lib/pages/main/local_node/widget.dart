@@ -99,7 +99,7 @@ class _LocalNodeWidget extends StatelessWidget {
         switchOutCurve: Curves.linearToEaseOut,
         duration: const Duration(milliseconds: 500),
         transitionBuilder: (c, a) =>
-            SizeTransition(sizeFactor: a, child: c, axis: Axis.vertical),
+            SizeTransition(sizeFactor: a, axis: Axis.vertical, child: c),
         child: controller.isOpen.value
             ? controller.children.isEmpty
                 ? _noChildren

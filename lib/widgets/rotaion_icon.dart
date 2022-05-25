@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class RotaionIcon extends StatelessWidget {
+class RotationIcon extends StatelessWidget {
   final bool rotate;
   final IconData? icon;
-  const RotaionIcon({required this.rotate, this.icon, Key? key})
+  const RotationIcon({required this.rotate, this.icon, Key? key})
       : super(key: key);
 
   @override

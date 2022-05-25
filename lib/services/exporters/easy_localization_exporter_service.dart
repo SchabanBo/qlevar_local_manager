@@ -1,7 +1,6 @@
-import 'package:get/get.dart';
-
 import '../../models/json/data.dart';
 import '../../widgets/notification.dart';
+import '../di_service.dart';
 import '../storage_service.dart';
 
 class EasyLocalizationExporterService {
@@ -10,7 +9,7 @@ class EasyLocalizationExporterService {
 
   void export(String toFolder) {
     try {
-      final storage = Get.find<StorageService>();
+      final storage = getService<StorageService>();
       for (var lan in data.data) {
         storage.writeFile('$toFolder/${lan.name}.json', lan.toJson());
       }

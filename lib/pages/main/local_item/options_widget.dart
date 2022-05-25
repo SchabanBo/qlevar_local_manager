@@ -21,23 +21,23 @@ class OptionsWidget extends StatelessWidget {
   Widget get options => Row(
         children: [
           InkWell(
+            onTap: copyPath,
             child: const Tooltip(
                 message: 'Copy Path',
                 child: Icon(
                   Icons.copy,
                   color: AppColors.icon,
                 )),
-            onTap: copyPath,
           ),
           const SizedBox(width: 5),
           InkWell(
+            onTap: translate,
             child: const Tooltip(
                 message: 'Translate',
                 child: Icon(
                   Icons.translate,
                   color: AppColors.icon,
                 )),
-            onTap: translate,
           ),
           const SizedBox(width: 5),
           InkWell(
@@ -128,7 +128,7 @@ class OptionsWidget extends StatelessWidget {
       node = node.children
           .whereType<LocalNode>()
           .firstWhere((e) => e.hashCode == indexMap[i]);
-      result += node.name + '_';
+      result += '${node.name}_';
     }
     final item = node.children.firstWhere((e) => e.hashCode == indexMap.last);
     result += item.name;

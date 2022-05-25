@@ -4,7 +4,7 @@ import 'models.dart';
 
 class Settings {
   final List<AppLocalFile> apps;
-  final TranlationSettings translation;
+  final TranslationSettings translation;
   final AutoSave autoSave;
   Settings({
     required this.apps,
@@ -25,8 +25,8 @@ class Settings {
       apps: List<AppLocalFile>.from(
           map['apps']?.map((x) => AppLocalFile.fromMap(x))),
       translation: map['tranlation'] == null
-          ? TranlationSettings()
-          : TranlationSettings.fromMap(map['tranlation']),
+          ? TranslationSettings()
+          : TranslationSettings.fromMap(map['tranlation']),
       autoSave: map['autoSave'] == null
           ? AutoSave()
           : AutoSave.fromMap(map['autoSave']),
