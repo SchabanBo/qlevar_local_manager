@@ -1,10 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:q_overlay/q_overlay.dart';
 
 import '../../../helpers/path_picker.dart';
+import '../../../services/di_service.dart';
 import '../../../services/storage_service.dart';
+import '../../../widgets/notification.dart';
 import '../controllers/settings_controller.dart';
 import '../models/models.dart';
 
@@ -17,7 +18,7 @@ class AppsSection extends StatefulWidget {
 }
 
 class _AppsSectionState extends State<AppsSection> {
-  final SettingsController controller = Get.find();
+  final SettingsController controller = getService();
   var addNewApp = false;
   @override
   Widget build(BuildContext context) => ExpansionTile(
@@ -148,16 +149,16 @@ class _AppsSectionState extends State<AppsSection> {
       exportPath: '',
     );
     controller.settings.value.apps.add(app);
-    Get.find<StorageService>().saveSettings(controller.settings.value);
-    await Get.find<StorageService>().importLocalsWeb(appName, data);
+    getService<StorageService>().saveSettings(controller.settings.value);
+    await getService<StorageService>().importLocalsWeb(appName, data);
     QOverlay.dismissLast<AppLocalFile>(result: app);
   }
 }
 
-class AddNewAppWidget extends GetView<SettingsController> {
+class AddNewAppWidget extends StatelessWidget {
   final VoidCallback onEnd;
   const AddNewAppWidget(this.onEnd, {Key? key}) : super(key: key);
-
+  SettingsController get controller => getService();
   @override
   Widget build(BuildContext context) {
     final key = GlobalKey<FormState>();
@@ -192,8 +193,7 @@ class AddNewAppWidget extends GetView<SettingsController> {
               TextButton(
                   onPressed: () async {
                     if (appPath.isEmpty && !kIsWeb) {
-                      Get.defaultDialog(
-                          title: 'Error', middleText: 'you must set the path');
+                      showNotification('Error', 'you must set the path');
                       return;
                     }
                     if (key.currentState!.validate()) {
@@ -202,7 +202,7 @@ class AddNewAppWidget extends GetView<SettingsController> {
                         path: appPath,
                         exportPath: appExportPath,
                       ));
-                      Get.find<StorageService>()
+                      getService<StorageService>()
                           .saveSettings(controller.settings.value);
                       onEnd();
                     }

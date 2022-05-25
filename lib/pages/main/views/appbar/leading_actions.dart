@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+
 import '../../../../helpers/constants.dart';
+import '../../../../services/di_service.dart';
 import '../../controllers/main_controller.dart';
 
 class LeadingActions extends StatelessWidget {
@@ -8,7 +9,7 @@ class LeadingActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<MainController>();
+    final controller = getService<MainController>();
     return Row(
       children: [
         SizedBox(

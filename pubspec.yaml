@@ -11,7 +11,6 @@ dependencies:
   shared_preferences: ^2.0.11
   reactive_state:
     path: ../reactive_state
-  get: ^4.6.1
   http: ^0.13.4
   file_picker: ^4.3.2
   q_overlay:

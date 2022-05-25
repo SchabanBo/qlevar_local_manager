@@ -1,26 +1,17 @@
-import 'package:get/get.dart';
+import 'dart:async';
+
 import 'package:reactive_state/reactive_state.dart';
 
 import '../../../models/qlocal.dart';
+import '../../../services/di_service.dart';
 import 'main_controller.dart';
 
-class LocalNodeController extends GetxController {
+class LocalNodeController extends Controller {
   final Observable<LocalNode> item;
   final List<int> indexMap;
   final isOpen = false.asObservable;
-  final _mainController = Get.find<MainController>();
+  final _mainController = getService<MainController>();
   late final filter = _mainController.filter;
-
-  @override
-  void onInit() {
-    super.onInit();
-    _mainController.openAllNodes.addListener(() {
-      isOpen.value = _mainController.openAllNodes.value;
-    });
-    if (_mainController.openAllNodes.value) {
-      isOpen.value = true;
-    }
-  }
 
   LocalNodeController(
     LocalNode _item,
@@ -28,9 +19,24 @@ class LocalNodeController extends GetxController {
   )   : item = _item.asObservable,
         indexMap = List.from(_indexMap) {
     indexMap.add(_item.hashCode);
+    _mainController.openAllNodes.addListener(nodeListener);
+    if (_mainController.openAllNodes.value) {
+      isOpen.value = true;
+    }
   }
 
   Iterable<LocalBase> get children => filter.value.isEmpty
       ? item.value.children
       : item.value.children.where((i) => i.filter(filter.value));
+
+  void nodeListener() {
+    isOpen.value = _mainController.openAllNodes.value;
+  }
+
+  @override
+  FutureOr onDispose() {
+    _mainController.openAllNodes.removeListener(nodeListener);
+    item.dispose();
+    isOpen.dispose();
+  }
 }

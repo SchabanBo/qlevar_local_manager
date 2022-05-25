@@ -8,9 +8,13 @@ void setupDI() {
   _getIt.registerSingleton(StorageService());
 }
 
-T getService<T>() => _getIt<T>();
+T getService<T extends Object>() => _getIt.get<T>();
+
+bool isServiceRegistered<T extends Object>() => _getIt.isRegistered<T>();
 
 void addService<T extends Object>(T service) =>
     _getIt.registerSingleton<T>(service);
 
 void removeService<T extends Object>() => _getIt.unregister<T>();
+
+abstract class Controller extends Disposable {}

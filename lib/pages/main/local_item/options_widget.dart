@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
 import 'package:q_overlay/q_overlay.dart';
 
 import '../../../helpers/constants.dart';
 import '../../../models/qlocal.dart';
+import '../../../services/di_service.dart';
 import '../../../services/translators/google_translator_service.dart';
 import '../../../widgets/notification.dart';
 import '../../settings/controllers/settings_controller.dart';
@@ -69,7 +69,7 @@ class OptionsWidget extends StatelessWidget {
                               const SizedBox(width: 8),
                               TextButton(
                                   onPressed: () {
-                                    Get.find<MainController>()
+                                    getService<MainController>()
                                         .removeItem(controller.indexMap);
                                     QOverlay.dismissLast();
                                   },
@@ -84,7 +84,7 @@ class OptionsWidget extends StatelessWidget {
       );
 
   void translate() async {
-    final languages = Get.find<MainController>().locals.value.languages;
+    final languages = getService<MainController>().locals.value.languages;
     final lan = await QDialog(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -108,7 +108,8 @@ class OptionsWidget extends StatelessWidget {
       ),
     ).show<String>();
     if (lan == null) return;
-    final settings = Get.find<SettingsController>().settings.value.translation;
+    final settings =
+        getService<SettingsController>().settings.value.translation;
     if (settings.googleApi.isEmpty) {
       showNotification('api key is missing',
           'Google api key is empty, please set it first in the settings');
@@ -116,13 +117,13 @@ class OptionsWidget extends StatelessWidget {
     }
     final service = GoogleTranslatorService(settings.googleApi);
     await service.translate(controller.item, lan);
-    Get.find<MainController>().locals.refresh();
+    getService<MainController>().locals.refresh();
   }
 
   void copyPath() {
     final indexMap = controller.indexMap;
     var result = '';
-    LocalNode node = Get.find<MainController>().locals.value;
+    LocalNode node = getService<MainController>().locals.value;
 
     for (var i = 1; i < indexMap.length - 1; i++) {
       node = node.children

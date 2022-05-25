@@ -1,13 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import '../../../../helpers/constants.dart';
+import '../../../../services/di_service.dart';
 import '../../../../services/storage_service.dart';
 import '../../controllers/main_controller.dart';
 
-class SaveDataWidget extends GetView<MainController> {
+class SaveDataWidget extends StatelessWidget {
   const SaveDataWidget({Key? key}) : super(key: key);
+  MainController get controller => getService();
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class SaveDataWidget extends GetView<MainController> {
                 tooltip: 'Download',
                 onPressed: () {
                   controller.saveData();
-                  Get.find<StorageService>().exportLocalsWeb(
+                  getService<StorageService>().exportLocalsWeb(
                       controller.appFile, controller.locals.value);
                 },
                 icon: const Icon(

@@ -1,10 +1,11 @@
-import 'package:get/get.dart';
+import 'dart:convert';
+
+import 'package:http/http.dart' as http;
 
 import '../../models/qlocal.dart';
 import '../../widgets/notification.dart';
 
-// TODO user http
-class GoogleTranslatorService extends GetConnect {
+class GoogleTranslatorService {
   final String apiKey;
   GoogleTranslatorService(this.apiKey);
 
@@ -24,18 +25,14 @@ class GoogleTranslatorService extends GetConnect {
   }
 
   Future<String> getTranslation(String value, String from, String to) async {
-    final request = await get(
-        'https://translation.googleapis.com/language/translate/v2',
-        query: {
-          'key': apiKey,
-          'q': value,
-          'target': to.substring(0, 2),
-          'source': from.substring(0, 2),
-        });
-    if (request.status.code != 200) {
-      throw Exception(request.bodyString);
+    final url =
+        'https://translation.googleapis.com/language/translate/v2?key=$apiKey&q=$value&source=$from&target=$to';
+    final request = await http.get(Uri.parse(url));
+    if (request.statusCode != 200) {
+      throw Exception(request.body);
     }
-    final result = request.body["data"]!["translations"]![0]!["translatedText"];
+    final result =
+        jsonDecode(request.body)["data"]["translations"][0]["translatedText"];
     return result;
   }
 }

@@ -1,25 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+
+import '../../../services/di_service.dart';
 import '../../../services/storage_service.dart';
-import 'auto_save_section.dart';
-import 'apps_section.dart';
-import 'translation_settings.dart';
 import '../controllers/settings_controller.dart';
+import 'apps_section.dart';
+import 'auto_save_section.dart';
+import 'translation_settings.dart';
 
 class SettingsPage extends StatefulWidget {
   final bool isSelectApp;
   const SettingsPage({this.isSelectApp = false, Key? key}) : super(key: key);
 
   @override
-  _SettingsPageState createState() => _SettingsPageState();
+  State createState() => _SettingsPageState();
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  final controller = Get.find<SettingsController>();
+  final controller = getService<SettingsController>();
 
   @override
   void dispose() {
-    Get.find<StorageService>().saveSettings(controller.settings.value);
+    getService<StorageService>().saveSettings(controller.settings.value);
     super.dispose();
   }
 

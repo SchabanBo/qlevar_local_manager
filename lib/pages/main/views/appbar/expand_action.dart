@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:reactive_state/reactive_state.dart';
 
+import '../../../../services/di_service.dart';
 import '../../controllers/main_controller.dart';
 
 class ExpandAction extends StatelessWidget {
@@ -9,7 +9,7 @@ class ExpandAction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<MainController>();
+    final controller = getService<MainController>();
     return Observer(
         builder: (_) => IconButton(
               icon: Icon(

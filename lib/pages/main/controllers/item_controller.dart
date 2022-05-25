@@ -1,13 +1,14 @@
-import 'package:get/get.dart';
+import 'dart:async';
 
 import '../../../models/drag_request.dart';
 import '../../../models/qlocal.dart';
+import '../../../services/di_service.dart';
 import 'main_controller.dart';
 
-class LocalItemController extends GetxController {
+class LocalItemController extends Controller {
   final LocalItem item;
   final List<int> indexMap;
-  final MainController mainController = Get.find();
+  final MainController mainController = getService();
   LocalItemController(
     this.item,
     List<int> _indexMap,
@@ -16,10 +17,10 @@ class LocalItemController extends GetxController {
   }
 
   void updateValue(String language, String value) =>
-      Get.find<MainController>().updateLocalItem(indexMap, language, value);
+      getService<MainController>().updateLocalItem(indexMap, language, value);
 
   void updateKey(String value) =>
-      Get.find<MainController>().updateLocalItemKey(indexMap, value);
+      getService<MainController>().updateLocalItemKey(indexMap, value);
 
   void handleDrag(DragRequest request) {
     switch (request.runtimeType) {
@@ -53,4 +54,7 @@ class LocalItemController extends GetxController {
       insertHashCode: item.hashCode,
     );
   }
+
+  @override
+  FutureOr onDispose() {}
 }

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:reactive_state/reactive_state.dart';
 
 import '../../../helpers/constants.dart';
 import '../../../models/drag_request.dart';
 import '../../../models/qlocal.dart';
+import '../../../services/di_service.dart';
 import '../controllers/main_controller.dart';
 import '../controllers/node_controller.dart';
 import '../local_item/binder.dart';
@@ -72,7 +72,7 @@ class _LocalNodeWidget extends StatelessWidget {
                   onEdit: (s) => controller.item.value.name = s),
             ),
             Expanded(
-              flex: Get.find<MainController>().locals.value.languages.length,
+              flex: getService<MainController>().locals.value.languages.length,
               child: InkWell(
                 onTap: () => controller.isOpen(!controller.isOpen.value),
                 child: Align(

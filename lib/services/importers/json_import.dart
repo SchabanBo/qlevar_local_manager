@@ -23,7 +23,7 @@ class JsonFileImporter {
   }
 
   Future<void> importData(String data, String lan) async {
-    final locals = getService()<MainController>().locals;
+    final locals = getService<MainController>().locals;
     final node = JsonNode(lan);
     node.fromMap(jsonDecode(data) as Map<String, dynamic>);
     locals.value.languages.add(lan);

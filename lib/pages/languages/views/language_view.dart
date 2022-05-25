@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:q_overlay/q_overlay.dart';
 import 'package:reactive_state/reactive_state.dart';
 
+import '../../../services/di_service.dart';
 import '../controllers/language_controller.dart';
 import 'language_dialog.dart';
 
-class LanguageView extends GetView<LanguageController> {
+class LanguageView extends StatelessWidget {
   const LanguageView({Key? key}) : super(key: key);
+
+  LanguageController get controller => getService();
 
   @override
   Widget build(BuildContext context) => Padding(

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:q_overlay/q_overlay.dart';
+
 import '../../../helpers/constants.dart';
+import '../../../services/di_service.dart';
 import '../controllers/language_controller.dart';
 import 'language_view.dart';
 
@@ -13,13 +14,13 @@ class LanguageSettings extends StatelessWidget {
     return IconButton(
         tooltip: 'Language Settings',
         onPressed: () async {
-          Get.put(LanguageController());
+          addService(LanguageController());
           await QPanel(
-            name: 'SetingsScreen',
+            name: 'Settings Screen',
             child: const LanguageView(),
             alignment: Alignment.centerRight,
           ).show();
-          Get.delete<LanguageController>();
+          removeService<LanguageController>();
         },
         icon: const Icon(
           Icons.language,

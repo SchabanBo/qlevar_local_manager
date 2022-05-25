@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
+import '../../../../services/di_service.dart';
 import '../../controllers/main_controller.dart';
 import 'actions_widget.dart';
 import 'leading_actions.dart';
 import 'title_widget.dart';
 
 class QAppBar extends StatelessWidget with PreferredSizeWidget {
-  final MainController mainController = Get.find();
+  final MainController mainController = getService();
   QAppBar({Key? key}) : super(key: key);
 
   @override

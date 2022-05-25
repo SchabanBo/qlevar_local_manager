@@ -1,22 +1,18 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
-import 'package:get/get.dart';
 import 'package:reactive_state/reactive_state.dart';
 
+import '../../../services/di_service.dart';
 import '../../../widgets/export/controllers/export_controller.dart';
 import '../../main/controllers/main_controller.dart';
 import '../models/models.dart';
 
-class SettingsController extends GetxController {
+class SettingsController extends Controller {
   final Observable<Settings> settings;
   Timer? _timer;
-  SettingsController(Settings _settings) : settings = _settings.asObservable;
-
-  @override
-  void onReady() {
-    super.onReady();
-    settings.addListener(_runAutoSave);
+  SettingsController(Settings settings) : settings = settings.asObservable {
+    this.settings.addListener(_runAutoSave);
     _runAutoSave();
   }
 
@@ -28,15 +24,21 @@ class SettingsController extends GetxController {
       return;
     }
     _timer = Timer.periodic(Duration(seconds: s.autoSave.interval), (_) {
-      if (!Get.isRegistered<MainController>()) {
+      if (!isServiceRegistered<MainController>()) {
         return;
       }
-      Get.find<MainController>().saveData();
+      getService<MainController>().saveData();
       if (s.autoSave.export && !kIsWeb) {
         final exporter = ExportController();
         exporter.exportAs(s.autoSave.exportAs);
         exporter.export();
       }
     });
+  }
+
+  @override
+  FutureOr onDispose() {
+    settings.removeListener(_runAutoSave);
+    _timer?.cancel();
   }
 }

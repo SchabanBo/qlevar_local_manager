@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:reactive_state/reactive_state.dart';
 
+import '../../../../services/di_service.dart';
 import '../../controllers/main_controller.dart';
 
-class TitleWidget extends GetView<MainController> {
+class TitleWidget extends StatelessWidget {
   const TitleWidget({Key? key}) : super(key: key);
 
+  MainController get controller => getService();
   @override
   Widget build(BuildContext context) => Container(
         margin: const EdgeInsets.symmetric(vertical: 8),

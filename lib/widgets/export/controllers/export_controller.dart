@@ -1,18 +1,20 @@
-import 'package:get/get.dart';
+import 'dart:async';
+
 import 'package:reactive_state/reactive_state.dart';
 
 import '../../../pages/main/controllers/main_controller.dart';
+import '../../../services/di_service.dart';
 import '../../../services/exporters/easy_localization_exporter_service.dart';
 import '../../../services/exporters/getx_exporter_service.dart';
 import '../../notification.dart';
 
-class ExportController extends GetxController {
+class ExportController extends Controller {
   final Observable<String> path =
-      Get.find<MainController>().appFile.exportPath.asObservable;
+      getService<MainController>().appFile.exportPath.asObservable;
   final Observable<ExportAs> exportAs = ExportAs.getx.asObservable;
 
   void export() {
-    final mainCon = Get.find<MainController>();
+    final mainCon = getService<MainController>();
     mainCon.loading.value = true;
     final data = mainCon.locals.value.toData();
     switch (exportAs.value) {
@@ -26,6 +28,11 @@ class ExportController extends GetxController {
 
     mainCon.loading.value = false;
     showNotification('Export Success', 'Locals exported successfully');
+  }
+
+  @override
+  FutureOr onDispose() {
+    exportAs.dispose();
   }
 }
 

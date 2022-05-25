@@ -1,16 +1,15 @@
 import 'dart:async';
 
 import 'package:flutter/widgets.dart';
-import 'package:get/get.dart';
-import 'package:get_it/get_it.dart';
 import 'package:reactive_state/reactive_state.dart';
 
 import '../../../models/qlocal.dart';
+import '../../../services/di_service.dart';
 import '../../../services/storage_service.dart';
 import '../../../widgets/notification.dart';
 import '../../settings/models/models.dart';
 
-class MainController implements Disposable {
+class MainController extends Controller {
   final AppLocalFile appFile;
   final Observable<QlevarLocal> locals;
   final openAllNodes = false.asObservable;
@@ -125,7 +124,7 @@ class MainController implements Disposable {
 
   Future<void> saveData() async {
     loading(true);
-    Get.find<StorageService>().saveLocals(appFile, locals.value);
+    getService<StorageService>().saveLocals(appFile, locals.value);
     loading(false);
     showNotification('Success', 'Data saved');
   }

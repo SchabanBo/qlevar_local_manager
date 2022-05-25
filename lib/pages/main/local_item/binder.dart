@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+
 import '../../../models/qlocal.dart';
 import '../controllers/item_controller.dart';
 import 'widget.dart';
@@ -18,12 +18,10 @@ class LocalItemBinder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<LocalItemController>(
-        init: LocalItemController(item, indexMap),
-        global: false,
-        builder: (c) => LocalItemWidget(
-              controller: c,
-              startPadding: startPadding,
-            ));
+    final controller = LocalItemController(item, indexMap);
+    return LocalItemWidget(
+      controller: controller,
+      startPadding: startPadding,
+    );
   }
 }

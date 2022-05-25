@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:q_overlay/q_overlay.dart';
 
 import '../../../helpers/constants.dart';
 import '../../../models/qlocal.dart';
+import '../../../services/di_service.dart';
 import '../../../widgets/notification.dart';
 import '../controllers/main_controller.dart';
 
@@ -24,7 +24,7 @@ class AddLocalNode extends StatelessWidget {
         if (key == null || key.isEmpty) {
           return;
         }
-        Get.find<MainController>().addNode(indexMap, LocalNode(name: key));
+        getService<MainController>().addNode(indexMap, LocalNode(name: key));
       });
 }
 
@@ -45,7 +45,7 @@ class AddLocalItem extends StatelessWidget {
         if (key == null || key.isEmpty) {
           return;
         }
-        Get.find<MainController>().addItem(indexMap, LocalItem(name: key));
+        getService<MainController>().addItem(indexMap, LocalItem(name: key));
       });
 }
 

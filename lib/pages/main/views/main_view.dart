@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:reactive_state/reactive_state.dart';
 
 import '../../../models/qlocal.dart';
+import '../../../services/di_service.dart';
 import '../controllers/item_controller.dart';
 import '../controllers/main_controller.dart';
 import '../local_item/binder.dart';
@@ -10,9 +10,10 @@ import '../local_item/header.dart';
 import '../local_node/binder.dart';
 import 'appbar/appbar.dart';
 
-class MainView extends GetView<MainController> {
+class MainView extends StatelessWidget {
   const MainView({Key? key}) : super(key: key);
 
+  MainController get controller => getService();
   @override
   Widget build(BuildContext context) {
     return Scaffold(

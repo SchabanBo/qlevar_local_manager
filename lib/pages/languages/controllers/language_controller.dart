@@ -1,9 +1,10 @@
-import 'package:get/get.dart';
+import 'dart:async';
 
+import '../../../services/di_service.dart';
 import '../../main/controllers/main_controller.dart';
 
-class LanguageController extends GetxController {
-  final main = Get.find<MainController>();
+class LanguageController extends Controller {
+  final main = getService<MainController>();
 
   List<String> get languages => main.locals.value.languages;
 
@@ -41,9 +42,8 @@ class LanguageController extends GetxController {
   }
 
   @override
-  void onClose() {
+  FutureOr onDispose() {
     main.locals.refresh();
     main.saveData();
-    super.onClose();
   }
 }

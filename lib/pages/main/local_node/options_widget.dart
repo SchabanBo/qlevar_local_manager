@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:q_overlay/q_overlay.dart';
 
 import '../../../helpers/constants.dart';
+import '../../../services/di_service.dart';
 import '../controllers/main_controller.dart';
 import '../controllers/node_controller.dart';
 import 'add_item.dart';
@@ -49,7 +49,7 @@ class OptionsWidget extends StatelessWidget {
                         const SizedBox(width: 8),
                         TextButton(
                             onPressed: () {
-                              Get.find<MainController>()
+                              getService<MainController>()
                                   .removeNode(controller.indexMap);
                               QOverlay.dismissLast();
                             },
