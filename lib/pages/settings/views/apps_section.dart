@@ -36,22 +36,22 @@ class _AppsSectionState extends State<AppsSection> {
               : const SizedBox.shrink(),
           addNewAppWidget,
           const SizedBox(height: 10),
-          controller.settings().apps.isEmpty
+          controller.settings.value.apps.isEmpty
               ? const Center(
                   child: Text('Add your first app :)',
                       style: TextStyle(fontSize: 18)))
               : ListView.builder(
                   shrinkWrap: true,
-                  itemCount: controller.settings().apps.length,
+                  itemCount: controller.settings.value.apps.length,
                   itemBuilder: (c, i) {
-                    final app = controller.settings().apps[i];
+                    final app = controller.settings.value.apps[i];
                     return Card(
                       child: ListTile(
                         title: Text(app.name),
                         subtitle: kIsWeb ? null : Text(app.path),
                         trailing: InkWell(
                           onTap: () {
-                            controller.settings().apps.remove(app);
+                            controller.settings.value.apps.remove(app);
                             setState(() {});
                           },
                           child: const Icon(Icons.delete, color: Colors.red),
@@ -147,7 +147,7 @@ class _AppsSectionState extends State<AppsSection> {
       path: '',
       exportPath: '',
     );
-    controller.settings().apps.add(app);
+    controller.settings.value.apps.add(app);
     Get.find<StorageService>().saveSettings(controller.settings.value);
     await Get.find<StorageService>().importLocalsWeb(appName, data);
     QOverlay.dismissLast<AppLocalFile>(result: app);
@@ -181,7 +181,8 @@ class AddNewAppWidget extends GetView<SettingsController> {
                   decoration: const InputDecoration(hintText: 'App Name'),
                   validator: (s) {
                     if (s == null || s.isEmpty) return 'Name required';
-                    if (controller.settings().apps.any((e) => e.name == s)) {
+                    if (controller.settings.value.apps
+                        .any((e) => e.name == s)) {
                       return 'App already exist';
                     }
                     return null;
@@ -196,11 +197,11 @@ class AddNewAppWidget extends GetView<SettingsController> {
                       return;
                     }
                     if (key.currentState!.validate()) {
-                      controller.settings().apps.add(AppLocalFile(
-                            name: appName.text,
-                            path: appPath,
-                            exportPath: appExportPath,
-                          ));
+                      controller.settings.value.apps.add(AppLocalFile(
+                        name: appName.text,
+                        path: appPath,
+                        exportPath: appExportPath,
+                      ));
                       Get.find<StorageService>()
                           .saveSettings(controller.settings.value);
                       onEnd();

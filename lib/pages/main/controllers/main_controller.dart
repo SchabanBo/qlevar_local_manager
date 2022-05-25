@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:reactive_state/reactive_state.dart';
 
 import '../../../models/qlocal.dart';
 import '../../../services/storage_service.dart';
@@ -8,19 +9,19 @@ import '../../settings/models/models.dart';
 
 class MainController extends GetxController {
   final AppLocalFile appFile;
-  final Rx<QlevarLocal> locals;
-  final openAllNodes = false.obs;
-  final loading = false.obs;
-  final filter = ''.obs;
+  final Observable<QlevarLocal> locals;
+  final openAllNodes = false.asObservable;
+  final loading = false.asObservable;
+  final filter = ''.asObservable;
   late final gridController = ScrollController();
   MainController({required this.appFile, required QlevarLocal locals})
-      : locals = locals.obs;
+      : locals = locals.asObservable;
 
-  int get listItemsCount => locals().children.length;
+  int get listItemsCount => locals.value.children.length;
 
-  Iterable<LocalBase> get children => filter.isEmpty
-      ? locals().children
-      : locals().children.where((i) => i.filter(filter()));
+  Iterable<LocalBase> get children => filter.value.isEmpty
+      ? locals.value.children
+      : locals.value.children.where((i) => i.filter(filter.value));
 
   @override
   void onClose() {
@@ -30,7 +31,7 @@ class MainController extends GetxController {
   }
 
   void addItem(List<int> hashMap, LocalItem item, {int? insertHashCode}) {
-    LocalNode node = locals();
+    LocalNode node = locals.value;
     for (var i = 1; i < hashMap.length; i++) {
       node = node.nodes.firstWhere((e) => e.hashCode == hashMap[i]);
     }
@@ -38,9 +39,9 @@ class MainController extends GetxController {
       showNotification('Error', 'Key with name ${item.name} already exist');
       return;
     }
-    item.ensureAllLanguagesExist(locals().languages);
+    item.ensureAllLanguagesExist(locals.value.languages);
     if (item.values.entries.first.value.isEmpty) {
-      item.values[locals().languages.first] = item.name;
+      item.values[locals.value.languages.first] = item.name;
     }
 
     if (insertHashCode != null) {
@@ -54,7 +55,7 @@ class MainController extends GetxController {
   }
 
   void addNode(List<int> hashMap, LocalNode newNode, {int? insertHashCode}) {
-    LocalNode node = locals();
+    LocalNode node = locals.value;
     for (var i = 1; i < hashMap.length; i++) {
       node = node.nodes.firstWhere((e) => e.hashCode == hashMap[i]);
     }
@@ -72,7 +73,7 @@ class MainController extends GetxController {
   }
 
   void updateLocalItem(List<int> hashMap, String language, String value) {
-    LocalNode node = locals();
+    LocalNode node = locals.value;
     for (var i = 1; i < hashMap.length - 1; i++) {
       node = node.nodes.firstWhere((e) => e.hashCode == hashMap[i]);
     }
@@ -82,7 +83,7 @@ class MainController extends GetxController {
   }
 
   void updateLocalItemKey(List<int> hashMap, String value) {
-    LocalNode node = locals();
+    LocalNode node = locals.value;
     for (var i = 1; i < hashMap.length - 1; i++) {
       node = node.nodes.firstWhere((e) => e.hashCode == hashMap[i]);
     }
@@ -97,7 +98,7 @@ class MainController extends GetxController {
   }
 
   void removeItem(List<int> hashMap, {bool update = true}) {
-    LocalNode node = locals();
+    LocalNode node = locals.value;
     for (var i = 1; i < hashMap.length - 1; i++) {
       node = node.nodes.firstWhere((e) => e.hashCode == hashMap[i]);
     }
@@ -109,7 +110,7 @@ class MainController extends GetxController {
   }
 
   void removeNode(List<int> hashMap, {bool update = true}) {
-    LocalNode node = locals();
+    LocalNode node = locals.value;
     for (var i = 1; i < hashMap.length - 1; i++) {
       node = node.nodes.firstWhere((e) => e.hashCode == hashMap[i]);
     }
@@ -122,7 +123,7 @@ class MainController extends GetxController {
 
   Future<void> saveData() async {
     loading(true);
-    Get.find<StorageService>().saveLocals(appFile, locals());
+    Get.find<StorageService>().saveLocals(appFile, locals.value);
     loading(false);
     showNotification('Success', 'Data saved');
   }

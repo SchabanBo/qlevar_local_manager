@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+
 import '../../../helpers/constants.dart';
 import '../../../models/drag_request.dart';
-import 'options_widget.dart';
-import 'editable_text_widget.dart';
 import '../controllers/item_controller.dart';
+import 'editable_text_widget.dart';
+import 'options_widget.dart';
 
 class LocalItemWidget extends StatelessWidget {
   final double startPadding;
@@ -77,7 +77,7 @@ class _LocalItemWidget extends StatelessWidget {
               child: QEditableText(
                   text: controller.item.name,
                   onEdit: (s) => controller.updateKey(s))),
-          ...controller.mainController.locals().languages.map((l) {
+          ...controller.mainController.locals.value.languages.map((l) {
             final value = controller.item.values[l] ?? '';
             return Expanded(
                 child: QEditableText(

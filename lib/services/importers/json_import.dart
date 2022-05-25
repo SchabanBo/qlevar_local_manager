@@ -26,12 +26,12 @@ class JsonFileImporter {
     final locals = Get.find<MainController>().locals;
     final node = JsonNode(lan);
     node.fromMap(jsonDecode(data) as Map<String, dynamic>);
-    locals().languages.add(lan);
+    locals.value.languages.add(lan);
     for (var child in node.children) {
       if (child is JsonNode) {
-        locals().addLocalNode(lan, child);
+        locals.value.addLocalNode(lan, child);
       } else if (child is JsonItem) {
-        locals().addLocalItem(lan, child);
+        locals.value.addLocalItem(lan, child);
       }
     }
     locals.refresh();

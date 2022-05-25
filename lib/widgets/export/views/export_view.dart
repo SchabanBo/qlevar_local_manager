@@ -1,8 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import '../controllers/export_controller.dart';
+import 'package:reactive_state/reactive_state.dart';
+
 import '../../../helpers/path_picker.dart';
+import '../controllers/export_controller.dart';
 
 class ExportView extends StatelessWidget {
   final ExportController controller = ExportController();
@@ -15,20 +16,21 @@ class ExportView extends StatelessWidget {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Obx(() => Column(
-                children: ExportAs.values
-                    .map((e) => RadioListTile<ExportAs>(
-                          title: Text(e.name),
-                          value: e,
-                          groupValue: controller.exportAs.value,
-                          onChanged: (e) => controller.exportAs(e),
-                        ))
-                    .toList(),
-              )),
+          Observer(
+              builder: (_) => Column(
+                    children: ExportAs.values
+                        .map((e) => RadioListTile<ExportAs>(
+                              title: Text(e.name),
+                              value: e,
+                              groupValue: controller.exportAs.value,
+                              onChanged: (e) => controller.exportAs(e),
+                            ))
+                        .toList(),
+                  )),
           kIsWeb
               ? const SizedBox.shrink()
               : PathPicker(
-                  path: controller.path(),
+                  path: controller.path.value,
                   title: 'Give the directory path to export to',
                   onChange: controller.path),
           const SizedBox(height: 8),

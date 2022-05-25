@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:reactive_state/reactive_state.dart';
 
 import '../../controllers/main_controller.dart';
 
@@ -21,9 +22,10 @@ class TitleWidget extends GetView<MainController> {
               controller.appFile.name,
               style: const TextStyle(fontSize: 20),
             ),
-            Obx(() => controller.loading.isTrue
-                ? const LinearProgressIndicator()
-                : const SizedBox.shrink()),
+            Observer(
+                builder: (_) => controller.loading.value
+                    ? const LinearProgressIndicator()
+                    : const SizedBox.shrink()),
           ],
         ),
       );

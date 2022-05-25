@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:q_overlay/q_overlay.dart';
+import 'package:reactive_state/reactive_state.dart';
 
 import '../controllers/language_controller.dart';
 import 'language_dialog.dart';
@@ -25,49 +26,50 @@ class LanguageView extends GetView<LanguageController> {
             ),
             const Divider(),
             Expanded(
-                child: Obx(() => ListView(
-                      shrinkWrap: true,
-                      children: [
-                        for (final language
-                            in controller.main.locals().languages)
-                          Card(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                children: [
-                                  Text(language,
-                                      style: const TextStyle(fontSize: 18)),
-                                  const Spacer(),
-                                  InkWell(
-                                    child: const Icon(Icons.arrow_upward),
-                                    onTap: () =>
-                                        controller.moveLanguage(language, -1),
+                child: Observer(
+                    builder: (_) => ListView(
+                          shrinkWrap: true,
+                          children: [
+                            for (final language
+                                in controller.main.locals.value.languages)
+                              Card(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    children: [
+                                      Text(language,
+                                          style: const TextStyle(fontSize: 18)),
+                                      const Spacer(),
+                                      InkWell(
+                                        child: const Icon(Icons.arrow_upward),
+                                        onTap: () => controller.moveLanguage(
+                                            language, -1),
+                                      ),
+                                      const SizedBox(width: 8),
+                                      InkWell(
+                                        child: const Icon(Icons.arrow_downward),
+                                        onTap: () => controller.moveLanguage(
+                                            language, 1),
+                                      ),
+                                      const SizedBox(width: 8),
+                                      InkWell(
+                                        child: const Icon(Icons.edit,
+                                            color: Colors.amber),
+                                        onTap: () => _editLanguage(language),
+                                      ),
+                                      const SizedBox(width: 8),
+                                      InkWell(
+                                        child: const Icon(Icons.delete,
+                                            color: Colors.red),
+                                        onTap: () =>
+                                            _removeLanguage(context, language),
+                                      ),
+                                    ],
                                   ),
-                                  const SizedBox(width: 8),
-                                  InkWell(
-                                    child: const Icon(Icons.arrow_downward),
-                                    onTap: () =>
-                                        controller.moveLanguage(language, 1),
-                                  ),
-                                  const SizedBox(width: 8),
-                                  InkWell(
-                                    child: const Icon(Icons.edit,
-                                        color: Colors.amber),
-                                    onTap: () => _editLanguage(language),
-                                  ),
-                                  const SizedBox(width: 8),
-                                  InkWell(
-                                    child: const Icon(Icons.delete,
-                                        color: Colors.red),
-                                    onTap: () =>
-                                        _removeLanguage(context, language),
-                                  ),
-                                ],
+                                ),
                               ),
-                            ),
-                          ),
-                      ],
-                    ))),
+                          ],
+                        ))),
             ElevatedButton(
               child: const SizedBox(
                   width: double.infinity, child: Center(child: Text('Close'))),

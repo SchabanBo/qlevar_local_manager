@@ -4,18 +4,18 @@ import 'models.dart';
 
 class Settings {
   final List<AppLocalFile> apps;
-  final TranlationSettings tranlation;
+  final TranlationSettings translation;
   final AutoSave autoSave;
   Settings({
     required this.apps,
-    required this.tranlation,
+    required this.translation,
     required this.autoSave,
   });
 
   Map<String, dynamic> toMap() {
     return {
       'apps': apps.map((x) => x.toMap()).toList(),
-      'tranlation': tranlation.toMap(),
+      'tranlation': translation.toMap(),
       'autoSave': autoSave.toMap(),
     };
   }
@@ -24,7 +24,7 @@ class Settings {
     return Settings(
       apps: List<AppLocalFile>.from(
           map['apps']?.map((x) => AppLocalFile.fromMap(x))),
-      tranlation: map['tranlation'] == null
+      translation: map['tranlation'] == null
           ? TranlationSettings()
           : TranlationSettings.fromMap(map['tranlation']),
       autoSave: map['autoSave'] == null

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../controllers/settings_controller.dart';
 
 class TranslationSection extends StatelessWidget {
@@ -13,9 +14,10 @@ class TranslationSection extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextFormField(
-              initialValue: controller.settings().tranlation.googleApi,
+              initialValue: controller.settings.value.translation.googleApi,
               obscureText: true,
-              onChanged: (s) => controller.settings().tranlation.googleApi = s,
+              onChanged: (s) =>
+                  controller.settings.value.translation.googleApi = s,
             ),
           )
         ],

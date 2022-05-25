@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:reactive_state/reactive_state.dart';
 
 import '../../../helpers/constants.dart';
 import '../../../models/drag_request.dart';
@@ -51,7 +52,7 @@ class _LocalNodeWidget extends StatelessWidget {
             bottom: BorderSide(color: AppColors.border),
           ),
         ),
-        child: Obx(() => Column(children: [header, body])),
+        child: Observer(builder: (_) => Column(children: [header, body])),
       );
 
   Widget get header => Container(
@@ -67,21 +68,22 @@ class _LocalNodeWidget extends StatelessWidget {
             Flexible(
               flex: 1,
               child: QEditableText(
-                  text: controller.item().name,
-                  onEdit: (s) => controller.item().name = s),
+                  text: controller.item.value.name,
+                  onEdit: (s) => controller.item.value.name = s),
             ),
             Expanded(
-              flex: Get.find<MainController>().locals().languages.length,
+              flex: Get.find<MainController>().locals.value.languages.length,
               child: InkWell(
-                onTap: () => controller.isOpen(!controller.isOpen()),
+                onTap: () => controller.isOpen(!controller.isOpen.value),
                 child: Align(
                   alignment: Alignment.centerRight,
-                  child: Obx(() => Icon(
-                        controller.isOpen.isTrue
-                            ? Icons.expand_less
-                            : Icons.expand_more,
-                        size: 30,
-                      )),
+                  child: Observer(
+                      builder: (_) => Icon(
+                            controller.isOpen.value
+                                ? Icons.expand_less
+                                : Icons.expand_more,
+                            size: 30,
+                          )),
                 ),
               ),
             ),
@@ -98,7 +100,7 @@ class _LocalNodeWidget extends StatelessWidget {
         duration: const Duration(milliseconds: 500),
         transitionBuilder: (c, a) =>
             SizeTransition(sizeFactor: a, child: c, axis: Axis.vertical),
-        child: controller.isOpen.isTrue
+        child: controller.isOpen.value
             ? controller.children.isEmpty
                 ? _noChildren
                 : ListView(

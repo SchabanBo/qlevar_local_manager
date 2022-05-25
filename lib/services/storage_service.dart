@@ -2,12 +2,13 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import '../helpers/download/download.dart'
     if (dart.library.html) '../helpers/download/download_web.dart';
 import '../models/json/data.dart';
 import '../models/qlocal.dart';
 import '../pages/settings/models/models.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 const _key = 'qlevar_local_manager_settings';
 
@@ -18,7 +19,7 @@ class StorageService extends GetxController {
       return Settings.fromJson(prefs.getString(_key)!);
     }
     return Settings(
-        apps: [], tranlation: TranlationSettings(), autoSave: AutoSave());
+        apps: [], translation: TranlationSettings(), autoSave: AutoSave());
   }
 
   Future saveSettings(Settings settings) async {
@@ -40,6 +41,7 @@ class StorageService extends GetxController {
       Get.defaultDialog(
           title: 'Error reading the data', middleText: e.toString());
     }
+    return null;
   }
 
   Future<QlevarLocal?> _loadLocalsWeb(AppLocalFile appLocalFile) async {
@@ -54,6 +56,7 @@ class StorageService extends GetxController {
       Get.defaultDialog(
           title: 'Error reading the data', middleText: e.toString());
     }
+    return null;
   }
 
   Future<void> saveLocals(AppLocalFile file, QlevarLocal local) async {
