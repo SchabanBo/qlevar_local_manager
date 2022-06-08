@@ -1,11 +1,9 @@
-import 'dart:async';
-
 import '../../../models/drag_request.dart';
 import '../../../models/qlocal.dart';
 import '../../../services/di_service.dart';
 import 'main_controller.dart';
 
-class LocalItemController extends Controller {
+class LocalItemController {
   final LocalItem item;
   final List<int> indexMap;
   final MainController mainController = getService();
@@ -54,7 +52,4 @@ class LocalItemController extends Controller {
       insertHashCode: item.hashCode,
     );
   }
-
-  @override
-  FutureOr onDispose() {}
 }

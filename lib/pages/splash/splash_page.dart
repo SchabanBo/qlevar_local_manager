@@ -46,7 +46,9 @@ class _SplashPageState extends State<SplashPage> {
             () => _storageController.loadSettings()),
         builder: (c, s) {
           if (s.hasData) {
-            addService(SettingsController(s.data!));
+            if (!isServiceRegistered<SettingsController>()) {
+              addService(SettingsController(s.data!));
+            }
             WidgetsBinding.instance
                 .addPostFrameCallback((_) => selectApp(Navigator.of(context)));
           }
@@ -79,7 +81,7 @@ class _SplashPageState extends State<SplashPage> {
       setState(() {});
       return;
     }
-    removeService<MainController>();
+    if (isServiceRegistered<MainController>()) removeService<MainController>();
     addService(MainController(appFile: app, locals: locals));
     navigator.pushReplacement(MaterialPageRoute(
       builder: (_) => const MainView(),

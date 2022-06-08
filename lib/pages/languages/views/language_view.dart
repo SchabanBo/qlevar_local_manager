@@ -75,7 +75,7 @@ class LanguageView extends StatelessWidget {
             ElevatedButton(
               child: const SizedBox(
                   width: double.infinity, child: Center(child: Text('Close'))),
-              onPressed: () => QOverlay.dismissName('SetingsScreen'),
+              onPressed: () => QOverlay.dismissName('Settings Screen'),
             ),
           ],
         ),
