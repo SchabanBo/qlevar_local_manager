@@ -1,5 +1,7 @@
 # qlevar_local_manager [QLM]
 
+This Project will continue as [Localic](https://github.com/SchabanBo/localic)
+
 This app will help you manage you applications locals easily. set you locals in groups, translate them with google translation and then export them to a class that is useable with GetX.
 
 - [qlevar_local_manager [QLM]](#qlevar_local_manager-qlm)
